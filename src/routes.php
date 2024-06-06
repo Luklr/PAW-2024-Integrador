@@ -12,50 +12,31 @@ $twig = new Environment($loader);
 // Instanciar el Router con Twig
 $router = new Router($twig);
 
-$router->get('/','PageController@index');
-$router->get('/menu','PageController@menu');
+$router->get('/','IndexController@index');
 
-$router->get('/politicas_privacidad','InformacionController@politicasPrivacidad');
-$router->get('/acerca_de_nosotros','InformacionController@acercaDeNosotros');
-$router->get('/novedades','InformacionController@novedades');
-$router->get('/defensa_del_consumidor','InformacionController@acercaDeNosotros');
-$router->get('/contactos','InformacionController@contactos');
-$router->post('/contactos','InformacionController@contactosFormulario');
+$router->get('/products','AssemblePcController@products');
+$router->get("/product", "AssemblePcController@product");
+$router->get("/assemble_pc_case", 'AssemblePcController@assemblePcCase');
+$router->get("/assemble_pc_cpu", 'AssemblePcController@assemblePcCpu');
+$router->get("/assemble_pc_gpu", 'AssemblePcController@assemblePcGpu');
+$router->get("/assemble_pc_ram", 'AssemblePcController@assemblePcRam');
+$router->get("/assemble_pc_motherboard", 'AssemblePcController@assemblePcMotherboard');
+$router->get("/assemble_pc_disk", 'AssemblePcController@assemblePcDisk');
+$router->get("/assemble_pc_power_suply", 'AssemblePcController@assemblePcPowerSuply');
+$router->get("/templates", 'AssemblePcController@templates');
 
-$router->get('/hacer_pedido','PedidoController@hacerPedido');
-$router->get('/armar_pedido','PedidoController@armarPedido');
-$router->post('/armar_pedido','PedidoController@armarPedidoFormulario');
-$router->get('/confirmar_pedido','PedidoController@confirmarPedido');
-$router->post('/confirmar_pedido','PedidoController@confirmarPedidoFormulario');
-$router->get('/elegir_local','PedidoController@elegirLocal');
-$router->post('/elegir_local','PedidoController@elegirLocalFormulario');
-$router->get('/ingresar_direccion','PedidoController@ingresarDireccion');
-$router->post("/ingresar_direccion", "PedidoController@ingresarDireccionFormulario");
-$router->get('/fin_pedido','PedidoController@finPedido');
-$router->get('/seleccion_mesa_qr','PedidoController@seleccionarMesa');
-$router->get('/tus_pedidos','PedidoController@pedidos');
-$router->get('/estado_pedido', 'PedidoController@estadoPedido');
-$router->post('/estado_pedido', 'PedidoController@actualizarEstadoPedido');
-$router->get('/get_pedidos', 'PedidoController@getPedidosId');
+$router->get("/about_us", "OrgInformationController@aboutUs");
+$router->get("/branches", "OrgInformationController@branches");
+$router->get("/consumer_defense", "OrgInformationController@consumerDefense");
+$router->get("/contacts", "OrgInformationController@contacts");
+$router->get("/news", "OrgInformationController@news");
 
-$router->get('/reservas','ReservaController@reservas');
-$router->get('/locales','ReservaController@locales');
-$router->post('/fin_reserva','ReservaController@finReserva');
-$router->post('/seleccion_mesa','ReservaController@seleccionMesa');
-$router->post('/agregar_reserva','ReservaController@agregarReserva');
-$router->get('/seleccion_mesa','ReservaController@seleccionMesa');
-$router->get('/local','ReservaController@local');
-$router->get('/local2','ReservaController@local2');
-$router->get('/reservas_mesa','ReservaController@reservasMesa'); //<---
+$router->get("/branch_selection", "PaymentController@branchSelection");
+$router->get("/cart", "PaymentController@cart");
+$router->get("/confirm_order", "PaymentController@confirmOrder");
+$router->get("/enter_address", "PaymentController@enterAddress");
+$router->get("/order_pickup", "PaymentController@orderPickUp");
 
-$router->get('/login','UsuarioController@login');
-$router->get('/register','UsuarioController@register');
-$router->post('/register','UsuarioController@registerFormulario');
-$router->get('/forgot_password','UsuarioController@forgotPassword');
-$router->get('/verification_code','UsuarioController@verificationCode');
-
-$router->get('/alta_plato', 'IntranetController@altaPlato');
-$router->post('/alta_plato', 'IntranetController@altaPlatoProcesado');
-$router->get('/turnero', 'IntranetController@turnero');
-$router->get('/gestion_pedidos', 'IntranetController@gestionPedidos');
-$router->get('/estados', 'IntranetController@estadosPedidos');
+$router->get("/login", "UserController@login");
+$router->get("/signin", "UserController@sigin");
+$router->get("/account", "UserController@account");
