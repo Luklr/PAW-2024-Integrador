@@ -1,0 +1,41 @@
+{
+    "name" : "paw/pc-fusion",
+    "description": "Integrador del grupo 1 de PAW, cursada 2024",
+    "keywords": ["php","mvc"],
+    "license": "MIT",
+    "authors" : [
+        {
+            "name": "Gonzalo Benito",
+            "email": "gonzalobenitounlu@gmail.com",
+            "role": "Creator / Main Developer"
+        },
+        {
+            "name": "Francisco Guerra",
+            "email": "fran03guerra@gmail.com",
+            "role": "Creator / Main Developer"
+        },
+        {
+            "name" : "Kevin Monti",
+            "email": "neielmonti@gmail.com",
+            "role": "Creator / Main Developer"
+        },
+        {
+            "name": "Lucio Reinoso",
+            "email": "lucioreinoso88@gmail.com",
+            "role": "Creator / Main Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=7.4.0",
+        "filp/whoops": "~2",
+        "monolog/monolog": "^3.5",
+        "vlucas/phpdotenv": "^5.6",
+        "robmorgan/phinx": "^0.16.0",
+        "twig/twig": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Paw\\" : "src/"
+        }
+    }
+}

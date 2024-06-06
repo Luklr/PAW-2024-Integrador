@@ -1,0 +1,12 @@
+@import url('reset.css');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+:root {
+    font-size: 12pt;
+    --alice-blue: #63D8FF;
+    --pale-azure: #EAF7FF;
+    --white: #FFFFFF;
+    --primary-font: "Archivo Black", sans-serif;
+    --secundary-font: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+}
