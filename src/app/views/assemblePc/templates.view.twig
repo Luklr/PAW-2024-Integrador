@@ -1,0 +1,17 @@
+{% extends 'view.twig' %}
+
+{% block content %}
+        <form class="searchbar-form">
+            <label for="searchbar-templates">Buscar</label>
+            <input type="text" id="searchbar-templates" name="searchbar-templates" class="searchbar-input" tabindex="1" autocomplete="on" autofocus required>
+            <input type="submit" value="Subir" class="submit searchbar-submit">
+        </form>
+
+        <section>
+            <h2>Resultados de la busqueda</h2>
+            <article class="articulo-plantilla">
+                <h3>Nombre Plantilla<h3>
+                <a href="/template?template=nombre_plantilla">Ver detalle</a>
+            </article>
+        </section>
+{% endblock %}

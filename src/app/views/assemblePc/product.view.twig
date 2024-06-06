@@ -1,0 +1,17 @@
+{% extends 'view.twig' %}
+
+{% block main_class %}product{% endblock %}
+
+{% block content %}
+    <article>
+        <picture>
+            <img src= "{{product.pathImg}}" >
+        </picture>
+        <h3>{{product.nombre}}</h3>
+        <p> 
+            {{product.descripcion}}
+            <br>
+            {{product.precio}}
+        </p>
+    </article>
+{% endblock %}

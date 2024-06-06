@@ -2,58 +2,22 @@
 
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
-use Twig\Environment;
 
 class OrgInformationController extends Controller
 {
-    private $twig;
-
-    public function __construct(Environment $twig) {
-        $this->twig = $twig;
-    }
-
     public function aboutUs(Request $request) {
-        $title = "About us";
-        echo $this->twig->render('orgInformation/about_us.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        echo $this->render('orgInformation/about_us.view.twig', "About us", $request);
     }
 
     public function branches(Request $request) {
-        $title = "Branches";
-        echo $this->twig->render('orgInformation/branches.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        echo $this->render('orgInformation/branches.view.twig', "Branches", $request);
     }
 
     public function consumerDefense(Request $request) {
-        $title = "Consumer defense";
-        echo $this->twig->render('orgInformation/consumer_defense.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        echo $this->render('orgInformation/consumer_defense.view.twig', "Consumer defense", $request);
     }
 
     public function contacts(Request $request) {
-        $title = "Contacts";
-        echo $this->twig->render('orgInformation/contacts.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
-    }
-
-    public function news(Request $request) {
-        $title = "News";
-        echo $this->twig->render('orgInformation/news.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        echo $this->render('orgInformation/contacts.view.twig', "Contacts", $request);
     }
 }

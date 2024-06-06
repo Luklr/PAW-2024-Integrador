@@ -1,25 +1,15 @@
-<nav>
+<nav class="nav-header">
     <ul>
         {% for item in nav %}
-            {% if item.role == 'user' %} 
+            {% if userRole in item.role %} 
                 <li>
                     <a href="{{ item.href }}" 
-                        class="{{ app.request.getPathInfo() == item.href ? 'selected' : '' }}">
+                        class="{{ pathInfo == item.href ? 'selected' : 'not-selected' }}">
                         {{ item.name }}
                     </a>
                 </li>
             {% endif %}
         {% endfor %}
         
-    </ul>
-</nav>
-<nav class="account">
-    <ul>
-        <li>
-            <a href="/login">Login</a>
-        </li>
-        <li>
-            <a href="/register">Register</a>
-        </li>
     </ul>
 </nav>

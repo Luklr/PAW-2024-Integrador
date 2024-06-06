@@ -1,12 +1,200 @@
 @import url('reset.css');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
 
 :root {
     font-size: 12pt;
-    --alice-blue: #63D8FF;
-    --pale-azure: #EAF7FF;
-    --white: #FFFFFF;
+    --large: #01303f;
+    --primary: #086A94;
+    --secondary: #02a9f7;
+    --background: #EAF6FB;
+
+    --font-main: "Montserrat", sans-serif;
+    --font-titles: "Arimo", sans-serif;
+
     --primary-font: "Archivo Black", sans-serif;
     --secundary-font: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 8rem 0 0 0;
+    background-color: var(--background);
+    position: relative; /* Necesario para posicionar el pseudo-elemento */
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    background-image: url(/source/pictures/background.webp);
+    position: absolute;
+    
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    opacity: 0.2; /* Ajusta la opacidad según sea necesario */
+    z-index: -1; /* Para asegurarse de que el pseudo-elemento esté detrás del contenido */
+    pointer-events: none; /* Evita que el pseudo-elemento interfiera con los eventos del mouse */
+    background-size: 40vw;
+    background-repeat:space;
+}
+
+/* .background-pc-index{
+    background-image: url(/source/pictures/background-main.jpg);
+    height: 80vw;
+    background-repeat: no-repeat;
+} */
+
+header {
+    background-color: var(--primary) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    height: fit-content;
+    align-items: center;
+    padding: 0 !important;
+
+    position: fixed; /* Hace que el encabezado se quede fijo en la parte superior */
+    top: 0; /* Se fija en la parte superior de la ventana */
+    left: 0;
+    z-index: 1000; /* Asegura que esté encima del contenido */
+}
+
+.header-nav-section {
+    width: 90vw;
+    height: fit-content;
+    padding-right: 1rem;
+}
+
+nav.nav-header {
+    background-color: var(--large) !important;
+    display: flex !important;
+    /*height: auto !important;*/
+    justify-content: flex-end;
+}
+
+nav.nav-header ul li .selected {
+    background-color: var(--primary) !important;
+}
+
+nav.nav-header ul li:hover {
+    background-color: var(--primary) !important;
+}
+
+.nav-account {
+    background-color: var(--primary) !important;
+}
+
+nav.nav-account ul li a {
+    color: var(--large) !important;
+    font-weight: 1000;
+}
+
+nav.nav-account ul li:hover {
+    background-color: var(--background) !important;
+}
+
+
+.logo {
+    width: fit-content;
+    height: fit-content;
+}
+
+.logo-picture {
+    width: fit-content;
+    height: fit-content;
+}
+
+.logo-image {
+    height: auto !important;
+    width: 10vw !important;
+}
+
+
+main {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0;
+    height: auto;
+    flex-grow: 1;
+}
+
+.boton-anchor{
+    background-color: var(--primary);
+    color: var(--background);
+    font-size: 2rem;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    transition: background-color 0.2s;
+}
+
+.boton-anchor:hover{
+    background-color: var(--secondary);
+}
+
+.article-producto, .article-branch, .article-part-assemble{
+    border: 2px solid var(--secondary) !important;
+    margin: 1rem;
+    border-radius: 0.3rem;
+    font-family: var(--font-main);
+    display: flex !important;
+    flex-direction: column;
+    width: 80vw;
+    align-items: center;
+}
+
+.article-part-assemble{
+    border: 2px solid var(--secondary) !important;
+    margin: 1rem;
+    border-radius: 0.3rem;
+    font-family: var(--font-main);
+    display: flex !important;
+    flex-direction: column;
+    width: 30vw;
+    align-items: center;
+}
+
+.assemble-title {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+.assemble-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+h2 {
+    font-family: var(--font-titles);
+}
+
+
+footer {
+    background-color: var(--large);
+    display: flex !important;
+    flex-direction: row !important;
+    justify-items: center !important;
+    align-items: center !important;
+    box-shadow: none;
+}
+
+nav.nav-footer {
+    background-color: var(--large) !important;
+    justify-content: center !important;
+    box-shadow: none;
+}
+
+.trademark {
+    color: var(--secondary) !important;
+    white-space: nowrap;
+    margin: 1rem;
+}
+
+.informacion, .form-account{
+    padding: 3rem;
 }

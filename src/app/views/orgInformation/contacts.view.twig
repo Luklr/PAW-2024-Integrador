@@ -1,0 +1,25 @@
+{% extends 'view.twig' %}
+
+{% block content %}
+    <section class="informacion">
+        <h2>
+            Contactanos
+        </h2>
+        {% if procesado %}
+            <p>Su petición fue procesada con éxito</p>
+        {% endif %}
+        <form id="form" method="POST" action="/contacts">
+            <label for="nombres">Nombres: </label>
+            <input type="text" id="nombres" placeholder="Nombres" required>
+            <label for="apellidos">Apellidos: </label>
+            <input type="text" id="apellidos" placeholder="Apellidos" required>
+            <label for="email">Correo electrónico: </label>
+            <input type="text" id="email" placeholder="Correo electrónico" required>
+            <label for="asunto">Asunto: </label>
+            <input type="text" id="asunto" placeholder="Asunto" required>
+            <label for="mensaje">Detalles de la consulta:</label>
+            <textarea id="mensaje" placeholder="Detalle su consulta o problema" rows="6"></textarea>
+            <input type="submit" value="Enviar" class="submit">
+        </form>
+    </section>
+{% endblock %}

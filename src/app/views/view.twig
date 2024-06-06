@@ -1,16 +1,7 @@
 {% include 'layout/head.view.twig' %}
 <body>
-    <header>
-        <h1>
-            <a href="../">
-                <picture>
-                    <source srcset="../images/Logo(Light).svg" media="(min-width: 600px)">
-                    <img alt="pawpower" src="../images/Logo(Light).svg">
-                </picture>
-            </a>
-        </h1>
-        {% include 'layout/nav.view.twig' %}
-    </header>
+
+    {% include 'layout/header.view.twig' %}
 
     <main class="{% block main_class %}default-class{% endblock %}">
         {% block content %}{% endblock %}

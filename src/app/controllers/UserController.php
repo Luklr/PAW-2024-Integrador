@@ -2,40 +2,55 @@
 
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
-use Twig\Environment;
 
 class UserController extends Controller
 {
-    private $twig;
-
-    public function __construct(Environment $twig) {
-        $this->twig = $twig;
+    public function login(Request $request) {
+        if ($this->userIsLogged()) {
+            $this->redirect("/");
+            return;
+        }
+        echo $this->render('user/login.view.twig', "Log in", $request);
     }
 
-    public function login(Request $request) {
-        $title = "Login";
-        echo $this->twig->render('user/login.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+    public function loginPost(Request $request) {
+        if ($this->userIsLogged()) {
+            $this->redirect("/");
+            return;
+        }
+        // Lo logeamos
+        $_SESSION["user_id"] = 1;   // Temporal
+        $_SESSION["user_role"] = "user";
+        
+        // Verifico si tenía que redirigir, sino al home
+        $originPath = $_SESSION["loopback"];
+        if ($originPath) {
+            unset($_SESSION["loopback"]);
+            $this->redirect($originPath);
+        } 
+        else {
+            $this->redirect("/");
+        }
     }
 
     public function signin(Request $request) {
-        $title = "Signin";
-        echo $this->twig->render('user/signin.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        echo $this->render('user/signin.view.twig', "Sign in", $request);
+    }
+
+    public function signinPost(Request $request) {
+
+        $originPath = $_SESSION["loopback"];
+        if (!$originPath) {
+            unset($_SESSION["loopback"]);
+            $this->redirect("/");
+        } 
+        else {
+            $this->redirect($originPath);
+        }
     }
 
     public function account(Request $request) {
-        $title = "Account";
-        echo $this->twig->render('user/account.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->verifyIsLogged();
+        echo $this->render('user/account.view.twig', "Account", $request);
     }
 }

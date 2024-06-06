@@ -1,18 +1,12 @@
 {% extends 'view.twig' %}
 
 {% block content %}
-        <a href="/templates">
-            <section>
-                <h2>
-                    Buscar plantillas
-                </h2>
-            </section>
+        <a href="/templates" class="boton-anchor">
+            Buscar plantillas
         </a>
-        <section>
-            <h2>
-                Articulos elegidos
-            </h2>
-            <article>
+        <section class="assemble-section">
+            <h2 class="assemble-title"> Productos elegidos </h2>
+            <article class="article-part-assemble">
                 <picture>
                     <img src="#">
                 </picture>
@@ -21,8 +15,9 @@
                     nombre
                     requerido
                 </p>
+                <a href="/assemble_pc_cpu">elegir</a>
             </article>
-            <article>
+            <article class="article-part-assemble">
                 <picture>
                     <img src="#">
                 </picture>
@@ -31,18 +26,20 @@
                     nombre
                     requerido
                 </p>
+                <a href="/assemble_pc_gpu">elegir</a>
             </article>
-            <article>
+            <article class="article-part-assemble">
                 <picture>
                     <img src="#">
                 </picture>
-                <h3>Memoria</h3>
+                <h3>Memoria RAM</h3>
                 <p>
                     nombre
                     requerido
                 </p>
+                <a href="/assemble_pc_ram">elegir</a>
             </article>
-            <article>
+            <article class="article-part-assemble">
                 <picture>
                     <img src="#">
                 </picture>
@@ -51,8 +48,9 @@
                     nombre
                     requerido
                 </p>
+                <a href="/assemble_pc_motherboard">elegir</a>
             </article>
-            <article>
+            <article class="article-part-assemble">
                 <picture>
                     <img src="#">
                 </picture>
@@ -61,8 +59,9 @@
                     nombre
                     requerido
                 </p>
+                <a href="/assemble_pc_disk">elegir</a>
             </article>
-            <article>
+            <article class="article-part-assemble">
                 <picture>
                     <img src="#">
                 </picture>
@@ -71,6 +70,7 @@
                     nombre
                     requerido
                 </p>
+                <a href="/assemble_pc_power_suply">elegir</a>
             </article>
         </section>
 {% endblock %}

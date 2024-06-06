@@ -25,12 +25,12 @@ $router->get("/assemble_pc_motherboard", 'AssemblePcController@assemblePcMotherb
 $router->get("/assemble_pc_disk", 'AssemblePcController@assemblePcDisk');
 $router->get("/assemble_pc_power_suply", 'AssemblePcController@assemblePcPowerSuply');
 $router->get("/templates", 'AssemblePcController@templates');
+$router->get("/template", 'AssemblePcController@template');
 
 $router->get("/about_us", "OrgInformationController@aboutUs");
 $router->get("/branches", "OrgInformationController@branches");
 $router->get("/consumer_defense", "OrgInformationController@consumerDefense");
 $router->get("/contacts", "OrgInformationController@contacts");
-$router->get("/news", "OrgInformationController@news");
 
 $router->get("/branch_selection", "PaymentController@branchSelection");
 $router->get("/cart", "PaymentController@cart");
@@ -39,5 +39,7 @@ $router->get("/enter_address", "PaymentController@enterAddress");
 $router->get("/order_pickup", "PaymentController@orderPickUp");
 
 $router->get("/login", "UserController@login");
-$router->get("/signin", "UserController@sigin");
+$router->post("/login", "UserController@loginPost");
+$router->get("/signin", "UserController@signin");
+$router->post("/signin", "UserController@signinPost");
 $router->get("/account", "UserController@account");

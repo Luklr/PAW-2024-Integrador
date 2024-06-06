@@ -1,0 +1,14 @@
+<nav class="nav-account">
+    <ul>
+        {% for item in navAccount %}
+            {% if userRole in item.role %} 
+                <li>
+                    <a href="{{ item.href }}" 
+                        class="{{ pathInfo == item.href ? 'selected' : 'not-selected' }}">
+                        {{ item.name }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</nav>

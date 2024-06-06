@@ -1,113 +1,54 @@
 <?php
-
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
-use Twig\Environment;
 
 class AssemblePcController extends Controller
 {
-    private $twig;
-
-    public function __construct(Environment $twig) {
-        $this->twig = $twig;
-    }
-
     public function products(Request $request) {
-        $title = "Products";
-        echo $this->twig->render('assemblePc/products.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/products.view.twig', "Products", $request);
     }
 
     public function product(Request $request) {
-        $title = ""; //nombre del producto!! -> /product?p=i9-9000 x ejemplo
-        echo $this->twig->render('assemblePc/product.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/product.view.twig', "", $request);
     }
 
     function assemblePc(Request $request) {
-        $title = "Assemble your PC";
-        echo $this->twig->render('assemblePc/assemble_pc.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/assemble_pc.view.twig', "Assemble your PC", $request);
     }
 
     function assemblePcCase(Request $request) {
-        $title = "Assemble your PC";
-        echo $this->twig->render('assemblePc/assemble_pc_case.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/assemble_pc_case.view.twig', "Assemble your PC", $request);
     }
 
     function assemblePcCpu(Request $request) {
-        $title = "Assemble your PC";
-        echo $this->twig->render('assemblePc/assemble_pc_cpu.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/assemble_pc_cpu.view.twig', "Assemble your PC", $request);
     }
 
     function assemblePcGpu(Request $request) {
-        $title = "Assemble your PC";
-        echo $this->twig->render('assemblePc/assemble_pc_gpu.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/assemble_pc_gpu.view.twig', "Assemble your PC", $request);
     }
 
     function assemblePcRam(Request $request) {
-        $title = "Assemble your PC";
-        echo $this->twig->render('assemblePc/assemble_pc_ram.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/assemble_pc_ram.view.twig', "Assemble your PC", $request);
     }
 
     function assemblePcMotherboard(Request $request) {
-        $title = "Assemble your PC";
-        echo $this->twig->render('assemblePc/assemble_pc_motherboard.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/assemble_pc_motherboard.view.twig', "Assemble your PC", $request);
     }
 
     function assemblePcDisk(Request $request) {
-        $title = "Assemble your PC";
-        echo $this->twig->render('assemblePc/assemble_pc_disk.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/assemble_pc_disk.view.twig', "Assemble your PC", $request);
     }
 
     function assemblePcPowerSuply(Request $request) {
-        $title = "Assemble your PC";
-        echo $this->twig->render('assemblePc/assemble_pc_power_suply.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+        $this->render('assemblePc/assemble_pc_power_suply.view.twig', "Assemble your PC", $request);
     }
 
-    function assemblePcTemplates(Request $request) {
-        $title = "Templates";
-        echo $this->twig->render('assemblePc/template.view.twig', [
-            'nav' => $this->nav,
-            'footer' => $this->footer,
-            'title' => $title,
-        ]);
+    function templates(Request $request) {
+        $this->render('assemblePc/templates.view.twig', "Assemble your PC", $request);
+    }
+
+    function template(Request $request) {
+        $this->render('assemblePc/template.view.twig', "", $request);
     }
 }
