@@ -2,8 +2,6 @@
 
 namespace Paw\App\Controllers;
 
-use Paw\App\Repositories\Repository;
-
 class Controller
 {  
     public string $imagesDir = __DIR__ . "/../../../public/images/";

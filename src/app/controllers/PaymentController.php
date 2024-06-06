@@ -3,7 +3,6 @@
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
 use Twig\Environment;
-use Paw\App\Repositories\ProductoRepository;
 
 class PaymentController extends Controller
 {
@@ -15,7 +14,7 @@ class PaymentController extends Controller
 
     public function branchSelection(Request $request) {
         $title = "Branch selection";
-        echo $this->twig->render('branch_selection.view.twig', [
+        echo $this->twig->render('payment/branch_selection.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -24,7 +23,7 @@ class PaymentController extends Controller
 
     public function cart(Request $request) {
         $title = "Cart";
-        echo $this->twig->render('cart.view.twig', [
+        echo $this->twig->render('payment/cart.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -33,7 +32,7 @@ class PaymentController extends Controller
 
     public function confirmOrder(Request $request) {
         $title = "Confirm order";
-        echo $this->twig->render('confirm_order.view.twig', [
+        echo $this->twig->render('payment/confirm_order.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -42,7 +41,7 @@ class PaymentController extends Controller
 
     public function enterAddress(Request $request) {
         $title = "Enter address";
-        echo $this->twig->render('enter_address.view.twig', [
+        echo $this->twig->render('payment/enter_address.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -51,7 +50,7 @@ class PaymentController extends Controller
 
     public function orderPickUp(Request $request) {
         $title = "Order pick up";
-        echo $this->twig->render('order_pickup.view.twig', [
+        echo $this->twig->render('payment/order_pickup.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,

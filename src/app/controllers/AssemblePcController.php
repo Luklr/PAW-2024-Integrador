@@ -3,7 +3,6 @@
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
 use Twig\Environment;
-use Paw\App\Repositories\ProductoRepository;
 
 class AssemblePcController extends Controller
 {
@@ -15,7 +14,7 @@ class AssemblePcController extends Controller
 
     public function products(Request $request) {
         $title = "Products";
-        echo $this->twig->render('products.view.twig', [
+        echo $this->twig->render('assemblePc/products.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -24,7 +23,16 @@ class AssemblePcController extends Controller
 
     public function product(Request $request) {
         $title = ""; //nombre del producto!! -> /product?p=i9-9000 x ejemplo
-        echo $this->twig->render('product.view.twig', [
+        echo $this->twig->render('assemblePc/product.view.twig', [
+            'nav' => $this->nav,
+            'footer' => $this->footer,
+            'title' => $title,
+        ]);
+    }
+
+    function assemblePc(Request $request) {
+        $title = "Assemble your PC";
+        echo $this->twig->render('assemblePc/assemble_pc.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -33,7 +41,7 @@ class AssemblePcController extends Controller
 
     function assemblePcCase(Request $request) {
         $title = "Assemble your PC";
-        echo $this->twig->render('assemble_pc_case.view.twig', [
+        echo $this->twig->render('assemblePc/assemble_pc_case.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -42,7 +50,7 @@ class AssemblePcController extends Controller
 
     function assemblePcCpu(Request $request) {
         $title = "Assemble your PC";
-        echo $this->twig->render('assemble_pc_cpu.view.twig', [
+        echo $this->twig->render('assemblePc/assemble_pc_cpu.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -51,7 +59,7 @@ class AssemblePcController extends Controller
 
     function assemblePcGpu(Request $request) {
         $title = "Assemble your PC";
-        echo $this->twig->render('assemble_pc_gpu.view.twig', [
+        echo $this->twig->render('assemblePc/assemble_pc_gpu.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -60,7 +68,7 @@ class AssemblePcController extends Controller
 
     function assemblePcRam(Request $request) {
         $title = "Assemble your PC";
-        echo $this->twig->render('assemble_pc_ram.view.twig', [
+        echo $this->twig->render('assemblePc/assemble_pc_ram.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -69,7 +77,7 @@ class AssemblePcController extends Controller
 
     function assemblePcMotherboard(Request $request) {
         $title = "Assemble your PC";
-        echo $this->twig->render('assemble_pc_motherboard.view.twig', [
+        echo $this->twig->render('assemblePc/assemble_pc_motherboard.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -78,7 +86,7 @@ class AssemblePcController extends Controller
 
     function assemblePcDisk(Request $request) {
         $title = "Assemble your PC";
-        echo $this->twig->render('assemble_pc_disk.view.twig', [
+        echo $this->twig->render('assemblePc/assemble_pc_disk.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -87,7 +95,7 @@ class AssemblePcController extends Controller
 
     function assemblePcPowerSuply(Request $request) {
         $title = "Assemble your PC";
-        echo $this->twig->render('assemble_pc_power_suply.view.twig', [
+        echo $this->twig->render('assemblePc/assemble_pc_power_suply.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -96,7 +104,7 @@ class AssemblePcController extends Controller
 
     function assemblePcTemplates(Request $request) {
         $title = "Templates";
-        echo $this->twig->render('template.view.twig', [
+        echo $this->twig->render('assemblePc/template.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,

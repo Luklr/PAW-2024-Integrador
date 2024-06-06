@@ -3,7 +3,6 @@
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
 use Twig\Environment;
-use Paw\App\Repositories\ProductoRepository;
 
 class OrgInformationController extends Controller
 {
@@ -15,7 +14,7 @@ class OrgInformationController extends Controller
 
     public function aboutUs(Request $request) {
         $title = "About us";
-        echo $this->twig->render('about_us.view.twig', [
+        echo $this->twig->render('orgInformation/about_us.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -24,7 +23,7 @@ class OrgInformationController extends Controller
 
     public function branches(Request $request) {
         $title = "Branches";
-        echo $this->twig->render('branches.view.twig', [
+        echo $this->twig->render('orgInformation/branches.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -33,7 +32,7 @@ class OrgInformationController extends Controller
 
     public function consumerDefense(Request $request) {
         $title = "Consumer defense";
-        echo $this->twig->render('consumer_defense.view.twig', [
+        echo $this->twig->render('orgInformation/consumer_defense.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -42,7 +41,7 @@ class OrgInformationController extends Controller
 
     public function contacts(Request $request) {
         $title = "Contacts";
-        echo $this->twig->render('contacts.view.twig', [
+        echo $this->twig->render('orgInformation/contacts.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,
@@ -51,7 +50,7 @@ class OrgInformationController extends Controller
 
     public function news(Request $request) {
         $title = "News";
-        echo $this->twig->render('news.view.twig', [
+        echo $this->twig->render('orgInformation/news.view.twig', [
             'nav' => $this->nav,
             'footer' => $this->footer,
             'title' => $title,

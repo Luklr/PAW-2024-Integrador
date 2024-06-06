@@ -3,7 +3,6 @@
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
 use Twig\Environment;
-use Paw\App\Repositories\ProductoRepository;
 
 class IndexController extends Controller
 {

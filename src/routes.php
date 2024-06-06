@@ -16,6 +16,7 @@ $router->get('/','IndexController@index');
 
 $router->get('/products','AssemblePcController@products');
 $router->get("/product", "AssemblePcController@product");
+$router->get("/assemble_pc", 'AssemblePcController@assemblePc');
 $router->get("/assemble_pc_case", 'AssemblePcController@assemblePcCase');
 $router->get("/assemble_pc_cpu", 'AssemblePcController@assemblePcCpu');
 $router->get("/assemble_pc_gpu", 'AssemblePcController@assemblePcGpu');
