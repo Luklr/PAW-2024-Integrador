@@ -6,10 +6,23 @@
 
 :root {
     font-size: 12pt;
+
+    /* MODO AZUL
+    /* 
     --large: #01303f;
     --primary: #086A94;
     --secondary: #02a9f7;
     --background: #EAF6FB;
+    */
+
+
+    /* MODO ROJO */
+
+    --large: #363333;
+    --primary: #E16428;
+    --secondary: #272121;
+    --background: #F6E9E9;
+    
 
     --font-main: "Montserrat", sans-serif;
     --font-titles: "Arimo", sans-serif;
@@ -42,6 +55,7 @@ body::before {
     pointer-events: none; /* Evita que el pseudo-elemento interfiera con los eventos del mouse */
     background-size: 40vw;
     background-repeat:space;
+    mix-blend-mode: multiply;
 }
 
 /* .background-pc-index{
@@ -51,7 +65,7 @@ body::before {
 } */
 
 header {
-    background-color: var(--primary) !important;
+    background-color: var(--large) !important;
     display: flex !important;
     flex-direction: row !important;
     height: fit-content;
@@ -65,9 +79,8 @@ header {
 }
 
 .header-nav-section {
-    width: 90vw;
+    width: 93vw;
     height: fit-content;
-    padding-right: 1rem;
 }
 
 nav.nav-header {
@@ -75,6 +88,7 @@ nav.nav-header {
     display: flex !important;
     /*height: auto !important;*/
     justify-content: flex-end;
+    padding-right: 1rem;
 }
 
 nav.nav-header ul li .selected {
@@ -111,7 +125,7 @@ nav.nav-account ul li:hover {
 
 .logo-image {
     height: auto !important;
-    width: 10vw !important;
+    width: 7vw !important;
 }
 
 
@@ -171,6 +185,11 @@ main {
 
 h2 {
     font-family: var(--font-titles);
+    font-size: 3rem !important;
+}
+
+h3 {
+    font-size: 2rem !important;
 }
 
 
