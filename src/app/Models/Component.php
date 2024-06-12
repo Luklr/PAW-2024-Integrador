@@ -5,7 +5,7 @@ namespace Paw\App\Models;
 use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
-abstract class Components extends Model {
+abstract class Component extends Model {
     protected array $fields = [
         "id" => null,
         "description" => null,

@@ -12,10 +12,6 @@ class Template extends Model {
         "components" => []
     ];
 
-    public function __construct(array $values) {
-        $this->set($values);
-    }
-
     public function setName(string $name) {
         $nameTrim = trim($name);
         if (strlen($nameTrim) > 60) {

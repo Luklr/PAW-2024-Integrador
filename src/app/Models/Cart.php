@@ -12,10 +12,6 @@ class Cart extends Model {
         "components" => []
     ];
 
-    public function __construct(array $values) {
-        $this->set($values);
-    }
-
     public function setUser(User $user) {
         $this->fields["user"] = $userTrim;
     }

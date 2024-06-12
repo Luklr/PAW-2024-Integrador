@@ -14,10 +14,6 @@ class Address extends Model {
         "domicileNumber" => null,
         "postalCode" => null
     ];
-
-    public function __construct(array $values) {
-        $this->set($values);
-    }
     
     public function setId(int $id) {
         $this->fields["id"] = $id;

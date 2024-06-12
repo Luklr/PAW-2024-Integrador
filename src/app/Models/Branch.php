@@ -10,10 +10,6 @@ class Branch extends Model {
         "id" => null,
         "Address" => null
     ];
-
-    public function __construct(array $values) {
-        $this->set($values);
-    }
     
     public function setId(int $id) {
         $this->fields["id"] = $id;

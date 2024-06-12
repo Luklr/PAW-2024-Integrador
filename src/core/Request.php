@@ -1,16 +1,34 @@
 <?php
 
 namespace Paw\Core;
-use Paw\App\Models\Usuario;
+use Paw\App\Models\User;
+use Paw\Core\Session;
+use Paw\Core\Database\QueryBuilder;
 
 class Request
 {
-    private $data;
     private $user;
+    private $session;
 
     public function __construct()
     {
-        $this->data = $_SERVER;
+        $this->session = new Session();
+    }
+
+    public function user(): User
+    {
+        $querybuilder = QueryBuilder::getInstance();
+        if (!isset($this->user)) {
+            $filter = "id = :id";
+            $user = $querybuilder->table('user')->select($filter, [':id' => $this->session->get('user_id')])[0];
+            $this->user = new User($user ?? []);
+        }
+        return $this->user;
+    }
+
+    public function session(): Session
+    {
+        return $this->session;
     }
 
     public function isPost()
@@ -45,7 +63,13 @@ class Request
         }
     }
 
-    public function post($key = null): array
+    public function getBody()
+    {
+        $body = file_get_contents("php://input");
+        return $body;
+    }
+
+    public function post($key = null)
     {
         if (is_null($key)) {
             return $_POST;

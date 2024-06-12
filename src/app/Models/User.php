@@ -6,7 +6,10 @@ use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class User extends Model {
+    private array $order = [];
+
     private array $fields = [
+        "id" => null,
         "name" => null,
         "lastname" => null,
         "username" => null,
@@ -15,12 +18,7 @@ class User extends Model {
         "role" => null,
         "address" => null,
         "cart" => null,
-        "order" => order
     ];
-
-    public function __construct(array $values) {
-        $this->set($values);
-    }
 
     public function setName(string $name) {
         $nameTrim = trim($name);

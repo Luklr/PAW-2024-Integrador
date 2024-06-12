@@ -15,7 +15,8 @@ Enlaces adicionales:
 
 * ```git clone <url-repo>```
 * ```cd project-name```
-* ```composer install cp .env.example .env``` # Editar el ```.env``` con los valores deseados
+* ```composer install```
+* ```cp .env.example .env``` # Editar el ```.env``` con los valores deseados
 * ```docker compose up -d```
 * ```./vendor/robmorgan/phinx/bin/phinx migrate -e development```
 * Ejecutar: ```php -S localhost:8888 -t public/```

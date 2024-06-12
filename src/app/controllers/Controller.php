@@ -19,13 +19,8 @@ class Controller
             "role" => ["user","guest"]
         ],
         [
-            "href" => "/products?page=0",
+            "href" => "/products",
             "name" => "Productos",
-            "role" => ["user","guest"]
-        ],
-        [
-            "href" => "/branches",
-            "name" => "Branches",
             "role" => ["user","guest"]
         ],
         [
@@ -71,6 +66,10 @@ class Controller
             "href" => "/consumer_defense",
             "name" => "Consumer defense",
         ],
+        [
+            "href" => "/branches",
+            "name" => "Branches",
+        ],
     ];
 
     
@@ -84,13 +83,13 @@ class Controller
             "footer" => $this->footer,
             "title" => $title,
             "pathInfo" => $request->url(),
-            "userLogged" => $this->userIsLogged(),
+            "userLogged" => $request->session()->isLogged(),
             "nav" => $this->nav,
             "navAccount" => $this->navAccount,
-            "userRole" => $this->getUserRole(),
+            "userRole" => $request->session()->get("user_role"),
         ];
 
-        if($values) {
+        if ($values) {
             $varsRender = array_merge($varsRender, $values);
         }
         echo $this->twig->render($url, $varsRender);
@@ -99,21 +98,6 @@ class Controller
     public function redirect($path) {
         header("Location: ". getenv('APP_URL') . $path);
         exit();
-    }
-
-    public function userIsLogged() {
-        return (isset($_SESSION["user_id"]));
-    }
-
-    public function getUserRole() {
-        return $_SESSION['user_role'] ?? "guest";
-    }
-
-    public function verifyIsLogged($originPath) {
-        if (!$this->userIsLogged()) {
-            $_SESSION["loopback"] = $originPath;
-            $this->redirect("/login");
-        }
     }
 
     public function sanitizeInput($input) {

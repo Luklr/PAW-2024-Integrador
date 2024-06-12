@@ -6,7 +6,7 @@ use Paw\Core\Request;
 class UserController extends Controller
 {
     public function login(Request $request) {
-        if ($this->userIsLogged()) {
+        if ($request->session()->isLogged()) {
             $this->redirect("/");
             return;
         }
@@ -14,18 +14,18 @@ class UserController extends Controller
     }
 
     public function loginPost(Request $request) {
-        if ($this->userIsLogged()) {
+        if ($request->session()->isLogged()) {
             $this->redirect("/");
             return;
         }
         // Lo logeamos
-        $_SESSION["user_id"] = 1;   // Temporal
-        $_SESSION["user_role"] = "user";
+        $request->session()->set("user_id", 1);   // Temporal
+        $request->session()->set("user_role", "user");
         
         // Verifico si tenía que redirigir, sino al home
-        $originPath = $_SESSION["loopback"];
+        $originPath = $request->session()->get("loopback");
         if ($originPath) {
-            unset($_SESSION["loopback"]);
+            $request->session()->delete("loopback");
             $this->redirect($originPath);
         } 
         else {
@@ -39,9 +39,9 @@ class UserController extends Controller
 
     public function signinPost(Request $request) {
 
-        $originPath = $_SESSION["loopback"];
+        $originPath = $request->session()->get("loopback");
         if (!$originPath) {
-            unset($_SESSION["loopback"]);
+            $request->session()->delete("loopback");
             $this->redirect("/");
         } 
         else {
@@ -50,7 +50,11 @@ class UserController extends Controller
     }
 
     public function account(Request $request) {
-        $this->verifyIsLogged();
+        //$this->redirectIfNotLogged($request, "/account");
+        if (!$request->session()->isLogged()) {
+            $request->session()->set("loopback", $originPath);
+            $this->redirect("/login");
+        } 
         echo $this->render('user/account.view.twig', "Account", $request);
     }
 }

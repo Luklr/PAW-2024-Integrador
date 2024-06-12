@@ -1,13 +1,17 @@
 <?php
 require __DIR__ . "/../vendor/autoload.php";
-require 'helpers.php';
-
+/*
+use Whoops\Handler\PrettyHandler;
+use Whoops\Run;
+*/
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Dotenv\Dotenv;
 
 use Paw\Core\Config;
 use Paw\Core\Request;
+use Paw\Core\Database\ConnectionBuilder;
+use Paw\Core\Database\QueryBuilder;
 
 require "routes.php";
 
@@ -21,9 +25,18 @@ $handler = new StreamHandler($config->get("LOG_PATH"));
 $handler->setLevel($config->get("LOG_LEVEL"));
 $log->pushHandler($handler);
 
+$connectionBuilder = new ConnectionBuilder;
+$connectionBuilder->setLogger($log);
+$connection = $connectionBuilder->make($config);
+
+$querybuilder = QueryBuilder::getInstance($connection);
+$querybuilder->setLogger($log);
+
 $request = new Request;
 
 $router->setLogger($log);
-//$whoops = new \Whoops\Run;
-//$whoops->pushHandler(new \Whoops\Handler\PrettyHandler);
-//$whoops->register();
+/*
+$whoops = new Run();
+$whoops->pushHandler(new PrettyHandler());
+$whoops->register();
+*/
