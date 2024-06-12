@@ -10,5 +10,12 @@
                 </li>
             {% endif %}
         {% endfor %}
-    </ul>
+        {% if userLogged %}
+            <li>
+                <a href="/account" class="{{ pathInfo == "/account" ? 'selected' : 'not-selected' }} account-anchor">
+                    <img class="account-image" alt="Account" src="./source/pictures/account.svg">
+                    <p class"account-name"> {{ username }} </p>
+                </a>
+            </li>
+        {% endif %}
 </nav>

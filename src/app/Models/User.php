@@ -5,10 +5,13 @@ namespace Paw\App\Models;
 use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
-class User extends Model {
+class User extends Model{
+
+    static public string $table = '"user"';
+
     private array $order = [];
 
-    private array $fields = [
+    protected array $fields = [
         "id" => null,
         "name" => null,
         "lastname" => null,
@@ -16,7 +19,7 @@ class User extends Model {
         "email" => null,
         "password" => null,
         "role" => null,
-        "address" => null,
+        "address_id" => null,
     ];
 
     public function setName(string $name) {
@@ -121,13 +124,13 @@ class User extends Model {
         return $this->fields["role"];
     }
 
-    public function setAddress(Address $address) {
-        $this->fields["address"] = $address;
+    public function setAddress_id(Address $address) {
+        $this->fields["address_id"] = $address;
     }
 
-    public function getAddress(): ?Address
+    public function getAddress_id(): ?Address
     {
-        return $this->fields["address"];
+        return $this->fields["address_id"];
     }
 
     public function setOrder(Order $order) {

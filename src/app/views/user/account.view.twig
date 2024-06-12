@@ -1,0 +1,13 @@
+{% extends 'view.twig' %}
+
+{% block content %}
+    <section class="user-profile">
+        <h1>User Profile</h1>
+        <p>Name: {{ user.getName() }}</p>
+        <p>Lastname: {{ user.getLastname() }}</p>
+        <p>Username: {{ user.getUsername() }}</p>
+        <p>Email: {{ user.getEmail() }}</p>
+        <p>Role: {{ user.getRole() }}</p>
+        <a href="/account/logout">Log out</a>
+    </section>
+{% endblock %}

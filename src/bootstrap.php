@@ -13,6 +13,8 @@ use Paw\Core\Request;
 use Paw\Core\Database\ConnectionBuilder;
 use Paw\Core\Database\QueryBuilder;
 
+use Paw\App\Repositories\UserRepository;
+
 require "routes.php";
 
 $dotenv = Dotenv::createUnsafeImmutable(__DIR__ . '/../');
@@ -31,6 +33,9 @@ $connection = $connectionBuilder->make($config);
 
 $querybuilder = QueryBuilder::getInstance($connection);
 $querybuilder->setLogger($log);
+
+# Inicializar los Repository singleton:
+UserRepository::getInstance($querybuilder);
 
 $request = new Request;
 

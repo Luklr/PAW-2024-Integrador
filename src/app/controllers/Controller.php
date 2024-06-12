@@ -46,11 +46,6 @@ class Controller
             "name" => "Sign In",
             "role" => "guest"
         ],
-        [
-            "href" => "/account",
-            "name" => "Account",
-            "role" => ["user","admin"]
-        ],
     ];
 
     public array $footer = [
@@ -87,6 +82,7 @@ class Controller
             "nav" => $this->nav,
             "navAccount" => $this->navAccount,
             "userRole" => $request->session()->get("user_role"),
+            "username" => $request->user()->getUsername(),
         ];
 
         if ($values) {

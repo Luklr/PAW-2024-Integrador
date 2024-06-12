@@ -11,6 +11,9 @@ abstract class Model {
     
     protected array $fields = [];
     
+    public function __construct(array $values) {
+        $this->set($values);
+    }
     
     /**
      * Set multiple fields of the model using an associative array.
@@ -21,6 +24,7 @@ abstract class Model {
     
     public function set(array $values)
     {
+
         foreach (array_keys($this->fields) as $field) {
             if (!isset($values[$field])) {
                 continue;

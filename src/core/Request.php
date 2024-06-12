@@ -20,7 +20,7 @@ class Request
         $querybuilder = QueryBuilder::getInstance();
         if (!isset($this->user)) {
             $filter = "id = :id";
-            $user = $querybuilder->table('user')->select($filter, [':id' => $this->session->get('user_id')])[0];
+            $user = $querybuilder->table('"user"')->select($filter, [':id' => $this->session->get('user_id')])[0];
             $this->user = new User($user ?? []);
         }
         return $this->user;

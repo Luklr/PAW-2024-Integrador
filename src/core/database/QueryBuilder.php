@@ -80,6 +80,9 @@ class QueryBuilder {
         $query = "INSERT INTO {$this->table} ({$columnas}) VALUES ({$placeholders})";
         $sentencia = $this->pdo->prepare($query);
 
+        //echo "<pre>";
+        //var_dump($query);die;
+
         // Bind parameters to the prepared statement
         foreach ($data as $key => $value) {
             

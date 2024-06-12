@@ -43,3 +43,4 @@ $router->post("/login", "UserController@loginPost");
 $router->get("/signin", "UserController@signin");
 $router->post("/signin", "UserController@signinPost");
 $router->get("/account", "UserController@account");
+$router->get("/registed_user", "UserController@registedUser");
