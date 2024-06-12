@@ -17,16 +17,15 @@ class User extends Model {
         "password" => null,
         "role" => null,
         "address" => null,
-        "cart" => null,
     ];
 
     public function setName(string $name) {
         $nameTrim = trim($name);
-        if (strlen($nameTrim) > 60) {
-            throw new InvalidValueFormatException("The name must not be major than 60 characters");
+        if (strlen($nameTrim) > 40) {
+            throw new InvalidValueFormatException("El nombre del usuario no puede ser mayor a 40 caracteres");
         }
         if (strlen($nameTrim) < 1 ) {
-            throw new InvalidValueFormatException("The nam must not be void");
+            throw new InvalidValueFormatException("El nombre del usuario no puede estar vacío");
         }
         $this->fields["name"] = $nameTrim;
     }
@@ -38,11 +37,11 @@ class User extends Model {
     
     public function setLastname(string $lastname) {
         $lastnameTrim = trim($lastname);
-        if (strlen($lastnameTrim) > 60) {
-            throw new InvalidValueFormatException("The lastname must not be major than 60 characters");
+        if (strlen($lastnameTrim) > 40) {
+            throw new InvalidValueFormatException("El apellido del usuario no puede ser mayor a 40 caracteres");
         }
         if (strlen($lastnameTrim) < 1 ) {
-            throw new InvalidValueFormatException("The lastname must not be void");
+            throw new InvalidValueFormatException("El apellido del usuario no puede estar vacío");
         }
         $this->fields["lastname"] = $lastnameTrim;
     }
@@ -54,11 +53,11 @@ class User extends Model {
 
     public function setUsername(string $username) {
         $usernameTrim = trim($username);
-        if (strlen($usernameTrim) > 60) {
-            throw new InvalidValueFormatException("The username must not be major than 60 characters");
+        if (strlen($usernameTrim) > 20) {
+            throw new InvalidValueFormatException("El username no puede ser mayor a 20 caracteres");
         }
         if (strlen($usernameTrim) < 1 ) {
-            throw new InvalidValueFormatException("The username must not be void");
+            throw new InvalidValueFormatException("El username no puede estar vacío");
         }
         $this->fields["username"] = $usernameTrim;
     }
@@ -71,13 +70,13 @@ class User extends Model {
     public function setEmail(string $email) {
         $emailTrim = trim($email);
         if (!filter_var($emailTrim, FILTER_VALIDATE_EMAIL)) {   // Esto se debe hacer en el modelo?
-            throw new InvalidValueFormatException("The email is not valid");
+            throw new InvalidValueFormatException("El email no es válido");
         }
         if (strlen($emailTrim) > 40) {
-            throw new InvalidValueFormatException("The email must not be major than 40 characters");
+            throw new InvalidValueFormatException("El email no puede tener mas de 40 caracteres");
         }
         if (strlen($emailTrim) < 1 ) {
-            throw new InvalidValueFormatException("The email must not be void");
+            throw new InvalidValueFormatException("El email no puede estar vacío");
         }
         $this->fields["email"] = $emailTrim;
     }
@@ -107,7 +106,14 @@ class User extends Model {
     }
 
     public function setRole(string $role) {
-        $this->fields["role"] = $role;
+        $roleTrim = trim($role);
+        if (strlen($roleTrim) > 10) {
+            throw new InvalidValueFormatException("El rol no puede ser mayor a 10 caracteres");
+        }
+        if (strlen($roleTrim) < 1 ) {
+            throw new InvalidValueFormatException("El rol no puede estar vacío");
+        }
+        $this->fields["role"] = $roleTrim;
     }
 
     public function getRole(): ?string
@@ -125,30 +131,11 @@ class User extends Model {
     }
 
     public function setOrder(Order $order) {
-        $this->fields["order"] = $order;
+        $this->order = $order;
     }
 
     public function getOrder(): ?Order
     {
-        return $this->fields["order"];
-    }
-
-    public function setCart(Cart $cart) {
-        $this->fields["cart"] = $cart;
-    }
-
-    public function getCart(): ?Cart
-    {
-        return $this->fields["cart"];
-    }
-
-    public function toArray(): array
-    {
-        $data = [];
-        foreach (array_keys($this->fields) as $field) {
-            $method = "get" . ucfirst($field);
-            $data[$field] = $this->$method();
-        }
-        return $data;
+        return $this->order;
     }
 }

@@ -19,6 +19,15 @@ final class CreateAddress extends AbstractMigration
      */
     public function change(): void
     {
-
+        $tableUsuario = $this->table("address");
+        $tableUsuario
+            ->addColumn("street", "string", ["limit" => 40])
+            ->addColumn("number", "integer")
+            ->addColumn("postal_code", "string", ["limit" => 20])
+            ->addColumn("floor", "integer", ["null" => true])
+            ->addColumn("apartment", "integer", ["null" => true])
+            ->addColumn("province", "string", ["limit" => 40])
+            ->addColumn("city", "string", ["limit" => 40])
+            ->create();
     }
 }

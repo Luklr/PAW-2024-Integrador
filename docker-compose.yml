@@ -1,7 +1,7 @@
 services:
   paw-2024:
     image: postgres:15.3
-    container_name: postgres-paw
+    container_name: postgres-TPI
     restart: always
     environment:
       POSTGRES_USER: ${DB_USERNAME}
