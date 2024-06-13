@@ -19,6 +19,22 @@ class App {
                 let selectProductForm = new SelectProductForm("fieldset.new-product-fieldset");
             });
         }
+
+        if (currentUrl === "/create_product") {
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("dragAndDrop", "js/components/dragAndDrop.js", () => {
+                    let dropArea = new dragAndDrop("div.drop-area",1);
+                });
+            });
+        }
+
+        if (currentUrl === "/products") {
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("infiniteScroll", "js/components/infiniteScroll.js", () => {
+                    let products = new ScrollInfinito();
+                });
+            });
+        }
     }
 }
 

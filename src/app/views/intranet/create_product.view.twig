@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <form action="/create_product" method="post">
+    <form action="/create_product" method="post" class="new-product-type-form">
         <fieldset class="new-product-fieldset">
             <input id="videoCard" name="type" type="radio" value="videoCard" {% if type == 'videoCard' %}checked{% endif %}>
             <label for="videoCard">GPU</label>

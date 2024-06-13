@@ -55,4 +55,17 @@ class ComponentRepository extends Repository
         }
     }
 
+    public function getPage(int $itemsPerPage, int $page)
+    {
+        $offset = $itemsPerPage * $page;
+        $results = $this->queryBuilder->table($this->table())->selectPage(null, [], $itemsPerPage, $offset);
+        if ($results) {
+            $result_models = [];
+            foreach ($results as $result){
+                $result_models[] = new $this->model($result);
+            }
+            return $result_models;
+        }
+        return null;
+    }
 }

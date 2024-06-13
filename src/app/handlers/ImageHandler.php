@@ -1,5 +1,7 @@
 <?php
 
+namespace Paw\App\Handlers;
+
 use Paw\App\Validators\ImageValidator;
 use Paw\Core\Exceptions\InvalidImageException;
 

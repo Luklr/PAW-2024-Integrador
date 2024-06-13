@@ -3,11 +3,11 @@
 namespace Paw\App\Controllers;
 
 use Exception;
-use ImageHandler;
+use Paw\App\Handlers\ImageHandler;
 use Paw\Core\Request;
 use Paw\App\Models\Components\Component;
 use Paw\App\Repositories\ComponentRepository;
-use Paw\App\Validators\RequestAltaPlatoValidator;
+use Paw\App\Validators\RequestCreateProduct;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 use Twig\Environment;
 
@@ -66,7 +66,7 @@ class IntranetController extends Controller
         */
 
         try {
-            RequestAltaPlatoValidator::validate($request, $componentKeys);
+            RequestCreateProduct::validate($request, $componentKeys);
             $values = $request->post();
             unset($values["componentType"]);       # REPENSAR ESTO
             $values['path_img'] = $this->imageHandler->saveImage($request->file("imagen"), 'productos');

@@ -62,4 +62,14 @@ class AssemblePcController extends Controller
     function template(Request $request) {
         $this->render('assemblePc/template.view.twig', "", $request);
     }
+
+    function productsPage(Request $request) {
+        $get = $request->get();
+        $page = isset($get['page']) ? (int)$get['page'] : 0;
+        $itemsPerPage = 10;
+        $products = $this->componentRepository->getPage($itemsPerPage, $page);
+
+        header('Content-Type: application/json');
+        echo json_encode($products);
+    }
 }

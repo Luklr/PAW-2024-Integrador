@@ -22,7 +22,6 @@ final class CreateComponent extends AbstractMigration
         $table = $this->table('component');
         $table
             ->addColumn('description', 'string', ['limit' => 512])
-            ->addIndex(["description"],['unique' => true])
             ->addColumn('type', 'string', ['limit' => 20])
             ->addColumn('price', 'float')
             ->addColumn('stock', 'integer')

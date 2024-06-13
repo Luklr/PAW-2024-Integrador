@@ -46,7 +46,7 @@ class QueryBuilder {
         return $sentencia->fetchAll();
     }
 
-    public function selectPaginado(string $filter = null, array $params = [], int $limit = null, int $offset = null)
+    public function selectPage(string $filter = null, array $params = [], int $limit = null, int $offset = null)
     {
         // $params es necesario para hacer el bind de los valores en el $filter
         $filterQuery = $filter ? "WHERE $filter" : "";

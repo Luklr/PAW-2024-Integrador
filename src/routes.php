@@ -1,12 +1,11 @@
 <?php
 
-use Paw\App\Controllers\IntranetController;
 use Paw\Core\Router;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-$loader = new FilesystemLoader(__DIR__ . '/App/views');
+$loader = new FilesystemLoader(__DIR__ . '/app/views');
 $twig = new Environment($loader);
 
 // Instanciar el Router con Twig
@@ -26,6 +25,7 @@ $router->get("/assemble_pc_disk", 'AssemblePcController@assemblePcDisk');
 $router->get("/assemble_pc_power_suply", 'AssemblePcController@assemblePcPowerSuply');
 $router->get("/templates", 'AssemblePcController@templates');
 $router->get("/template", 'AssemblePcController@template');
+$router->get("/products_page", "AssemblePcController@productsPage");
 
 $router->get("/about_us", "OrgInformationController@aboutUs");
 $router->get("/branches", "OrgInformationController@branches");

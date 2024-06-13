@@ -5,7 +5,7 @@ namespace Paw\App\Validators;
 use Paw\Core\Request;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
-class RequestAltaPlatoValidator
+class RequestCreateProduct
 {
     public static function validate(Request $request, array $requiredParams)
     {
