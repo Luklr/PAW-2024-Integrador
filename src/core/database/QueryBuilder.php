@@ -64,6 +64,7 @@ class QueryBuilder {
 
         $sentencia->setFetchMode(PDO::FETCH_ASSOC);
         $sentencia->execute();
+        
         return $sentencia->fetchAll();
     }
 

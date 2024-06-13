@@ -14,12 +14,12 @@ class ScrollInfinito{
         });
 
         observer.observe(this.loading);
-        this.loading.style.display = 'none';
+        // this.loading.style.display = 'none';
     }
 
     async chargeMoreProducts() {
         try {
-            this.loading.style.display = 'block';
+            // this.loading.style.display = 'block';
             const response = await fetch(`${window.location.origin}/products_page?page=${this.page}`);
             const data = await response.json();
 
@@ -32,10 +32,10 @@ class ScrollInfinito{
                 console.log(item);
                 art.className = 'product';
 
-                img.src = item.fields["path_img"] ? item.fields["path_img"] : "#";
+                // img.src = item.fields["path_img"] ? item.fields["path_img"] : "#";
                 pic.appendChild(img);
-                h3.textContent = item.fields["description"];
-                p.textContent = `${item.fields["stock"]} - $${item.fields["price"]}`;
+                h3.textContent = item["description"];
+                p.textContent = `${item["stock"]} - $${item["price"]}`;
                 
                 art.appendChild(pic);
                 art.appendChild(h3);
@@ -47,7 +47,7 @@ class ScrollInfinito{
         } catch (error) {
             console.error('Error loading more data:', error);
         } finally {
-            this.loading.style.display = 'none';
+            // this.loading.style.display = 'none';
         }
     };
 }
