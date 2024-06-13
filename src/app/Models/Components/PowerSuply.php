@@ -7,9 +7,9 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class PowerSuply extends Component {
 
-    static public string $tableHijo = '"powerSuply"';
+    static public string $tableChild = '"powerSuply"';
 
-    protected array $fieldsHijo = [
+    protected array $fieldsChild = [
         "type" => null,
         "efficiency" => null,    
         "wattage" => null,    
@@ -17,37 +17,37 @@ class PowerSuply extends Component {
     ];
 
     public function setType(?string $type){
-        $this->fieldsHijo["type"] = $type;
+        $this->fieldsChild["type"] = $type;
     }
     public function getType(): ?string{
-        return $this->fieldsHijo["type"];
+        return $this->fieldsChild["type"];
     }
 
     public function setEfficiency(?string $efficiency){
-        $this->fieldsHijo["efficiency"] = $efficiency;
+        $this->fieldsChild["efficiency"] = $efficiency;
     }
     public function getEfficiency(): ?string{
-        return $this->fieldsHijo["efficiency"];
+        return $this->fieldsChild["efficiency"];
     }
 
     public function setWattage(?int $wattage){
-        $this->fieldsHijo["wattage"] = $wattage;
+        $this->fieldsChild["wattage"] = $wattage;
     }
     public function getWattage(): ?int{
-        return $this->fieldsHijo["wattage"];
+        return $this->fieldsChild["wattage"];
     }
 
     public function setModular(?bool $modular){
-        $this->fieldsHijo["modular"] = $modular;
+        $this->fieldsChild["modular"] = $modular;
     }
     public function getModular(): ?bool{
-        return $this->fieldsHijo["modular"];
+        return $this->fieldsChild["modular"];
     }
 
-    public function toArrayHijo(): array
+    public function toArrayChild(): array
     {
         $data = [ "component_id" => $this->getId()];
-        foreach (array_keys($this->fieldsHijo) as $field) {
+        foreach (array_keys($this->fieldsChild) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }

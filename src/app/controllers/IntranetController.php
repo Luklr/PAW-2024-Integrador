@@ -11,10 +11,57 @@ class IntranetController extends Controller
         if (!$type) {
             $type = "";
         }
-        $types = ["video_card","motherboard","memory","internal_hard_drive","cpu_fan","monitor","case_pc","power_suply"];
+
+                /*
+        $data = [
+            "id" => 2,
+            "description" => "saasasdds",
+            "price" => 7,
+            "stock" => 50,
+            "socket" => "jeje",
+            "memory_slot" => 5,
+        ];
+        $mother = $this->componentRepository->create($data, "Motherboard");
+        */
+
+        $types = ["videoCard","motherboard","memory","internalHardDrive","cpuFan","monitor","casePc","powerSuply"];
+        $data = [
+            "type" => $type, 
+            "types" => $types];
+        $this->render('intranet/create_product.view.twig', "Create Product", $request, $data);
+    }
+
+    public function createProductPost(Request $request) {
+        $this->access($request, $request->url(), "admin");
+        $type = $request->get("type");
+        if (!$type) {
+            $type = "";
+        }
+
+        $values = $request->post();
+        echo "<pre>";
+        var_dump($values); die;
+                /*
+        $data = [
+            "id" => 2,
+            "description" => "saasasdds",
+            "price" => 7,
+            "stock" => 50,
+            "socket" => "jeje",
+            "memory_slot" => 5,
+        ];
+        $mother = $this->componentRepository->create($data, "Motherboard");
+        */
+        if (!class_exists($type)) {
+            $type = "Paw\\App\\Models\\Components\\$type";
+        }
+        $types::getFields();
+
+        $types = ["VideoCard","Motherboard","Memory","InternalHardDrive","cpuFan","Monitor","CasePc","PowerSuply"];
         $data = [
             "type" => strtolower($type), 
             "types" => $types];
         $this->render('intranet/create_product.view.twig', "Create Product", $request, $data);
     }
+
 }

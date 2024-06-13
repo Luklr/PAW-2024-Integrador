@@ -7,39 +7,39 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class CasePc extends Component {
 
-    static public string $tableHijo = '"casePc"';
+    static public string $tableChild = '"casePc"';
 
-    protected array $fieldsHijo = [
+    protected array $fieldsChild = [
         "type" => null,
         "side_panel" => null,
         "external_volume" => null
     ];
 
     public function setType(string $type){
-        $this->fieldsHijo["type"] = $type;
+        $this->fieldsChild["type"] = $type;
     }
     public function getType(): string{
-        return $this->fieldsHijo["type"];
+        return $this->fieldsChild["type"];
     }
 
     public function setSide_panel(string $sidePanel){
-        $this->fieldsHijo["side_panel"] = $sidePanel;
+        $this->fieldsChild["side_panel"] = $sidePanel;
     }
     public function getSide_panel(): string{
-        return $this->fieldsHijo["side_panel"];
+        return $this->fieldsChild["side_panel"];
     }
 
     public function setExternal_volume(?float $externalVolume){
-        $this->fieldsHijo["external_volume"] = $externalVolume;
+        $this->fieldsChild["external_volume"] = $externalVolume;
     }
     public function getExternal_volume(): ?float{
-        return $this->fieldsHijo["external_volume"];
+        return $this->fieldsChild["external_volume"];
     }
 
-    public function toArrayHijo(): array
+    public function toArrayChild(): array
     {
         $data = [ "component_id" => $this->getId()];
-        foreach (array_keys($this->fieldsHijo) as $field) {
+        foreach (array_keys($this->fieldsChild) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }

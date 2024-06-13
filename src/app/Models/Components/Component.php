@@ -16,7 +16,7 @@ abstract class Component extends Model {
         "stock" => null
     ];
 
-    protected array $fieldsHijo;
+    protected array $fieldsChild;
 
     public function __construct(array $values) {
         $this->set($values);
@@ -61,7 +61,9 @@ abstract class Component extends Model {
 
     protected function getFields(): ?array
     {
-        return $this->fields;
+        $data = array_merge($this->fields, $this->fieldsChild);
+        unset($data["id"]);
+        return $data;
     }
 
     public function setStock(int $stock) {
@@ -85,7 +87,7 @@ abstract class Component extends Model {
             $method = "set" . ucfirst($field);
             $this->$method($values[$field]);
         }
-        foreach (array_keys($this->fieldsHijo) as $field) {
+        foreach (array_keys($this->fieldsChild) as $field) {
             if (!isset($values[$field])) {
                 continue;
             }
@@ -102,7 +104,7 @@ abstract class Component extends Model {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }
-        foreach (array_keys($this->fieldsHijo) as $field) {
+        foreach (array_keys($this->fieldsChild) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }

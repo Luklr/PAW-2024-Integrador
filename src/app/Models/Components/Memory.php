@@ -7,31 +7,31 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class Memory extends Component {
 
-    static public string $tableHijo = '"memory"';
+    static public string $tableChild = '"memory"';
 
-    protected array $fieldsHijo = [
+    protected array $fieldsChild = [
         "speed" => null,
         "modules" => null,
     ];
 
     public function setSpeed(?int $speed){
-        $this->fieldsHijo["speed"] = $speed;
+        $this->fieldsChild["speed"] = $speed;
     }
     public function getSpeed(): ?int{
-        return $this->fieldsHijo["speed"];
+        return $this->fieldsChild["speed"];
     }
 
     public function setModules(?string $modules){
-        $this->fieldsHijo["modules"] = $modules;
+        $this->fieldsChild["modules"] = $modules;
     }
     public function getModules(): ?string{
-        return $this->fieldsHijo["modules"];
+        return $this->fieldsChild["modules"];
     }
 
-    public function toArrayHijo(): array
+    public function toArrayChild(): array
     {
         $data = [ "component_id" => $this->getId()];
-        foreach (array_keys($this->fieldsHijo) as $field) {
+        foreach (array_keys($this->fieldsChild) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }

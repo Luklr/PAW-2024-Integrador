@@ -7,39 +7,39 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class CpuFan extends Component {
 
-    static public string $tableHijo = '"cpuFan"';
+    static public string $tableChild = '"cpuFan"';
 
-    protected array $fieldsHijo = [
+    protected array $fieldsChild = [
         "rpm" => null,    
         "noise_level" => null,    
         "size" => null
     ];
 
     public function setRpm(?int $rpm){
-        $this->fieldsHijo["rpm"] = $rpm;
+        $this->fieldsChild["rpm"] = $rpm;
     }
     public function getRpm(): ?int{
-        return $this->fieldsHijo["rpm"];
+        return $this->fieldsChild["rpm"];
     }
 
     public function setNoise_level(?int $noiseLevel){
-        $this->fieldsHijo["noise_level"] = $noiseLevel;
+        $this->fieldsChild["noise_level"] = $noiseLevel;
     }
     public function getNoise_level(): ?int{
-        return $this->fieldsHijo["noise_level"];
+        return $this->fieldsChild["noise_level"];
     }
 
     public function setSize(?int $size){
-        $this->fieldsHijo["size"] = $size;
+        $this->fieldsChild["size"] = $size;
     }
     public function getSize(): ?int{
-        return $this->fieldsHijo["size"];
+        return $this->fieldsChild["size"];
     }
 
-    public function toArrayHijo(): array
+    public function toArrayChild(): array
     {
         $data = [ "component_id" => $this->getId()];
-        foreach (array_keys($this->fieldsHijo) as $field) {
+        foreach (array_keys($this->fieldsChild) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }

@@ -16,17 +16,6 @@ class AssemblePcController extends Controller
     }
 
     public function products(Request $request) {
-        /*
-        $data = [
-            "id" => 2,
-            "description" => "saasasdds",
-            "price" => 7,
-            "stock" => 50,
-            "socket" => "jeje",
-            "memory_slot" => 5,
-        ];
-        $mother = $this->componentRepository->create($data, "Motherboard");
-        */
         $this->render('assemblePc/products.view.twig', "Products", $request);
     }
 

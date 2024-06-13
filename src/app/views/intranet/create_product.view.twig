@@ -4,7 +4,7 @@
 
     <form action="/create_product" method="post">
         <fieldset class="new-product-fieldset">
-            <input id="videoCard" name="type" type="radio" value="video_card" {% if type == 'video_card' %}checked{% endif %}>
+            <input id="videoCard" name="type" type="radio" value="videoCard" {% if type == 'videoCard' %}checked{% endif %}>
             <label for="videoCard">GPU</label>
 
             <input id="motherboard" name="type" type="radio" value="motherboard" {% if type == 'motherboard' %}checked{% endif %}>
@@ -13,19 +13,19 @@
             <input id="memory" name="type" type="radio" value="memory" {% if type == 'memory' %}checked{% endif %}>
             <label for="memory">RAM</label>
 
-            <input id="internalHardDrive" name="type" type="radio" value="internal_hard_drive" {% if type == 'internal_hard_drive' %}checked{% endif %}>
+            <input id="internalHardDrive" name="type" type="radio" value="internalHardDrive" {% if type == 'internalHardDrive' %}checked{% endif %}>
             <label for="internalHardDrive">Hard Drive</label>
 
-            <input id="cpuFan" name="type" type="radio" value="cpu_fan" {% if type == 'cpu_fan' %}checked{% endif %}>
+            <input id="cpuFan" name="type" type="radio" value="cpuFan" {% if type == 'cpuFan' %}checked{% endif %}>
             <label for="cpuFan">Cpu Fan</label>
 
             <input id="monitor" name="type" type="radio" value="monitor" {% if type == 'monitor' %}checked{% endif %}>
             <label for="monitor">Monitor</label>
 
-            <input id="casePc" name="type" type="radio" value="case_pc" {% if type == 'case_pc' %}checked{% endif %}>
+            <input id="casePc" name="type" type="radio" value="casePc" {% if type == 'casePc' %}checked{% endif %}>
             <label for="casePc">Case</label>
 
-            <input id="powerSuply" name="type" type="radio" value="power_suply" {% if type == 'power_suply' %}checked{% endif %}>
+            <input id="powerSuply" name="type" type="radio" value="powerSuply" {% if type == 'powerSuply' %}checked{% endif %}>
             <label for="powerSuply">Power Suply</label>
         </fieldset>
     </form>
