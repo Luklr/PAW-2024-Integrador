@@ -1,25 +1,25 @@
 <form action="/create_product" method="post">
     <legend>Alta de Ventilador de CPU</legend>
 
-    <input type="hidden" id="componentType" name="componentType" value={{type}}>
+    <input type="hidden" id="componentType" name="componentType" value={{type}} required>
 
     <label for="rpm">RPM:</label>
-    <input type="number" id="rpm" name="rpm">
+    <input type="number" id="rpm" name="rpm" required>
 
     <label for="noise_level">Nivel de Ruido:</label>
-    <input type="number" id="noise_level" name="noise_level">
+    <input type="number" id="noise_level" name="noise_level" required>
 
     <label for="size">Tamaño:</label>
-    <input type="number" id="size" name="size">
+    <input type="number" id="size" name="size" required>
 
     <label for="description">Descripción:</label>
-    <input type="text" id="description" name="description" maxlength="512">
+    <input type="text" id="description" name="description" maxlength="512" required>
 
     <label for="price">Precio:</label>
-    <input type="number" step="0.01" id="price" name="price">
+    <input type="number" step="0.01" id="price" name="price" required>
 
     <label for="stock">Stock:</label>
-    <input type="number" id="stock" name="stock">
+    <input type="number" id="stock" name="stock" required>
 
     <input type="submit" value="Dar de Alta">
 </form>

@@ -1,7 +1,7 @@
 <form action="/create_product" method="post">
     <legend>Alta de GPU</legend>
 
-    <input type="hidden" id="componentType" name="componentType" value={{type}}>
+    <input type="hidden" id="componentType" name="componentType" value={{type}} required>
 
     <label for="chipset">Chipset:</label>
     <input type="text" id="chipset" name="chipset" maxlength="60" required>

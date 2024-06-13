@@ -1,34 +1,34 @@
 <form action="/create_product" method="post">
     <legend>Alta de Monitor</legend>
 
-    <input type="hidden" id="componentType" name="componentType" value={{type}}>
+    <input type="hidden" id="componentType" name="componentType" value={{type}} required>
 
     <label for="screen_size">Tamaño de Pantalla:</label>
-    <input type="number" step="0.1" id="screen_size" name="screen_size">
+    <input type="number" step="0.1" id="screen_size" name="screen_size" required>
 
     <label for="resolution">Resolución:</label>
-    <input type="text" id="resolution" name="resolution" maxlength="20">
+    <input type="text" id="resolution" name="resolution" maxlength="20" required>
 
     <label for="refresh_rate">Frecuencia de Actualización:</label>
-    <input type="number" id="refresh_rate" name="refresh_rate">
+    <input type="number" id="refresh_rate" name="refresh_rate" required>
 
     <label for="response_time">Tiempo de Respuesta:</label>
-    <input type="number" step="0.1" id="response_time" name="response_time">
+    <input type="number" step="0.1" id="response_time" name="response_time" required>
 
     <label for="panel_type">Tipo de Panel:</label>
-    <input type="text" id="panel_type" name="panel_type" maxlength="20">
+    <input type="text" id="panel_type" name="panel_type" maxlength="20" required>
 
     <label for="aspect_ratio">Relación de Aspecto:</label>
-    <input type="text" id="aspect_ratio" name="aspect_ratio" maxlength="20">
+    <input type="text" id="aspect_ratio" name="aspect_ratio" maxlength="20" required>
 
     <label for="description">Descripción:</label>
-    <input type="text" id="description" name="description" maxlength="512">
+    <input type="text" id="description" name="description" maxlength="512" required>
 
     <label for="price">Precio:</label>
-    <input type="number" step="0.01" id="price" name="price">
+    <input type="number" step="0.01" id="price" name="price" required>
 
     <label for="stock">Stock:</label>
-    <input type="number" id="stock" name="stock">
+    <input type="number" id="stock" name="stock" required>
 
     <input type="submit" value="Dar de Alta">
 </form>
