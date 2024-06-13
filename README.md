@@ -18,5 +18,5 @@ Enlaces adicionales:
 * ```composer install```
 * ```cp .env.example .env``` # Editar el ```.env``` con los valores deseados
 * ```docker compose up -d```
-* ```./vendor/robmorgan/phinx/bin/phinx migrate -e development```
+* ```./db/scripts/init_db.sh```
 * Ejecutar: ```php -S localhost:8888 -t public/```
