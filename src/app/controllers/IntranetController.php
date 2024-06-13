@@ -1,18 +1,25 @@
 <?php
 
 namespace Paw\App\Controllers;
+
+use Exception;
+use ImageHandler;
 use Paw\Core\Request;
 use Paw\App\Models\Components\Component;
 use Paw\App\Repositories\ComponentRepository;
+use Paw\App\Validators\RequestAltaPlatoValidator;
+use Paw\Core\Exceptions\InvalidValueFormatException;
 use Twig\Environment;
 
 class IntranetController extends Controller
 {
     private $componentRepository;
+    private ImageHandler $imageHandler;
 
     public function __construct(Environment $twig) {
         parent::__construct($twig);
         $this->componentRepository = ComponentRepository::getInstance();
+        $this->imageHandler = new ImageHandler($this->imagesDir);   # products/
     }
 
     public function createProduct(Request $request) {
@@ -35,11 +42,17 @@ class IntranetController extends Controller
         if (!$type) {
             $type = "";
         }
-        
-        $class = "Paw\\App\\Models\\Components\\$type";
-        $component = new $class([]);
-        $keys = $component->getKeys();
 
+        # REPENSAR ESTA LÓGICA, AUNQUE ESTÁ BIEN
+        $class = "Paw\\App\\Models\\Components\\$type";
+        if (!class_exists($class)) {
+            $this->createProduct($request, "Tipo de componente no válido");
+            return;
+        }
+        $component = new $class([]);
+        $componentKeys = $component->getKeys();
+
+        /* CODIGO ANTERIOR
         $values = $request->post();
         unset($values["componentType"]);
         //$mother = $this->componentRepository->create($data, "Motherboard");
@@ -50,6 +63,22 @@ class IntranetController extends Controller
             exit();
         }
         $component = $this->componentRepository->create($values, ucfirst($type));
+        */
+
+        try {
+            RequestAltaPlatoValidator::validate($request, $componentKeys);
+            $values = $request->post();
+            unset($values["componentType"]);       # REPENSAR ESTO
+            $values['path_img'] = $this->imageHandler->saveImage($request->file("imagen"), 'productos');
+            $component = $this->componentRepository->create($values, ucfirst($type));
+            $mensaje = "El producto fue procesado y subido con éxito";
+        } catch (InvalidValueFormatException $e) {
+            $mensaje = $e->getMessage();
+        } catch (Exception $e) {
+            $mensaje = "Ocurrió un error al procesar su solicitud. " . $e->getMessage();
+        }
+
+        $this->createProduct($request, $mensaje);
     }
 
 }
