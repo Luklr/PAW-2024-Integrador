@@ -9,3 +9,5 @@
 ./vendor/robmorgan/phinx/bin/phinx seed:run -s MemorySeeder
 ./vendor/robmorgan/phinx/bin/phinx seed:run -s InternalHardDriveSeeder
 ./vendor/robmorgan/phinx/bin/phinx seed:run -s CpuFanSeeder
+./vendor/robmorgan/phinx/bin/phinx seed:run -s CasePcSeeder
+./vendor/robmorgan/phinx/bin/phinx seed:run -s PowerSuplySeeder
