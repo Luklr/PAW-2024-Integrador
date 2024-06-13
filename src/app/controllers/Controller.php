@@ -82,8 +82,11 @@ class Controller
             "nav" => $this->nav,
             "navAccount" => $this->navAccount,
             "userRole" => $request->session()->get("user_role"),
-            "username" => $request->user()->getUsername(),
         ];
+        $user = $request->user();
+        if ($user) {
+            $varsRender = array_merge($varsRender,  ["username" => $user->getUsername()]);
+        }
 
         if ($values) {
             $varsRender = array_merge($varsRender, $values);

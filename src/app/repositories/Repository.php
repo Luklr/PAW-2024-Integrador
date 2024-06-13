@@ -7,10 +7,10 @@ use Paw\Core\Database\QueryBuilder;
 abstract class Repository
 {
     protected $model;
-    protected static $instance = null;
+    protected static $instances = [];
     protected static $queryBuilder;
 
-    private function __construct(QueryBuilder $queryBuilder)
+    protected function __construct(QueryBuilder $queryBuilder)
     {
         self::$queryBuilder = $queryBuilder;
         $this->setModel();
@@ -18,10 +18,13 @@ abstract class Repository
 
     public static function getInstance(QueryBuilder $queryBuilder = null)
     {
-        if (self::$instance === null) {
-            self::$instance = new static($queryBuilder);
+        $class = static::class; // Obtiene el nombre de la clase actual
+
+        if (!isset(self::$instances[$class])) {
+            self::$instances[$class] = new static($queryBuilder);
         }
-        return self::$instance;
+
+        return self::$instances[$class];
     }
 
     // Esta la define cada subclase Repository

@@ -29,8 +29,13 @@ class Session
     }
 
     public function destroy()
-    {
+    {   
+        $_SESSION = [];
+        setcookie(session_name(), '', time() - 10000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]);
         session_destroy();
+
     }
 
     public function all()

@@ -1,16 +1,22 @@
 <?php
 
-namespace Paw\App\Models;
+namespace Paw\App\Models\Components;
 
 use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
 abstract class Component extends Model {
+
+    static public string $table = '"component"';
+
     protected array $fields = [
         "id" => null,
         "description" => null,
-        "price" => null
+        "price" => null,
+        "stock" => null
     ];
+
+    protected array $fieldsHijo;
 
     public function __construct(array $values) {
         $this->set($values);
@@ -53,6 +59,42 @@ abstract class Component extends Model {
         return $this->fields["price"];
     }
 
+    protected function getFields(): ?array
+    {
+        return $this->fields;
+    }
+
+    public function setStock(int $stock) {
+        if ($stock >= 0) {
+            $this->fields["stock"] = $stock;
+        }
+        else  throw new InvalidValueFormatException("The stock cant be lower than 0");
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->fields["stock"];
+    }
+
+    public function set(array $values)
+    {
+        foreach (array_keys($this->fields) as $field) {
+            if (!isset($values[$field])) {
+                continue;
+            }
+            $method = "set" . ucfirst($field);
+            $this->$method($values[$field]);
+        }
+        foreach (array_keys($this->fieldsHijo) as $field) {
+            if (!isset($values[$field])) {
+                continue;
+            }
+            $method = "set" . ucfirst($field);
+            $this->$method($values[$field]);
+        }
+    }
+
+    /*
     public function toArray(): array
     {
         $data = [];
@@ -60,6 +102,11 @@ abstract class Component extends Model {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }
+        foreach (array_keys($this->fieldsHijo) as $field) {
+            $method = "get" . ucfirst($field);
+            $data[$field] = $this->$method();
+        }
         return $data;
     }
+    */
 }

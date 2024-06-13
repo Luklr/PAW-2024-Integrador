@@ -6,11 +6,10 @@ use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class InternalHardDrive extends Component {
-    protected array $fields = [
-        "id" => null,
-        "name" => null,
-        "description" => null,
-        "price" => null,
+
+    static public string $tableHijo = '"internalHardDrive"';
+
+    protected array $fieldsHijo = [
         "capacity" => null,
         "type" => null,
         "form_factor" => null,
@@ -18,37 +17,37 @@ class InternalHardDrive extends Component {
     ];
 
     public function setCapacity(?int $capacity){
-        $this->fields["capacity"] = $capacity;
+        $this->fieldsHijo["capacity"] = $capacity;
     }
     public function getCapacity(): ?int{
-        return $this->fields["capacity"];
+        return $this->fieldsHijo["capacity"];
     }
 
     public function setType(?string $type){
-        $this->fields["type"] = $type;
+        $this->fieldsHijo["type"] = $type;
     }
     public function getType(): ?string{
-        return $this->fields["type"];
+        return $this->fieldsHijo["type"];
     }
 
     public function setForm_factor(?string $formFactor){
-        $this->fields["form_factor"] = $formFactor;
+        $this->fieldsHijo["form_factor"] = $formFactor;
     }
     public function getForm_factor(): ?string{
-        return $this->fields["form_factor"];
+        return $this->fieldsHijo["form_factor"];
     }
 
     public function setInterface(?string $interface){
-        $this->fields["interface"] = $interface;
+        $this->fieldsHijo["interface"] = $interface;
     }
     public function getInterface(): ?string{
-        return $this->fields["interface"];
+        return $this->fieldsHijo["interface"];
     }
     
-    public function toArray(): array
+    public function toArrayHijo(): array
     {
-        $data = [];
-        foreach (array_keys($this->fields) as $field) {
+        $data = [ "component_id" => $this->getId()];
+        foreach (array_keys($this->fieldsHijo) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }

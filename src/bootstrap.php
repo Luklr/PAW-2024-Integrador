@@ -14,6 +14,7 @@ use Paw\Core\Database\ConnectionBuilder;
 use Paw\Core\Database\QueryBuilder;
 
 use Paw\App\Repositories\UserRepository;
+use Paw\App\Repositories\ComponentRepository;
 
 require "routes.php";
 
@@ -34,8 +35,12 @@ $connection = $connectionBuilder->make($config);
 $querybuilder = QueryBuilder::getInstance($connection);
 $querybuilder->setLogger($log);
 
+$querybuilder1 = QueryBuilder::getInstance($connection);
+$querybuilder1->setLogger($log);
+
 # Inicializar los Repository singleton:
 UserRepository::getInstance($querybuilder);
+ComponentRepository::getInstance($querybuilder1);
 
 $request = new Request;
 

@@ -1,0 +1,13 @@
+{% extends 'view.twig' %}
+
+{% block content %}
+
+    {% include 'intranet/create_product_forms/select_type_form.view.twig' %}
+
+    {% if type == "Motherboard" %}
+        {% include 'intranet/create_product_forms/motherboard_form.view.twig' %}
+    {% endif %}
+    {% if type == "Video_card" %}
+        {% include 'intranet/create_product_forms/video_card_form.view.twig' %}
+    {% endif %}
+{% endblock %}

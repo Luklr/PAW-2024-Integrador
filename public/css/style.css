@@ -104,7 +104,7 @@ nav.nav-header ul li:hover {
     background-color: var(--primary) !important;
 }
 
-nav.nav-account ul li a {
+nav.nav-account ul li a.account-anchor {
     width: 9rem;
     display: flex;
     flex-direction: row;

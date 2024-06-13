@@ -14,12 +14,18 @@ class UserController extends Controller
         $this->userRepository = UserRepository::getInstance();
     }
 
-    public function login(Request $request) {
+    public function logout(Request $request) {
+        if ($request->session()->isLogged()) {
+            $request->session()->destroy();
+        }
+        $this->redirect("/");
+    }
+
+    public function login(Request $request, $mensaje = "") {
         if ($request->session()->isLogged()) {
             $this->redirect("/");
-            return;
         }
-        echo $this->render('user/login.view.twig', "Log in", $request);
+        echo $this->render('user/login.view.twig', "Log in", $request, ["mensaje" => $mensaje]);
     }
 
     public function loginPost(Request $request) {
@@ -27,10 +33,36 @@ class UserController extends Controller
             $this->redirect("/");
             return;
         }
-        // Lo logeamos
-        $request->session()->set("user_id", 1);   // Temporal
-        $request->session()->set("user_role", "user");
+        $mensaje = "";
+        if (!$request->hasBodyParams(["email", "password"])) {
+            $mensaje = "No se encontraron los parámetros necesarios";
+            $this->login($request, $mensaje);
+            return;
+        }
+        $values = $request->post();
+        $password = $this->sanitizeInput($values["password"]);
+        $email = $this->sanitizeInput($values["email"]);
+
+        $hash = hash('sha256', $password);
+        $usuario = $this->userRepository->getByEmail($email);
+
+        //var_dump($usuario);die;
+
+        if (!$usuario) {
+            $mensaje = "No se encontro un usuario con ese mail";
+            $this->login($request, $mensaje);
+            return;
+        }
         
+        $passwordUser = $usuario->getPassword();
+        if ($passwordUser !== $hash) {
+            $mensaje = "La contraseña es incorrecta";
+            $this->login($request, $mensaje);
+            return;
+        }
+        $request->session()->set("user_id", $usuario->getId()); 
+        $request->session()->set("user_role", $usuario->getRole());
+
         // Verifico si tenía que redirigir, sino al home
         $originPath = $request->session()->get("loopback");
         if ($originPath) {
@@ -38,7 +70,7 @@ class UserController extends Controller
             $this->redirect($originPath);
         } 
         else {
-            $this->redirect("/");
+            $this->redirect("/account");
         }
     }
 
@@ -82,7 +114,7 @@ class UserController extends Controller
                     $request->session()->set("user_role", $usuario->getRole());
 
                     $mensaje = "Su usuario fue procesado y registrado con éxito";
-                    $this->redirect("/registed_user");
+                    $this->redirect("/account");
                 } catch (InvalidValueFormatException $e) {
                     $mensaje = $e->getMessage();  // Hay que manejar una exception específica nuestra
                 } catch (PDOException $e) {
@@ -112,4 +144,5 @@ class UserController extends Controller
         } 
         echo $this->render('user/account.view.twig', "Account", $request, ["user" => $request->user()]);
     }
+
 }

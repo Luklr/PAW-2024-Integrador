@@ -38,9 +38,11 @@ $router->get("/confirm_order", "PaymentController@confirmOrder");
 $router->get("/enter_address", "PaymentController@enterAddress");
 $router->get("/order_pickup", "PaymentController@orderPickUp");
 
+$router->get("/create_product", "IntranetController@createProduct");
+
 $router->get("/login", "UserController@login");
 $router->post("/login", "UserController@loginPost");
 $router->get("/signin", "UserController@signin");
 $router->post("/signin", "UserController@signinPost");
 $router->get("/account", "UserController@account");
-$router->get("/registed_user", "UserController@registedUser");
+$router->get("/account/logout", "UserController@logout");

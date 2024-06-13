@@ -1,10 +1,32 @@
 <?php
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
+use Paw\App\Models\Components\Component;
+use Paw\App\Models\Components\Motherboard;
+use Paw\App\Repositories\ComponentRepository;
+use Twig\Environment;
 
 class AssemblePcController extends Controller
 {
+    private $componentRepository;
+
+    public function __construct(Environment $twig) {
+        parent::__construct($twig);
+        $this->componentRepository = ComponentRepository::getInstance();
+    }
+
     public function products(Request $request) {
+        /*
+        $data = [
+            "id" => 2,
+            "description" => "saasasdds",
+            "price" => 7,
+            "stock" => 50,
+            "socket" => "jeje",
+            "memory_slot" => 5,
+        ];
+        $mother = $this->componentRepository->create($data, "Motherboard");
+        */
         $this->render('assemblePc/products.view.twig', "Products", $request);
     }
 
