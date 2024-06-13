@@ -221,7 +221,7 @@ nav.nav-footer {
     margin: 1rem;
 }
 
-.informacion, .form-account{
+.informacion, .form-account, form{
     padding: 3rem;
 }
 
@@ -234,4 +234,12 @@ nav.nav-footer {
 
 form .new-product-fieldset {
     margin: 2rem;
+}
+
+input[type="checkbox"] + label, [type="checkbox"]:checked+label:before {
+    display: block;
+}
+
+small.trademark {
+    color: gray !important;
 }

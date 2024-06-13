@@ -1,26 +1,28 @@
 <form action="/create_product" method="post">
     <legend>Alta de GPU</legend>
 
+    <input type="hidden" id="componentType" name="componentType" value={{type}}>
+
     <label for="chipset">Chipset:</label>
-    <input type="text" id="chipset" name="chipset" maxlength="60" required><br>
+    <input type="text" id="chipset" name="chipset" maxlength="60" required>
     
     <label for="memory">Memory:</label>
-    <input type="number" id="memory" name="memory" required><br>
+    <input type="number" id="memory" name="memory" required>
     
     <label for="core_clock">Core Clock:</label>
-    <input type="number" id="core_clock" name="core_clock" required><br>
+    <input type="number" id="core_clock" name="core_clock" required>
     
     <label for="boost_clock">Boost Clock:</label>
-    <input type="number" id="boost_clock" name="boost_clock" required><br>
+    <input type="number" id="boost_clock" name="boost_clock" required>
     
     <label for="description">Description:</label>
-    <input type="text" id="description" name="description" maxlength="512" required><br>
+    <input type="text" id="description" name="description" maxlength="512" required>
     
     <label for="price">Price:</label>
-    <input type="number" id="price" name="price" step="0.01" required><br>
+    <input type="number" id="price" name="price" step="0.01" required>
     
     <label for="stock">Stock:</label>
-    <input type="number" id="stock" name="stock" required><br>
+    <input type="number" id="stock" name="stock" required>
     
     <input type="submit" value="Submit">
 </form>

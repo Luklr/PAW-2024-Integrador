@@ -25,7 +25,7 @@
             <input id="casePc" name="type" type="radio" value="casePc" {% if type == 'casePc' %}checked{% endif %}>
             <label for="casePc">Case</label>
 
-            <input id="powerSuply" name="type" type="radio" value="powerSuply" {% if type == 'powerSuply' %}checked{% endif %}>
+            <input id="powerSuply" name="type" type="radio" value="powerSuply" {% if type == 'power_suply' %}checked{% endif %}>
             <label for="powerSuply">Power Suply</label>
         </fieldset>
     </form>
@@ -34,10 +34,11 @@
         <h2>Seleccione un producto</h2>
         <p>Por favor, seleccione un tipo de producto a dar de alta</p>
     {% elseif type in types %}
-        {% include 'intranet/create_product_forms/' ~ type ~ '_form.view.twig' %}
+        {% include 'intranet/create_product_forms/' ~ type ~ '_form.view.twig' with {'type': type} %}
     {% else %}
         <h2>Tipo de producto inválido</h2>
         <p>Por favor, seleccione un tipo de producto a dar de alta válido</p>
+        <p>{{type}}</p>
     {% endif %}
 
 {% endblock %}

@@ -1,32 +1,34 @@
 <form action="/create_product" method="post">
     <legend>Alta de Monitor</legend>
 
+    <input type="hidden" id="componentType" name="componentType" value={{type}}>
+
     <label for="screen_size">Tamaño de Pantalla:</label>
-    <input type="number" step="0.1" id="screen_size" name="screen_size"><br>
+    <input type="number" step="0.1" id="screen_size" name="screen_size">
 
     <label for="resolution">Resolución:</label>
-    <input type="text" id="resolution" name="resolution" maxlength="20"><br>
+    <input type="text" id="resolution" name="resolution" maxlength="20">
 
     <label for="refresh_rate">Frecuencia de Actualización:</label>
-    <input type="number" id="refresh_rate" name="refresh_rate"><br>
+    <input type="number" id="refresh_rate" name="refresh_rate">
 
     <label for="response_time">Tiempo de Respuesta:</label>
-    <input type="number" step="0.1" id="response_time" name="response_time"><br>
+    <input type="number" step="0.1" id="response_time" name="response_time">
 
     <label for="panel_type">Tipo de Panel:</label>
-    <input type="text" id="panel_type" name="panel_type" maxlength="20"><br>
+    <input type="text" id="panel_type" name="panel_type" maxlength="20">
 
     <label for="aspect_ratio">Relación de Aspecto:</label>
-    <input type="text" id="aspect_ratio" name="aspect_ratio" maxlength="20"><br>
+    <input type="text" id="aspect_ratio" name="aspect_ratio" maxlength="20">
 
     <label for="description">Descripción:</label>
-    <input type="text" id="description" name="description" maxlength="512"><br>
+    <input type="text" id="description" name="description" maxlength="512">
 
     <label for="price">Precio:</label>
-    <input type="number" step="0.01" id="price" name="price"><br>
+    <input type="number" step="0.01" id="price" name="price">
 
     <label for="stock">Stock:</label>
-    <input type="number" id="stock" name="stock"><br>
+    <input type="number" id="stock" name="stock">
 
     <input type="submit" value="Dar de Alta">
 </form>

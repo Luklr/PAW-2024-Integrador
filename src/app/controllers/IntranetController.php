@@ -2,27 +2,25 @@
 
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
+use Paw\App\Models\Components\Component;
+use Paw\App\Repositories\ComponentRepository;
+use Twig\Environment;
 
 class IntranetController extends Controller
 {
+    private $componentRepository;
+
+    public function __construct(Environment $twig) {
+        parent::__construct($twig);
+        $this->componentRepository = ComponentRepository::getInstance();
+    }
+
     public function createProduct(Request $request) {
         $this->access($request, $request->url(), "admin");
         $type = $request->get("type");
         if (!$type) {
             $type = "";
         }
-
-                /*
-        $data = [
-            "id" => 2,
-            "description" => "saasasdds",
-            "price" => 7,
-            "stock" => 50,
-            "socket" => "jeje",
-            "memory_slot" => 5,
-        ];
-        $mother = $this->componentRepository->create($data, "Motherboard");
-        */
 
         $types = ["videoCard","motherboard","memory","internalHardDrive","cpuFan","monitor","casePc","powerSuply"];
         $data = [
@@ -33,37 +31,25 @@ class IntranetController extends Controller
 
     public function createProductPost(Request $request) {
         $this->access($request, $request->url(), "admin");
-        $type = $request->post("type");
+        $type = $request->post("componentType");
         if (!$type) {
             $type = "";
         }
+        
+        $class = "Paw\\App\\Models\\Components\\$type";
+        $component = new $class([]);
+        $keys = $component->getKeys();
 
         $values = $request->post();
-        echo "<pre>";
-        var_dump($values); die;
-                /*
-        $data = [
-            "id" => 2,
-            "description" => "saasasdds",
-            "price" => 7,
-            "stock" => 50,
-            "socket" => "jeje",
-            "memory_slot" => 5,
-        ];
-        $mother = $this->componentRepository->create($data, "Motherboard");
-        */
-        if (!class_exists($type)) {
-            $type = "Paw\\App\\Models\\Components\\$type";
-        }
-        $fields = $types::getKeys();
-        if (!$request->hasBodyParams($fields)){
+        unset($values["componentType"]);
+        //$mother = $this->componentRepository->create($data, "Motherboard");
 
+        if (!$request->hasBodyParams($keys)){
+            //var_dump($request->get("type"));die;
+            $this->createProduct($request, "Ingrese todos los campos requeridos");
+            exit();
         }
-        $types = ["VideoCard","Motherboard","Memory","InternalHardDrive","cpuFan","Monitor","CasePc","PowerSuply"];
-        $data = [
-            "type" => strtolower($type), 
-            "types" => $types];
-        $this->render('intranet/create_product.view.twig', "Create Product", $request, $data);
+        $component = $this->componentRepository->create($values, ucfirst($type));
     }
 
 }

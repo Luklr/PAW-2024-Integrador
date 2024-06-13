@@ -1,26 +1,28 @@
 <form action="/create_product" method="post">
     <legend>Alta de Power Supply</legend>
 
+    <input type="hidden" id="componentType" name="componentType" value={{type}}>
+
     <label for="type">Tipo:</label>
-    <input type="text" id="type" name="type" maxlength="20"><br>
+    <input type="text" id="type" name="type" maxlength="20">
 
     <label for="efficiency">Eficiencia:</label>
-    <input type="text" id="efficiency" name="efficiency" maxlength="20"><br>
+    <input type="text" id="efficiency" name="efficiency" maxlength="20">
 
     <label for="wattage">Potencia (Wattage):</label>
-    <input type="number" id="wattage" name="wattage"><br>
+    <input type="number" id="wattage" name="wattage">
 
     <label for="modular">Modular:</label>
-    <input type="checkbox" id="modular" name="modular"><br>
+    <input type="checkbox" id="modular" name="modular">
 
     <label for="description">Descripción:</label>
-    <input type="text" id="description" name="description" maxlength="512"><br>
+    <input type="text" id="description" name="description" maxlength="512">
 
     <label for="price">Precio:</label>
-    <input type="number" step="0.01" id="price" name="price"><br>
+    <input type="number" step="0.01" id="price" name="price">
 
     <label for="stock">Stock:</label>
-    <input type="number" id="stock" name="stock"><br>
+    <input type="number" id="stock" name="stock">
 
     <input type="submit" value="Dar de Alta">
 </form>

@@ -1,20 +1,22 @@
 <form action="/create_product" method="post">
     <legend>Alta de Memoria</legend>
     
+    <input type="hidden" id="componentType" name="componentType" value={{type}}>
+
     <label for="speed">Velocidad:</label>
-    <input type="number" id="speed" name="speed"><br>
+    <input type="number" id="speed" name="speed">
 
     <label for="modules">Módulos:</label>
-    <input type="text" id="modules" name="modules" maxlength="20"><br>
+    <input type="text" id="modules" name="modules" maxlength="20">
 
     <label for="description">Descripción:</label>
-    <input type="text" id="description" name="description" maxlength="512"><br>
+    <input type="text" id="description" name="description" maxlength="512">
 
     <label for="price">Precio:</label>
-    <input type="number" step="0.01" id="price" name="price"><br>
+    <input type="number" step="0.01" id="price" name="price">
 
     <label for="stock">Stock:</label>
-    <input type="number" id="stock" name="stock"><br>
+    <input type="number" id="stock" name="stock">
 
     <input type="submit" value="Dar de Alta">
 </form>
