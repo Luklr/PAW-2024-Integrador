@@ -59,11 +59,11 @@ abstract class Component extends Model {
         return $this->fields["price"];
     }
 
-    protected function getFields(): ?array
+    protected static function getKeys(): ?array
     {
         $data = array_merge($this->fields, $this->fieldsChild);
         unset($data["id"]);
-        return $data;
+        return array_keys($data);
     }
 
     public function setStock(int $stock) {

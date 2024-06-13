@@ -33,7 +33,7 @@ class IntranetController extends Controller
 
     public function createProductPost(Request $request) {
         $this->access($request, $request->url(), "admin");
-        $type = $request->get("type");
+        $type = $request->post("type");
         if (!$type) {
             $type = "";
         }
@@ -55,8 +55,10 @@ class IntranetController extends Controller
         if (!class_exists($type)) {
             $type = "Paw\\App\\Models\\Components\\$type";
         }
-        $types::getFields();
+        $fields = $types::getKeys();
+        if (!$request->hasBodyParams($fields)){
 
+        }
         $types = ["VideoCard","Motherboard","Memory","InternalHardDrive","cpuFan","Monitor","CasePc","PowerSuply"];
         $data = [
             "type" => strtolower($type), 
