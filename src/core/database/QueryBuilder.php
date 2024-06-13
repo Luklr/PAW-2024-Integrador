@@ -70,7 +70,7 @@ class QueryBuilder {
     public function insert(array $data)
     {   
         // Si está seteado $id, lo elimino para que no se inserte en la BD porque será NULL
-        //if (isset($data['id'])) {
+        //if (!isset($data['id'])) {
         //        unset($data['id']);
         //}
         unset($data['id']);

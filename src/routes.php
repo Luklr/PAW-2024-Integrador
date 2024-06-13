@@ -46,3 +46,7 @@ $router->get("/signin", "UserController@signin");
 $router->post("/signin", "UserController@signinPost");
 $router->get("/account", "UserController@account");
 $router->get("/account/logout", "UserController@logout");
+
+$router->get("/forbidden", "ErrorController@forbidden");
+$router->get("/not_found", "ErrorController@notFound");
+$router->get("/server_error", "ErrorController@internalServerError");

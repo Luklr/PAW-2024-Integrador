@@ -1,0 +1,23 @@
+<form action="/create_product" method="post">
+    <legend>Alta de Case PC</legend>
+
+    <label for="type">Tipo:</label>
+    <input type="text" id="type" name="type" maxlength="20"><br>
+
+    <label for="side_panel">Panel Lateral:</label>
+    <input type="text" id="side_panel" name="side_panel" maxlength="40"><br>
+
+    <label for="external_volume">Volumen Externo:</label>
+    <input type="number" step="0.1" id="external_volume" name="external_volume"><br>
+
+    <label for="description">Descripción:</label>
+    <input type="text" id="description" name="description" maxlength="512"><br>
+
+    <label for="price">Precio:</label>
+    <input type="number" step="0.01" id="price" name="price"><br>
+
+    <label for="stock">Stock:</label>
+    <input type="number" id="stock" name="stock"><br>
+
+    <input type="submit" value="Dar de Alta">
+</form>

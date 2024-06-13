@@ -2,12 +2,42 @@
 
 {% block content %}
 
-    {% include 'intranet/create_product_forms/select_type_form.view.twig' %}
+    <form action="/create_product" method="post">
+        <fieldset class="new-product-fieldset">
+            <input id="videoCard" name="type" type="radio" value="video_card" {% if type == 'video_card' %}checked{% endif %}>
+            <label for="videoCard">GPU</label>
 
-    {% if type == "Motherboard" %}
-        {% include 'intranet/create_product_forms/motherboard_form.view.twig' %}
+            <input id="motherboard" name="type" type="radio" value="motherboard" {% if type == 'motherboard' %}checked{% endif %}>
+            <label for="motherboard">Motherboard</label>
+
+            <input id="memory" name="type" type="radio" value="memory" {% if type == 'memory' %}checked{% endif %}>
+            <label for="memory">RAM</label>
+
+            <input id="internalHardDrive" name="type" type="radio" value="internal_hard_drive" {% if type == 'internal_hard_drive' %}checked{% endif %}>
+            <label for="internalHardDrive">Hard Drive</label>
+
+            <input id="cpuFan" name="type" type="radio" value="cpu_fan" {% if type == 'cpu_fan' %}checked{% endif %}>
+            <label for="cpuFan">Cpu Fan</label>
+
+            <input id="monitor" name="type" type="radio" value="monitor" {% if type == 'monitor' %}checked{% endif %}>
+            <label for="monitor">Monitor</label>
+
+            <input id="casePc" name="type" type="radio" value="case_pc" {% if type == 'case_pc' %}checked{% endif %}>
+            <label for="casePc">Case</label>
+
+            <input id="powerSuply" name="type" type="radio" value="power_suply" {% if type == 'power_suply' %}checked{% endif %}>
+            <label for="powerSuply">Power Suply</label>
+        </fieldset>
+    </form>
+
+    {% if type == "" %}
+        <h2>Seleccione un producto</h2>
+        <p>Por favor, seleccione un tipo de producto a dar de alta</p>
+    {% elseif type in types %}
+        {% include 'intranet/create_product_forms/' ~ type ~ '_form.view.twig' %}
+    {% else %}
+        <h2>Tipo de producto inválido</h2>
+        <p>Por favor, seleccione un tipo de producto a dar de alta válido</p>
     {% endif %}
-    {% if type == "Video_card" %}
-        {% include 'intranet/create_product_forms/video_card_form.view.twig' %}
-    {% endif %}
+
 {% endblock %}

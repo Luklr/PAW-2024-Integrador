@@ -224,3 +224,14 @@ nav.nav-footer {
 .informacion, .form-account{
     padding: 3rem;
 }
+
+.new-product-fieldset {
+    display: flex;
+    flex-direction: row;
+    width: 70vw;
+    justify-content: space-around;
+}
+
+form .new-product-fieldset {
+    margin: 2rem;
+}

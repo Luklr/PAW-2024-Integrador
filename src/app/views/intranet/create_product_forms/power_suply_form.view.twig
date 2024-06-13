@@ -1,0 +1,26 @@
+<form action="/create_product" method="post">
+    <legend>Alta de Power Supply</legend>
+
+    <label for="type">Tipo:</label>
+    <input type="text" id="type" name="type" maxlength="20"><br>
+
+    <label for="efficiency">Eficiencia:</label>
+    <input type="text" id="efficiency" name="efficiency" maxlength="20"><br>
+
+    <label for="wattage">Potencia (Wattage):</label>
+    <input type="number" id="wattage" name="wattage"><br>
+
+    <label for="modular">Modular:</label>
+    <input type="checkbox" id="modular" name="modular"><br>
+
+    <label for="description">Descripción:</label>
+    <input type="text" id="description" name="description" maxlength="512"><br>
+
+    <label for="price">Precio:</label>
+    <input type="number" step="0.01" id="price" name="price"><br>
+
+    <label for="stock">Stock:</label>
+    <input type="number" id="stock" name="stock"><br>
+
+    <input type="submit" value="Dar de Alta">
+</form>

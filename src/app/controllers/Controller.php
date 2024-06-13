@@ -1,6 +1,7 @@
 <?php
 
 namespace Paw\App\Controllers;
+use Paw\Core\Request;
 use Twig\Environment;
 
 class Controller
@@ -101,5 +102,21 @@ class Controller
 
     public function sanitizeInput($input) {
         return htmlspecialchars(trim($input));
+    }
+
+    public function redirectIfNotLogged(Request $request, $originPath) {
+        if (!$request->session()->isLogged()) {
+            if ($originPath) {
+                $request->session()->set("loopback", $originPath);
+            } 
+            $this->redirect("/login");
+        }
+    }
+
+    public function access(Request $request, $originPath, $role) {
+        $this->redirectIfNotLogged($request, $originPath);
+        if ($request->session()->get("user_role") != $role) {
+            $this->redirect("/forbidden");
+        }
     }
 }
