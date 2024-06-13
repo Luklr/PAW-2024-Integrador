@@ -11,13 +11,11 @@
         {% for item in products %}
             <article>
                 <picture>
-                    <img src= "{{item.pathImg}}" >
+                    {# <img src= "{{item.pathImg}}" > #}
                 </picture>
-                <h3>{{item.nombre}}</h3>
+                <h3>{{item.name}}</h3>
                 <p> 
-                    {{item.descripcion}}
-                    <br>
-                    {{item.precio}}
+                    {{item.description}} - ${{item.price}}
                 </p>
             </article>
         {% endfor %}

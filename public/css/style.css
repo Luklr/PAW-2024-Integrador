@@ -227,6 +227,22 @@ nav.nav-footer {
     flex-direction: column;
 }
 
+form.new-product-type-form {
+    background-color: var(--large);
+    padding: 1rem;
+    border-radius: 2rem;
+    margin: 1rem;
+}
+
+form.new-product-form legend{
+    margin: 1rem;
+}
+
+form.new-product-type-form fieldset{
+    margin: 0;
+    border: none;
+}
+
 .new-product-fieldset {
     display: flex;
     flex-direction: row;
@@ -242,12 +258,18 @@ input[type="checkbox"] + label, [type="checkbox"]:checked+label:before {
     display: block;
 }
 
+[type="radio"]:checked+label:after {
+    border: 2px solid var(--primary);
+    background-color: var(--primary);
+}
+
 small.trademark {
     color: gray !important;
 }
 
 
-/* DRAG AND DROP */
+/* DRAG AND DROP ---------------------------------------------*/
+
 .drop-area {
     border: 2px dashed #ddd;
     height: 500px;

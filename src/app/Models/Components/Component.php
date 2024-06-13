@@ -5,7 +5,7 @@ namespace Paw\App\Models\Components;
 use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
-abstract class Component extends Model {
+class Component extends Model {
 
     static public string $table = "component";
 
@@ -17,7 +17,7 @@ abstract class Component extends Model {
         "path_img" => null
     ];
 
-    protected array $fieldsChild;
+    protected array $fieldsChild = [];
 
     public function __construct(array $values) {
         $this->set($values);
