@@ -15,7 +15,6 @@ class ComponentRepository extends Repository
         return Component::class; 
     }
 
-    
     public function getByIdAndType($id, string $type = null)
     {
         $filter = "id = :id";

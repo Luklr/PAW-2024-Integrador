@@ -38,12 +38,13 @@ class IntranetController extends Controller
 
     public function createProductPost(Request $request) {
         $this->access($request, $request->url(), "admin");
-        $type = $request->post("componentType");
-        if (!$type) {
-            $type = "";
+        $tipo = $request->post("componentType");
+        if (!$tipo) {
+            $tipo = "";
         }
 
         # REPENSAR ESTA LÓGICA, AUNQUE ESTÁ BIEN
+        $type = ucfirst($tipo);
         $class = "Paw\\App\\Models\\Components\\$type";
         if (!class_exists($class)) {
             $this->createProduct($request, "Tipo de componente no válido");
@@ -52,30 +53,19 @@ class IntranetController extends Controller
         $component = new $class([]);
         $componentKeys = $component->getKeys();
 
-        /* CODIGO ANTERIOR
-        $values = $request->post();
-        unset($values["componentType"]);
-        //$mother = $this->componentRepository->create($data, "Motherboard");
-
-        if (!$request->hasBodyParams($keys)){
-            //var_dump($request->get("type"));die;
-            $this->createProduct($request, "Ingrese todos los campos requeridos");
-            exit();
-        }
-        $component = $this->componentRepository->create($values, ucfirst($type));
-        */
-
         try {
             RequestCreateProduct::validate($request, $componentKeys);
             $values = $request->post();
             unset($values["componentType"]);       # REPENSAR ESTO
             $values['path_img'] = $this->imageHandler->saveImage($request->file("imagen"), 'productos');
-            $component = $this->componentRepository->create($values, ucfirst($type));
+            $component = $this->componentRepository->create($values, $type);
             $mensaje = "El producto fue procesado y subido con éxito";
         } catch (InvalidValueFormatException $e) {
             $mensaje = $e->getMessage();
+            dd($e->getMessage());
         } catch (Exception $e) {
             $mensaje = "Ocurrió un error al procesar su solicitud. " . $e->getMessage();
+            dd($e->getMessage());
         }
 
         $this->createProduct($request, $mensaje);

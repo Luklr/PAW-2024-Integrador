@@ -7,13 +7,14 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 abstract class Component extends Model {
 
-    static public string $table = '"component"';
+    static public string $table = "component";
 
     protected array $fields = [
         "id" => null,
         "description" => null,
         "price" => null,
-        "stock" => null
+        "stock" => null,
+        "path_img" => null
     ];
 
     protected array $fieldsChild;
@@ -63,6 +64,7 @@ abstract class Component extends Model {
     {
         $data = array_merge($this->fields, $this->fieldsChild);
         unset($data["id"]);
+        unset($data["path_img"]);
         return array_keys($data);
     }
 
@@ -78,37 +80,12 @@ abstract class Component extends Model {
         return $this->fields["stock"];
     }
 
-    public function set(array $values)
-    {
-        foreach (array_keys($this->fields) as $field) {
-            if (!isset($values[$field])) {
-                continue;
-            }
-            $method = "set" . ucfirst($field);
-            $this->$method($values[$field]);
-        }
-        foreach (array_keys($this->fieldsChild) as $field) {
-            if (!isset($values[$field])) {
-                continue;
-            }
-            $method = "set" . ucfirst($field);
-            $this->$method($values[$field]);
-        }
+    public function setPath_img(string $path_img) {
+        $this->fields["path_img"] = $path_img;
     }
 
-    /*
-    public function toArray(): array
+    public function getPath_img(): ?string
     {
-        $data = [];
-        foreach (array_keys($this->fields) as $field) {
-            $method = "get" . ucfirst($field);
-            $data[$field] = $this->$method();
-        }
-        foreach (array_keys($this->fieldsChild) as $field) {
-            $method = "get" . ucfirst($field);
-            $data[$field] = $this->$method();
-        }
-        return $data;
+        return $this->fields["path_img"];
     }
-    */
 }

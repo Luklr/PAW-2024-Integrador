@@ -1,6 +1,6 @@
 <?php
 
-namespace Paw\App\Models;
+namespace Paw\App\Models\Components;
 
 use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
