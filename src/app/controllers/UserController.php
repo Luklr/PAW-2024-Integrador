@@ -49,14 +49,14 @@ class UserController extends Controller
         //var_dump($usuario);die;
 
         if (!$usuario) {
-            $mensaje = "No se encontro un usuario con ese mail";
+            $mensaje = "Usuario o contraseña incorrectos";
             $this->login($request, $mensaje);
             return;
         }
         
         $passwordUser = $usuario->getPassword();
         if ($passwordUser !== $hash) {
-            $mensaje = "La contraseña es incorrecta";
+            $mensaje = "Usuario o contraseña incorrectos";
             $this->login($request, $mensaje);
             return;
         }

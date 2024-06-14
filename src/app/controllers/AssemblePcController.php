@@ -19,13 +19,6 @@ class AssemblePcController extends Controller
         $page = 0;
         $itemsPerPage = 10;
         $products = $this->componentRepository->getPage($itemsPerPage, $page); 
-        
-        // echo $this->twig->render('menu.view.twig', [
-        //     'nav' => $this->nav,
-        //     'footer' => $this->footer,
-        //     'title' => $title,
-        //     'products' => $products
-        // ]);
 
         
         $this->render('assemblePc/products.view.twig', "Products", $request, ["products" => $products]);

@@ -6,30 +6,20 @@
                 <a href="/assemble_pc" class="boton-anchor">Crea tu propia PC, ya!</a>
             </h2>
         </section>
-        <section>
+        <section class="index-products">
             <h2>
                 Ultimos productos
             </h2>
-            <article class="article-producto">
+            {% for item in products %}
+            <article class="product">
                 <picture>
-                    <img src="#">
+                    {# <img src= "{{item.pathImg}}" > #}
                 </picture>
-                <h3>Producto 1</h3>
-                <!--creo un boton con js que añada al carrito con un post-->
+                <h3>{{item.description}}</h3>
+                <p> 
+                    {{item.stock}} - ${{item.price}}
+                </p>
             </article>
-            <article  class="article-producto">
-                <picture>
-                    <img src="#">
-                </picture>
-                <h3>Producto 1</h3>
-                <!--creo un boton con js que añada al carrito con un post-->
-            </article>
-            <article  class="article-producto">
-                <picture>
-                    <img src="#">
-                </picture>
-                <h3>Producto 1</h3>
-                <!--creo un boton con js que añada al carrito con un post-->
-            </article>
+            {% endfor %}
         </section>
 {% endblock %}

@@ -60,10 +60,10 @@ class IntranetController extends Controller
             $mensaje = "El producto fue procesado y subido con éxito";
         } catch (InvalidValueFormatException $e) {
             $mensaje = $e->getMessage();
-            dd($e->getMessage());
+            //dd($e->getMessage());
         } catch (Exception $e) {
             $mensaje = "Ocurrió un error al procesar su solicitud. " . $e->getMessage();
-            dd($e->getMessage());
+            //dd($e->getMessage());
         }
 
         $this->createProduct($request, $mensaje);
