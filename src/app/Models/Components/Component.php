@@ -16,7 +16,7 @@ class Component extends Model {
         "stock" => null
     ];
 
-    protected array $fieldsChild = [];
+    protected SpecificComponent $specificComponent;
 
     public function __construct(array $values) {
         $this->set($values);
@@ -29,6 +29,15 @@ class Component extends Model {
     public function getId(): ?int
     {
         return $this->fields["id"];
+    }
+
+    public function setSpecificComponent(SpecificComponent $specificComponent) {
+        $this->specificComponent = $specificComponent;
+    }
+
+    public function getSpecificComponent(): ?SpecificComponent
+    {
+        return $this->specificComponent;
     }
 
     public function setDescription(string $description) {
@@ -61,7 +70,7 @@ class Component extends Model {
 
     public function getKeys(): ?array
     {
-        $data = array_merge($this->fields, $this->fieldsChild);
+        $data = array_merge($this->fields, $this->fields);
         unset($data["id"]);
         return array_keys($data);
     }
@@ -87,7 +96,7 @@ class Component extends Model {
             $method = "set" . ucfirst($field);
             $this->$method($values[$field]);
         }
-        foreach (array_keys($this->fieldsChild) as $field) {
+        foreach (array_keys($this->fields) as $field) {
             if (!isset($values[$field])) {
                 continue;
             }
@@ -104,7 +113,7 @@ class Component extends Model {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }
-        foreach (array_keys($this->fieldsChild) as $field) {
+        foreach (array_keys($this->fields) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }

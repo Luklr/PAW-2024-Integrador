@@ -5,11 +5,11 @@ namespace Paw\App\Models\Components;
 use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
-class InternalHardDrive extends Component {
+class InternalHardDrive extends SpecificComponent {
 
     static public string $tableChild = '"internalHardDrive"';
 
-    protected array $fieldsChild = [
+    protected array $fields = [
         "capacity" => null,
         "type" => null,
         "form_factor" => null,
@@ -17,37 +17,37 @@ class InternalHardDrive extends Component {
     ];
 
     public function setCapacity(?int $capacity){
-        $this->fieldsChild["capacity"] = $capacity;
+        $this->fields["capacity"] = $capacity;
     }
     public function getCapacity(): ?int{
-        return $this->fieldsChild["capacity"];
+        return $this->fields["capacity"];
     }
 
     public function setType(?string $type){
-        $this->fieldsChild["type"] = $type;
+        $this->fields["type"] = $type;
     }
     public function getType(): ?string{
-        return $this->fieldsChild["type"];
+        return $this->fields["type"];
     }
 
     public function setForm_factor(?string $formFactor){
-        $this->fieldsChild["form_factor"] = $formFactor;
+        $this->fields["form_factor"] = $formFactor;
     }
     public function getForm_factor(): ?string{
-        return $this->fieldsChild["form_factor"];
+        return $this->fields["form_factor"];
     }
 
     public function setInterface(?string $interface){
-        $this->fieldsChild["interface"] = $interface;
+        $this->fields["interface"] = $interface;
     }
     public function getInterface(): ?string{
-        return $this->fieldsChild["interface"];
+        return $this->fields["interface"];
     }
     
     public function toArrayChild(): array
     {
         $data = [ "component_id" => $this->getId()];
-        foreach (array_keys($this->fieldsChild) as $field) {
+        foreach (array_keys($this->fields) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }

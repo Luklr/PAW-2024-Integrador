@@ -5,33 +5,33 @@ namespace Paw\App\Models;
 use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
-class Memory extends Component {
+class Memory extends SpecificComponent {
 
     static public string $tableChild = '"memory"';
 
-    protected array $fieldsChild = [
+    protected array $fields = [
         "speed" => null,
         "modules" => null,
     ];
 
     public function setSpeed(?int $speed){
-        $this->fieldsChild["speed"] = $speed;
+        $this->fields["speed"] = $speed;
     }
     public function getSpeed(): ?int{
-        return $this->fieldsChild["speed"];
+        return $this->fields["speed"];
     }
 
     public function setModules(?string $modules){
-        $this->fieldsChild["modules"] = $modules;
+        $this->fields["modules"] = $modules;
     }
     public function getModules(): ?string{
-        return $this->fieldsChild["modules"];
+        return $this->fields["modules"];
     }
 
     public function toArrayChild(): array
     {
         $data = [ "component_id" => $this->getId()];
-        foreach (array_keys($this->fieldsChild) as $field) {
+        foreach (array_keys($this->fields) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }

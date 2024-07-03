@@ -5,41 +5,41 @@ namespace Paw\App\Models\Components;
 use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
-class CasePc extends Component {
+class CasePc extends SpecificComponent {
 
     static public string $tableChild = '"casePc"';
 
-    protected array $fieldsChild = [
+    protected array $fields = [
         "type" => null,
         "side_panel" => null,
         "external_volume" => null
     ];
 
     public function setType(string $type){
-        $this->fieldsChild["type"] = $type;
+        $this->fields["type"] = $type;
     }
     public function getType(): string{
-        return $this->fieldsChild["type"];
+        return $this->fields["type"];
     }
 
     public function setSide_panel(string $sidePanel){
-        $this->fieldsChild["side_panel"] = $sidePanel;
+        $this->fields["side_panel"] = $sidePanel;
     }
     public function getSide_panel(): string{
-        return $this->fieldsChild["side_panel"];
+        return $this->fields["side_panel"];
     }
 
     public function setExternal_volume(?float $externalVolume){
-        $this->fieldsChild["external_volume"] = $externalVolume;
+        $this->fields["external_volume"] = $externalVolume;
     }
     public function getExternal_volume(): ?float{
-        return $this->fieldsChild["external_volume"];
+        return $this->fields["external_volume"];
     }
 
     public function toArrayChild(): array
     {
         $data = [ "component_id" => $this->getId()];
-        foreach (array_keys($this->fieldsChild) as $field) {
+        foreach (array_keys($this->fields) as $field) {
             $method = "get" . ucfirst($field);
             $data[$field] = $this->$method();
         }
