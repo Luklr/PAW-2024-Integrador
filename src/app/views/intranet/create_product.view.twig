@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <form action="/create_product" method="post" class="new-product-type-form">
+    <form action="/create_product" method="post" class="new-product-type-form"> <!-- TODO: esto es un <menu> -->
         <fieldset class="new-product-fieldset">
             <input id="videoCard" name="type" type="radio" value="videoCard" {% if type == 'videoCard' %}checked{% endif %}>
             <label for="videoCard">GPU</label>
@@ -25,7 +25,7 @@
             <input id="casePc" name="type" type="radio" value="casePc" {% if type == 'casePc' %}checked{% endif %}>
             <label for="casePc">Case</label>
 
-            <input id="powerSuply" name="type" type="radio" value="powerSuply" {% if type == 'power_suply' %}checked{% endif %}>
+            <input id="powerSuply" name="type" type="radio" value="powerSuply" {% if type == 'powerSuply' %}checked{% endif %}>
             <label for="powerSuply">Power Suply</label>
         </fieldset>
     </form>
@@ -39,6 +39,10 @@
         <h2>Tipo de producto inválido</h2>
         <p>Por favor, seleccione un tipo de producto a dar de alta válido</p>
         <p>{{type}}</p>
+    {% endif %}
+
+    {% if mensaje %}
+        <p>{{mensaje}}</p>
     {% endif %}
 
 {% endblock %}

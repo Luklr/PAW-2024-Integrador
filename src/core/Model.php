@@ -24,7 +24,6 @@ abstract class Model {
     
     public function set(array $values)
     {
-
         foreach (array_keys($this->fields) as $field) {
             if (!isset($values[$field])) {
                 continue;

@@ -25,6 +25,7 @@ final class CreateComponent extends AbstractMigration
             ->addColumn('type', 'string', ['limit' => 20])
             ->addColumn('price', 'float')
             ->addColumn('stock', 'integer')
+            ->addColumn("path_img", "string", ["limit" => 255, "null" => true])
             ->create();
     }
 }

@@ -193,6 +193,7 @@ main {
 h2 {
     font-family: var(--font-titles);
     font-size: 3rem !important;
+    text-align: center;
 }
 
 h3 {
@@ -227,6 +228,22 @@ nav.nav-footer {
     flex-direction: column;
 }
 
+form.new-product-type-form {
+    background-color: var(--large);
+    padding: 1rem;
+    border-radius: 2rem;
+    margin: 1rem;
+}
+
+form.new-product-form legend{
+    margin: 1rem;
+}
+
+form.new-product-type-form fieldset{
+    margin: 0;
+    border: none;
+}
+
 .new-product-fieldset {
     display: flex;
     flex-direction: row;
@@ -236,18 +253,114 @@ nav.nav-footer {
 
 form .new-product-fieldset {
     margin: 2rem;
+    font-weight:500 !important;
 }
 
 input[type="checkbox"] + label, [type="checkbox"]:checked+label:before {
     display: block;
 }
 
+[type="radio"]:checked+label:after {
+    border: 2px solid var(--primary);
+    background-color: var(--primary);
+}
+
 small.trademark {
     color: gray !important;
 }
 
+main.products {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr;
+}
 
-/* DRAG AND DROP */
+.searchbar-form {
+    grid-column: 1 / -1;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between;
+    width: 40vw !important;
+    justify-self: center;
+    align-items: center;
+    border-radius: 1rem;
+    background-color: rgba(54,51,51,0.3);
+}
+
+.searchbar-form .searchbar-input {
+    width: 25vw;
+}
+
+.searchbar-form label {
+    display: none;
+}
+
+.searchbar-form input[type="submit"] {
+    height: 3rem;
+    color: transparent;
+    background: url(/source/pictures/search-icon.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+    transition: transform 0.3s;
+}
+
+.searchbar-form input[type="submit"]:hover {
+    transform: scale(1.1);
+}
+
+article.product {
+    border: 2px solid var(--secondary) !important;
+    margin: 1rem;
+    border-radius: 0.3rem;
+    font-family: var(--font-main);
+    display: flex !important;
+    flex-direction: column;
+    width: 30vw;
+    align-items: center;
+    padding: 1rem;
+
+    /*
+    width: 20rem;
+    height: 10rem;
+    border: 2px solid var(--large);
+    border-radius: 3px;
+    */
+
+}
+
+article.product h3 {
+    font-size: 1rem !important;
+}
+
+/*
+.assemble-title {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+.assemble-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+*/
+
+.index-products h2 {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.index-products .product {
+    grid-row: 2;
+}
+
+
+.index-products {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+/* DRAG AND DROP ---------------------------------------------*/
+
 .drop-area {
     border: 2px dashed #ddd;
     height: 500px;

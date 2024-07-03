@@ -15,7 +15,6 @@ class ComponentRepository extends Repository
         return Component::class; 
     }
 
-    
     public function getByIdAndType($id, string $type = null)
     {
         $filter = "id = :id";
@@ -43,6 +42,10 @@ class ComponentRepository extends Repository
 
                 $arrayChild = $model->toArrayChild();
                 $arrayChild["component_id"] = $id;
+                // echo "<pre>";
+                // var_dump($type::$tableChild);
+                // var_dump($arrayChild);
+                // die;
                 $idChild = self::$queryBuilder->table($type::$tableChild)->insert($arrayChild);
             }
             if ($idChild && $id) {

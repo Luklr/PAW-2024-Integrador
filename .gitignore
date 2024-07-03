@@ -5,3 +5,7 @@ logs/
 .vscode/settings.json
 postgres/
 ngrok.exe
+public/images/productos/*
+
+# Imagenes Seeders
+!public/images/productos/*imagen_seeder*
