@@ -20,10 +20,12 @@ class ComponentRepository extends Repository
         $filter = "id = :id";
         $component = self::$queryBuilder->table($this->table())->select($filter, [':id' => $id]);
         $filter = "component_id = :component_id";
-        $Child = self::$queryBuilder->table($type::$tableChild)->select($filter, [':component_id' => $id]);
+        $specificComponent = self::$queryBuilder->table($type::$tableChild)->select($filter, [':component_id' => $id]);
         if ($component && $Child) {
-            $data = array_merge($component[0], $Child[0]);
-            return new $type($data);
+            $specificComponentInstance = new $type($specificComponent);
+            $componentInstance = new Component($component);
+            $componentInstance->setSpecificComponent($specificComponentInstance);
+            return $componentInstance;
         }
         return null;
     }
@@ -34,21 +36,23 @@ class ComponentRepository extends Repository
             if (!class_exists($type)) {
                 $type = "Paw\\App\\Models\\Components\\$type";
             }
-            $model = new $type($data);
-            if ($model) {
-                $arrayComponent = $model->toArray();
+            $specificComponent = new $type($data);
+            $component = new Component($data);
+
+            if ($component && $specificComponent){
+                $arrayComponent = $component->toArray();
                 $arrayComponent["type"] = $type::$tableChild;
                 $id = self::$queryBuilder->table($this->table())->insert($arrayComponent);
 
-                $arrayChild = $model->toArrayChild();
-                $arrayChild["component_id"] = $id;
+                $arraySpecificComponent = $specificComponent->toArray();
+                $arraySpecificComponent["component_id"] = $id;
                 // echo "<pre>";
                 // var_dump($type::$tableChild);
                 // var_dump($arrayChild);
                 // die;
-                $idChild = self::$queryBuilder->table($type::$tableChild)->insert($arrayChild);
+                $idSpecificComponent = self::$queryBuilder->table($type::$tableChild)->insert($arraySpecificComponent);
             }
-            if ($idChild && $id) {
+            if ($idSpecificComponent && $id) {
                 $model = $this->getByIdAndType($id, $type);
                 return $model;
             }

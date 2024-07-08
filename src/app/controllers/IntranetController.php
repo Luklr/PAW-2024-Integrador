@@ -9,6 +9,7 @@ use Paw\App\Repositories\ComponentRepository;
 use Paw\App\Validators\RequestCreateProduct;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 use Twig\Environment;
+use Paw\App\Models\Components\Component;
 
 class IntranetController extends Controller
 {
@@ -48,8 +49,9 @@ class IntranetController extends Controller
         # REPENSAR ESTA LÓGICA, AUNQUE ESTÁ BIEN
         $type = ucfirst($tipo);
         $class = "Paw\\App\\Models\\Components\\$type";
-        $component = new $class([]);
-        $componentKeys = $component->getKeys();
+        $specificComponent = new $class([]);
+        $component = new Component([]);
+        $componentKeys = array_merge($specificComponent->getKeys(), $component->getKeys());
 
         try {
             RequestCreateProduct::validate($request, $componentKeys);

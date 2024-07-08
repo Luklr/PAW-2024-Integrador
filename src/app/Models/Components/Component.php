@@ -70,7 +70,7 @@ class Component extends Model {
 
     public function getKeys(): ?array
     {
-        $data = array_merge($this->fields, $this->fields);
+        $data = $this->fields;
         unset($data["id"]);
         return array_keys($data);
     }
