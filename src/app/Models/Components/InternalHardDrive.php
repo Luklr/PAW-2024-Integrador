@@ -16,6 +16,18 @@ class InternalHardDrive extends SpecificComponent {
         "interface" => null,
     ];
 
+    protected function compatibility(SpecificComponent $component){
+        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
+        $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
+
+        $componentStr = get_class($component);
+        if (in_array($componentStr, $types)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function setCapacity(?int $capacity){
         $this->fields["capacity"] = $capacity;
     }

@@ -15,6 +15,22 @@ class CasePc extends SpecificComponent {
         "external_volume" => null
     ];
 
+    protected function compatibility(SpecificComponent $component){
+        $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "VideoCard"];
+        $componentStr = get_class($component);
+        if (in_array($componentStr, $types)) {
+            return true;
+        }
+
+        if ($componentStr == "PowerSuply"){
+            if ($this->getType() == $component->getType()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function setType(string $type){
         $this->fields["type"] = $type;
     }

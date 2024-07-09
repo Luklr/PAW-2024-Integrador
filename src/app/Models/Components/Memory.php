@@ -14,6 +14,26 @@ class Memory extends SpecificComponent {
         "modules" => null,
     ];
 
+    protected function compatibility(SpecificComponent $component){
+        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
+        $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "PowerSuply", "VideoCard"];
+
+        $componentStr = get_class($component);
+        if (in_array($componentStr, $types)) {
+            return true;
+        }
+
+        if ($componentStr == "Motherboard"){
+            $parts = explode(',', $this->getModules());
+            $memory_slots = $parts[0];
+            if ($component->getMemory_slots() >= $memory_slots){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function setSpeed(?int $speed){
         $this->fields["speed"] = $speed;
     }

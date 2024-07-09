@@ -17,6 +17,18 @@ class Monitor extends SpecificComponent {
         "panel_type" => null,
         "aspect_ratio" => null,
     ];
+
+    protected function compatibility(SpecificComponent $component){
+        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
+        $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
+
+        $componentStr = get_class($component);
+        if (in_array($componentStr, $types)) {
+            return true;
+        }
+
+        return false;
+    }
     
     public function setScreen_size(float $screen_size) {
         if ($screen_size > 1)

@@ -16,6 +16,24 @@ class PowerSuply extends SpecificComponent {
         "modular" => null
     ];
 
+    protected function compatibility(SpecificComponent $component){
+        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
+        $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
+
+        $componentStr = get_class($component);
+        if (in_array($componentStr, $types)) {
+            return true;
+        }
+
+        if ($componentStr == "CasePc"){
+            if ($this->getType() == $component->getType()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function setType(?string $type){
         $this->fields["type"] = $type;
     }
