@@ -124,26 +124,26 @@ class dragAndDrop {
 
         }
 
-    /*
-    function uploadFile(file, id) {
-        const formData = new FormData();
-        formData.append("file",file);
+    
+        async function uploadFile(file, id) {
+            const formData = new FormData();
+            formData.append("file",file);
 
-        try {
-            const response = await fetch("http://localhost:3000/upload", {
-                method: "POST",
-                body: formData,
-            });
-            const responseText = await response.text();
-            document.querySelector(
-                `#${id}.status-text`
-            ).innerHTML = `<span class="success"> Archivo subido correctamente...</span>`;
-        } catch(error) {
-            document.querySelector(
-                `#${id}.status-text`
-            ).innerHTML = `<span class="failure"> El archivo no pudo subirse...</span>`;
+            try {
+                const response = await fetch(`${window.location.origin}/upload`, {
+                    method: "POST",
+                    body: formData,
+                });
+                const responseText = await response.text();
+                document.querySelector(
+                    `#${id}.status-text`
+                ).innerHTML = `<span class="success"> Archivo subido correctamente...</span>`;
+            } catch(error) {
+                document.querySelector(
+                    `#${id}.status-text`
+                ).innerHTML = `<span class="failure"> El archivo no pudo subirse...</span>`;
+            }
         }
-    }
-    */
+    
     }
 }

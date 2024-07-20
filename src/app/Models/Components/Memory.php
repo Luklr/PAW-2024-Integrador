@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class Memory extends SpecificComponent {
 
-    static public string $tableChild = '"memory"';
+    static public string $tableChild = 'memory';
 
     protected array $fields = [
         "speed" => null,

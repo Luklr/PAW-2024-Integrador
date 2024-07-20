@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class InternalHardDrive extends SpecificComponent {
 
-    static public string $tableChild = '"internalHardDrive"';
+    static public string $tableChild = 'internalHardDrive';
 
     protected array $fields = [
         "capacity" => null,

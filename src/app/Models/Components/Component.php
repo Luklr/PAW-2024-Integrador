@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class Component extends Model {
 
-    static public string $table = '"component"';
+    static public string $table = 'component';
 
     protected array $fields = [
         "id" => null,

@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class Monitor extends SpecificComponent {
 
-    static public string $tableChild = '"monitor"';
+    static public string $tableChild = 'monitor';
 
     protected array $fields = [
         "screen_size" => null,

@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class VideoCard extends SpecificComponent {
 
-    static public string $tableChild = '"videoCard"';
+    static public string $tableChild = 'videoCard';
 
     protected array $fields = [
         "chipset" => null,

@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class Motherboard extends SpecificComponent {
 
-    static public string $tableChild = '"motherboard"';
+    static public string $tableChild = 'motherboard';
 
     protected array $fields = [
         "socket" => null,

@@ -25,7 +25,7 @@ final class CreateMotherboard extends AbstractMigration
             ->addIndex(["component_id"],['unique' => true])
             ->addForeignKey('component_id', 'component', 'id', ['update' => 'NO_ACTION'])
             ->addColumn('socket', 'string', ['limit' => 30])
-            ->addColumn('memory_slot', 'integer')
+            ->addColumn('memory_slots', 'integer')
             ->create();
     }
 }

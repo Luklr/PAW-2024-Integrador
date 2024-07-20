@@ -9,7 +9,17 @@ class RequestCreateProduct
 {
     public static function validate(Request $request, array $requiredParams)
     {
-        if (!$request->hasBodyParams($requiredParams)) {
+        $postParams = $request->post();
+
+        $missingParams = [];
+        foreach ($requiredParams as $param) {
+            if (!array_key_exists($param, $postParams)) {
+                $missingParams[] = $param;
+            }
+        }
+
+
+        if (!empty($missingParams)) {
             throw new InvalidValueFormatException("Complete todos los campos");
         }
 

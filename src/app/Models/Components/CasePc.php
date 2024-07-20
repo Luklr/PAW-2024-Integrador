@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class CasePc extends SpecificComponent {
 
-    static public string $tableChild = '"casePc"';
+    static public string $tableChild = 'casePc';
 
     protected array $fields = [
         "type" => null,

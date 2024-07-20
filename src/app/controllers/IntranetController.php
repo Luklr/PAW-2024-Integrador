@@ -45,14 +45,14 @@ class IntranetController extends Controller
         if (!$tipo) {
             $tipo = "";
         }
-
+        
         # REPENSAR ESTA LÓGICA, AUNQUE ESTÁ BIEN
         $type = ucfirst($tipo);
         $class = "Paw\\App\\Models\\Components\\$type";
         $specificComponent = new $class([]);
         $component = new Component([]);
         $componentKeys = array_merge($specificComponent->getKeys(), $component->getKeys());
-
+        
         try {
             RequestCreateProduct::validate($request, $componentKeys);
             $values = $request->post();
@@ -67,7 +67,7 @@ class IntranetController extends Controller
             $mensaje = "Ocurrió un error al procesar su solicitud. " . $e->getMessage();
             //dd($e->getMessage());
         }
-
+        
         $this->createProduct($request, $mensaje);
     }
 

@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class PowerSuply extends SpecificComponent {
 
-    static public string $tableChild = '"powerSuply"';
+    static public string $tableChild = 'powerSuply';
 
     protected array $fields = [
         "type" => null,

@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class Cpu extends SpecificComponent {
 
-    static public string $tableChild = '"cpu"';
+    static public string $tableChild = 'cpu';
 
     protected array $fields = [
     ];

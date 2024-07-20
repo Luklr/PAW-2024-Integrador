@@ -7,7 +7,7 @@ use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class CpuFan extends SpecificComponent {
 
-    static public string $tableChild = '"cpuFan"';
+    static public string $tableChild = 'cpuFan';
 
     protected array $fields = [
         "rpm" => null,    
