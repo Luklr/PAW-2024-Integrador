@@ -9,7 +9,7 @@ class VideoCard extends SpecificComponent {
 
     static public string $tableChild = 'videoCard';
 
-    protected array $fields = [
+    public array $fields = [
         "chipset" => null,
         "memory" => null,
         "core_clock" =>	null,

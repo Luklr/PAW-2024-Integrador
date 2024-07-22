@@ -3,15 +3,31 @@
 {% block main_class %}product{% endblock %}
 
 {% block content %}
-    <article>
-        <picture>
-            <img src= "{{product.pathImg}}" >
-        </picture>
-        <h3>{{product.nombre}}</h3>
+    <picture>
+        {# <img src= "{{item.pathImg}}" > #}#
+    </picture>
+    <section>
+        <h3>{{product.description}}</h3>
         <p> 
-            {{product.descripcion}}
+            {{product.price}}$
             <br>
-            {{product.precio}}
+            {{product.stock}} unidades restantes
         </p>
-    </article>
+        <h4>Caracteristicas</h4>
+        <ul>
+            {% for key, value in productSpecific %}
+                <li>{{key}}: {{value}}</li>
+            {% endfor %}
+        </ul>
+        <form class="form">
+        <div class="input-group">
+            <label for="searchbar-templates">Cantidad</label>
+            
+                <input type="number" id="searchbar-templates" name="searchbar-templates" 
+                class="searchbar-input" tabindex="1" autocomplete="on" autofocus required min="1" max="{{product.stock}}">
+        </div>
+                <input type="submit" value="Agregar al carrito" class="submit form-submit">
+            
+        </form>
+    </section>
 {% endblock %}

@@ -25,7 +25,15 @@ class AssemblePcController extends Controller
     }
 
     public function product(Request $request) {
-        $this->render('assemblePc/product.view.twig', "", $request);
+        $id = $request->get("id");
+        $component = $this->componentRepository->getByIdAndType($id);
+        
+        $specificComponent = $component->getSpecificComponent();
+        $specificComponent = $specificComponent->toArray();
+        // echo("<pre>");
+        // var_dump($specificComponent);
+        // die;
+        $this->render('assemblePc/product.view.twig', $component->getDescription(), $request, ["product" => $component, "productSpecific" => $specificComponent]);
     }
 
     function assemblePc(Request $request) {
@@ -71,7 +79,7 @@ class AssemblePcController extends Controller
     function productsPage(Request $request) {
         $get = $request->get();
         $page = isset($get['page']) ? (int)$get['page'] : 0;
-        $itemsPerPage = 10;
+        $itemsPerPage = 30;
         $products = $this->componentRepository->getPage($itemsPerPage, $page);
 
         header('Content-Type: application/json');

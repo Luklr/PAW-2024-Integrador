@@ -19,11 +19,16 @@ class ComponentRepository extends Repository
     {
         $filter = "id = :id";
         $component = self::$queryBuilder->table($this->table())->select($filter, [':id' => $id]);
+        $type = ($component[0])["type"];
+        
+        $type = "Paw\\App\\Models\\Components\\" . ucfirst($type);
         $filter = "component_id = :component_id";
-        $specificComponent = self::$queryBuilder->table($type::$tableChild)->select($filter, [':component_id' => $id]);
-        if ($component && $Child) {
-            $specificComponentInstance = new $type($specificComponent);
-            $componentInstance = new Component($component);
+        $specificComponent = self::$queryBuilder->table("\"" . $type::$tableChild . "\"")->select($filter, [':component_id' => $id]);
+        
+        //son arrays de arrays, por eso hay que especificar $component[0]
+        if ($component && $specificComponent) {
+            $specificComponentInstance = new $type($specificComponent[0]);
+            $componentInstance = new Component($component[0]);
             $componentInstance->setSpecificComponent($specificComponentInstance);
             return $componentInstance;
         }
@@ -46,10 +51,7 @@ class ComponentRepository extends Repository
 
                 $arraySpecificComponent = $specificComponent->toArray();
                 $arraySpecificComponent["component_id"] = $id;
-                // echo "<pre>";
-                // var_dump($type::$tableChild);
-                // var_dump($arrayChild);
-                // die;
+
                 $idSpecificComponent = self::$queryBuilder->table($type::$tableChild)->insert($arraySpecificComponent);
             }
             if ($idSpecificComponent && $id) {

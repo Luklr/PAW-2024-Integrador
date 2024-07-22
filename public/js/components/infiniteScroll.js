@@ -1,6 +1,7 @@
 class ScrollInfinito{
     constructor(){
-        this.page = 1;
+        this.page = 0;
+        
         this.loading = document.getElementById('loading');
         this.container = document.getElementsByClassName('products')[0];
         const observer = new IntersectionObserver((entries) => {
@@ -24,12 +25,14 @@ class ScrollInfinito{
             const data = await response.json();
 
             data.forEach(item => {
+                const a = document.createElement("a");
                 const art = document.createElement('article');
                 const pic = document.createElement("picture");
                 const img = document.createElement("img");
                 const h3 = document.createElement("h3");
                 const p =  document.createElement("p");
                 console.log(item);
+                a.href = `${window.location.origin}/product?id=${item["id"]}`;
                 art.className = 'product';
 
                 // img.src = item.fields["path_img"] ? item.fields["path_img"] : "#";
@@ -40,7 +43,8 @@ class ScrollInfinito{
                 art.appendChild(pic);
                 art.appendChild(h3);
                 art.appendChild(p);
-                this.container.insertBefore(art, this.container.lastElementChild);
+                a.appendChild(art);
+                this.container.insertBefore(a, this.container.lastElementChild);
             });
 
             this.page++;

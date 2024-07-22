@@ -8,16 +8,18 @@
             <input type="text" id="searchbar-templates" name="searchbar-templates" class="searchbar-input" tabindex="1" autocomplete="on" autofocus required>
             <input type="submit" value="Buscar" class="submit searchbar-submit">
         </form>
-        {% for item in products %}
-            <article class="product">
-                <picture>
-                    {# <img src= "{{item.pathImg}}" > #}
-                </picture>
-                <h3>{{item.description}}</h3>
-                <p> 
-                    {{item.stock}} - ${{item.price}}
-                </p>
-            </article>
-        {% endfor %}
+        {# {% for item in products %}
+            <a href="{%%}">
+                <article class="product">
+                    <picture>
+                        <img src= "{{item.pathImg}}" >
+                    </picture>
+                    <h3>{{item.description}}</h3>
+                    <p> 
+                        {{item.stock}} - ${{item.price}}
+                    </p>
+                </article>
+            </a>
+        {% endfor %} #}
         <div class="loading" id="loading"> loading... </div>
 {% endblock %}
