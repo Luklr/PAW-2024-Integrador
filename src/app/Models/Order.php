@@ -6,6 +6,9 @@ use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class Order extends Model {
+
+    static public string $table = 'order';
+
     protected array $fields = [
         "id" => null,
         "orderDate" => null,

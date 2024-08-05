@@ -9,3 +9,5 @@
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s CpuFanSeeder
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s CasePcSeeder
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s PowerSuplySeeder
+.\vendor\robmorgan\phinx\bin\phinx seed:run -s AddressSeeder
+.\vendor\robmorgan\phinx\bin\phinx seed:run -s BranchSeeder

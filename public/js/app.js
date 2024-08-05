@@ -35,6 +35,14 @@ class App {
                 });
             });
         }
+
+        if (currentUrl === "/product") {
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("product", "js/components/product.js", () => {
+                    let product = new Product();
+                })
+            })
+        }
     }
 }
 

@@ -17,11 +17,14 @@ class ComponentRepository extends Repository
 
     public function getByIdAndType($id, string $type = null)
     {
+        if (!$id) 
+            return null;
         $filter = "id = :id";
         $component = self::$queryBuilder->table($this->table())->select($filter, [':id' => $id]);
         $type = ($component[0])["type"];
         
         $type = "Paw\\App\\Models\\Components\\" . ucfirst($type);
+        
         $filter = "component_id = :component_id";
         $specificComponent = self::$queryBuilder->table("\"" . $type::$tableChild . "\"")->select($filter, [':component_id' => $id]);
         

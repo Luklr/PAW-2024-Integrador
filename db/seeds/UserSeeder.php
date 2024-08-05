@@ -15,8 +15,7 @@ class UserSeeder extends AbstractSeed
                 'password' => hash('sha256', "12345678"),
                 'role' => 'user',
                 'name' => 'User',
-                'lastname' => '1',
-                // 'address_id' => 1
+                'lastname' => '1'
             ],
             [
                 'username' => 'Admin',
@@ -24,8 +23,7 @@ class UserSeeder extends AbstractSeed
                 'password' => hash('sha256', "12345678"),
                 'role' => 'admin',
                 'name' => 'Admin',
-                'lastname' => '1',
-                // 'address_id' => 1
+                'lastname' => '1'
             ],
         ];
 

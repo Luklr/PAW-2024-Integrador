@@ -29,8 +29,6 @@ final class CreateUser extends AbstractMigration
             ->addIndex(["email"],['unique' => true])
             ->addColumn("password", "string", ["limit" => 100])
             ->addColumn("role", "string", ["limit" => 10])
-            ->addColumn("address_id", "integer", ["null" => true])
-            ->addForeignKey('address_id', 'address', 'id', ['update' => 'NO_ACTION'])
             ->create();
     }
 }

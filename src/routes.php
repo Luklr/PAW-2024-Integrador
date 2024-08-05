@@ -32,6 +32,7 @@ $router->get("/branches", "OrgInformationController@branches");
 $router->get("/consumer_defense", "OrgInformationController@consumerDefense");
 $router->get("/contacts", "OrgInformationController@contacts");
 
+$router->post("/add_to_cart", "PaymentController@addComponentToCart");
 $router->get("/branch_selection", "PaymentController@branchSelection");
 $router->get("/cart", "PaymentController@cart");
 $router->get("/confirm_order", "PaymentController@confirmOrder");

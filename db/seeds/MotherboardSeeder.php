@@ -38,7 +38,7 @@ class MotherboardSeeder extends AbstractSeed
             $motherboardsData[] = [
                 'component_id' => $id,
                 'socket' => $row[2],
-                'memory_slot' => (int)$row[5],
+                'memory_slots' => (int)$row[5],
             ];
 
             $id++;

@@ -28,6 +28,8 @@ final class CreateAddress extends AbstractMigration
             ->addColumn("apartment", "integer", ["null" => true])
             ->addColumn("province", "string", ["limit" => 40])
             ->addColumn("city", "string", ["limit" => 40])
+            ->addColumn('user_id', 'integer')
+            ->addForeignKey('user_id', 'user', "id", ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION'])
             ->create();
     }
 }
