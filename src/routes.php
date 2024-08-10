@@ -26,6 +26,7 @@ $router->get("/assemble_pc_power_suply", 'AssemblePcController@assemblePcPowerSu
 $router->get("/templates", 'AssemblePcController@templates');
 $router->get("/template", 'AssemblePcController@template');
 $router->get("/products_page", "AssemblePcController@productsPage");
+$router->get("/stock_id", "AssemblePcController@stockById");
 
 $router->get("/about_us", "OrgInformationController@aboutUs");
 $router->get("/branches", "OrgInformationController@branches");
@@ -35,9 +36,11 @@ $router->get("/contacts", "OrgInformationController@contacts");
 $router->post("/add_to_cart", "PaymentController@addComponentToCart");
 $router->get("/branch_selection", "PaymentController@branchSelection");
 $router->get("/cart", "PaymentController@cart");
+$router->post("/cart", "PaymentController@cartToOrder");
 $router->get("/confirm_order", "PaymentController@confirmOrder");
 $router->get("/enter_address", "PaymentController@enterAddress");
 $router->get("/order_pickup", "PaymentController@orderPickUp");
+$router->get("/delete_item_cart", "PaymentController@deleteItemCart");
 
 $router->get("/create_product", "IntranetController@createProduct");
 $router->post("/create_product", "IntranetController@createProductPost");

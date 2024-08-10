@@ -43,6 +43,14 @@ class App {
                 })
             })
         }
+
+        if (currentUrl === "/cart"){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("cartPage", "js/components/cartPage.js", () => {
+                    let cartPage = new CartPage();
+                })
+            })
+        }
     }
 }
 

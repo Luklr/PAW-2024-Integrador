@@ -36,6 +36,17 @@ class AssemblePcController extends Controller
         $this->render('assemblePc/product.view.twig', $component->getDescription(), $request, ["product" => $component, "productSpecific" => $specificComponent]);
     }
 
+    function stockById(Request $request) {
+        if (!$request->get("id")){
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Missing id']);
+        } else {
+            $id = $request->get("id");
+            $stock = $this->componentRepository->getStockById($id);
+            echo json_encode(["success" => true, "stock" => $stock]);
+        }
+    }
+
     function assemblePc(Request $request) {
         $this->render('assemblePc/assemble_pc.view.twig', "Assemble your PC", $request);
     }

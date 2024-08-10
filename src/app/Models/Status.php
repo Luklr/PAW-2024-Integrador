@@ -21,6 +21,17 @@ enum Status: string {
             Status::DELIVERED => "DELIVERED"
         };
     }
+
+    public static function fromString(string $status): Status {
+        return match($status) {
+            "PENDING_PAYMENT" => Status::PENDING_PAYMENT,
+            "PREPARING" => Status::PREPARING,
+            "DISPATCHED" => Status::DISPATCHED,
+            "READY_FOR_PICKUP" => Status::READY_FOR_PICKUP,
+            "DELIVERED" => Status::DELIVERED,
+            default => throw new InvalidValueFormatException("Invalid status value: $status")
+        };
+    }
 }
 
 // // Usar el enumerado con metodos

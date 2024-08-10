@@ -41,6 +41,7 @@ class OrderRepository extends Repository
         }
 
         if($order && $componentsArray){
+            $order[0]["status"] = Status::fromString($order[0]["status"]);
             # a ese array lo meto dentro del objeto pedido
             $orderInstance = new Order($order[0]);
             $orderInstance->setComponents($componentsArray);
@@ -56,6 +57,8 @@ class OrderRepository extends Repository
         $modelArray = $model->toArray();
         unset($modelArray["components"]);
         if ($model) {
+            # paso el status a string
+            $modelArray["status"] = $modelArray["status"]->label();
             $id = self::$queryBuilder->table($this->table())->insert($modelArray);
         }
         if ($id) {

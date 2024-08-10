@@ -38,6 +38,15 @@ class ComponentRepository extends Repository
         return null;
     }
 
+    public function getStockById(int $id) 
+    {
+        if (!$id) 
+            return null;
+        $filter = "id = :id";
+        $component = self::$queryBuilder->table($this->table())->select($filter, [':id' => $id]);
+        return $component[0]["stock"];
+    }
+
     public function create(array $data, string $type = null)
     {
         if ($type !== null) {
