@@ -1,0 +1,34 @@
+{% extends 'view.twig' %}
+
+{% block main_class %}payment{% endblock %}
+
+{% block content %}
+    <h2>
+        Sucursales
+    </h2>
+    {% if addresses is not empty %}
+        <ul>
+            {% for address in addresses %}
+            <li>
+                <article id="{{address.id}}" class="address-item"> <!--Si cliqueo en el articulo, un js envia el branch y luego me envia al confirm order-->
+                    <h3>{{address.street}} {{address.number}}, {{address.locality}}, {{address.province}}</h3>
+                    <ul>
+                        <li>Código postal {{address.postalcode}}</li>
+                        {% if address.floor %}
+                            <li>Piso {{address.floor}}</li>
+                        {% endif %}
+                        {% if address.apartment %}
+                            <li>Apartamento {{address.apartment}}</li>
+                        {% endif %}
+                    </ul>
+                </article>
+            </li>
+            {% endfor %}
+        </ul>
+        <input type="button" value="continuar" class="submit form-submit">
+        <p><a href="/account/set_address" target="_blank">Añade una nueva dirección aquí</a></p>
+    {% else %}
+        <h2>No tienes direcciones guardadas</h2>
+        <p><a href="/account/set_address" target="_blank">Añade una aquí</a></p>
+    {% endif %}
+{% endblock %}

@@ -6,13 +6,18 @@ use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class Address extends Model {
+    static public string $table = '"address"';
+
     protected array $fields = [
         "id" => null,
         "province" => null,
         "locality" => null,
+        "floor" => null,
+        "apartment" => null,
         "street" => null,
-        "domicileNumber" => null,
-        "postalCode" => null
+        "number" => null,
+        "postalcode" => null,
+        "user" => null
     ];
     
     public function setId(int $id) {
@@ -72,32 +77,64 @@ class Address extends Model {
         return $this->fields["street"];
     }
 
-    public function setDomicileNumber(int $dn) {
-        if ($dn < 1) {
+    public function setNumber(int $n) {
+        if ($n < 1) {
             throw new InvalidValueFormatException("The domicile number must not be minor than 1");
         }
-        $this->fields["domicileNumber"] = $dn;
+        $this->fields["number"] = $n;
     }
 
-    public function getDomicileNumber(): ?int
+    public function getNumber(): ?int
     {
-        return $this->fields["domicileNumber"];
+        return $this->fields["number"];
     }
 
-    public function setPostalCode(string $postalCode) {
-        $postalCodeTrim = trim($postalCode);
-        if (strlen($postalCodeTrim) > 10) {
+    public function setFloor(int $f) {
+        if (!$f || $f < 1) {
+            throw new InvalidValueFormatException("The floor must not be minor than 1");
+        }
+        $this->fields["floor"] = $f;
+    }
+
+    public function getFloor(): ?int
+    {
+        return $this->fields["floor"];
+    }
+
+    public function setApartment(int $a) {
+        if (!$a || $a < 1) {
+            throw new InvalidValueFormatException("The apartment must not be minor than 1");
+        }
+        $this->fields["apartment"] = $a;
+    }
+
+    public function getApartment(): ?int
+    {
+        return $this->fields["apartment"];
+    }
+
+    public function setPostalcode(string $postalcode) {
+        $postalcodeTrim = trim($postalcode);
+        if (strlen($postalcodeTrim) > 10) {
             throw new InvalidValueFormatException("The postal code must not be major than 10 characters");
         }
-        if (strlen($postalCodeTrim) < 1 ) {
+        if (strlen($postalcodeTrim) < 1 ) {
             throw new InvalidValueFormatException("The postal code must not be void");
         }
-        $this->fields["postalCode"] = $postalCodeTrim;
+        $this->fields["postalcode"] = $postalcodeTrim;
     }
 
-    public function getPostalCode(): ?string
+    public function getPostalcode(): ?string
     {
-        return $this->fields["postalCode"];
+        return $this->fields["postalcode"];
+    }
+
+    public function setUser(User $user) {
+        $this->fields["user"] = $user;
+    }
+    public function getUser(): ?User
+    {
+        return $this->fields["user"];
     }
 
     public function toArray(): array

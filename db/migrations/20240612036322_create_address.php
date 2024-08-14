@@ -23,11 +23,11 @@ final class CreateAddress extends AbstractMigration
         $tableAddress
             ->addColumn("street", "string", ["limit" => 40])
             ->addColumn("number", "integer")
-            ->addColumn("postal_code", "string", ["limit" => 20])
+            ->addColumn("postalcode", "string", ["limit" => 20])
             ->addColumn("floor", "integer", ["null" => true])
             ->addColumn("apartment", "integer", ["null" => true])
             ->addColumn("province", "string", ["limit" => 40])
-            ->addColumn("city", "string", ["limit" => 40])
+            ->addColumn("locality", "string", ["limit" => 40])
             ->addColumn('user_id', 'integer')
             ->addForeignKey('user_id', 'user', "id", ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION'])
             ->create();

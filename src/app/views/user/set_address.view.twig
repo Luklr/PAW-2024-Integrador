@@ -1,0 +1,24 @@
+{% extends 'view.twig' %}
+
+{% block content %}
+    <h2>
+        Añadir dirección
+    </h2>
+    <form name="set_address" action="/account/set_address" method="POST" class="submit form-submit">
+        <label for="province">Provincia</label>
+        <input type="text" id="province" name="province" tabindex="1" required autocomplete="on">
+        <label for="locality">Localidad</label>
+        <input type="text" id="locality" name="locality" tabindex="2" required autocomplete="on">
+        <label for="street">Calle</label>
+        <input type="text" id="street" name="street" tabindex="3" required autocomplete="on">
+        <label for="number">Número</label>
+        <input type="number" id="number" name="number" tabindex="4" required autocomplete="on">
+        <label for="floor">Piso</label>
+        <input type="number" id="floor" name="floor" tabindex="5" min="1" autocomplete="on">
+        <label for="apartment">Apartamento</label>
+        <input type="number" id="apartment" name="apartment" tabindex="6" min="1" autocomplete="on">
+        <label for="postalcode">Código Postal</label>
+        <input type="text" id="postalcode" name="postalcode" tabindex="7" required autocomplete="on">
+        <input type="submit" value="Enviar" class="submit" tabindex="8">
+    </form>
+{% endblock %}

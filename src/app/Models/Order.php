@@ -3,20 +3,25 @@
 namespace Paw\App\Models;
 
 use Paw\Core\Model;
+use Paw\App\Models\Status;
+use Paw\App\Models\User;
+use Paw\App\Models\Branch;
+use Paw\App\Models\Address;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
 class Order extends Model {
 
-    static public string $table = 'order';
+    static public string $table = '"order"';
 
     protected array $fields = [
         "id" => null,
-        "orderDate" => null,
-        "deliveryDate" => null,
-        "orderPrice" => null,
-        "deliveryPrice" => null,
+        "orderdate" => null,
+        "deliverydate" => null,
+        "orderprice" => null,
+        "deliveryprice" => null,
         "user" => null,
         "branch" => null,
+        "address" => null,
         "status" => null,
         "components" => []
     ];
@@ -30,46 +35,46 @@ class Order extends Model {
         return $this->fields["id"];
     }
 
-    public function setOrderDate(DateTime $orderDate) {
-        $this->fields["orderDate"] = $orderDate;
+    public function setOrderdate(\DateTime $orderdate) {
+        $this->fields["orderdate"] = $orderdate;
     }
 
-    public function getOrderDate(): ?DateTime
+    public function getOrderdate(): ?\DateTime
     {
-        return $this->fields["orderDate"];
+        return $this->fields["orderdate"];
     }
 
-    public function setDeliveryDate(DateTime $deliveryDate) {
-        $this->fields["deliveryDate"] = $deliveryDate;
+    public function setDeliverydate(\DateTime $deliverydate) {
+        $this->fields["deliverydate"] = $deliverydate;
     }
 
-    public function getDeliveryDate(): ?DateTime
+    public function getDeliverydate(): ?\DateTime
     {
-        return $this->fields["deliveryDate"];
+        return $this->fields["deliverydate"];
     }
 
-    public function setOrderPrice(float $price) {
+    public function setOrderprice(float $price) {
         if ($price < 0.0){
             throw new InvalidValueFormatException("The order price must not be minor than 0.0$");
         }
-        $this->fields["orderPrice"] = $price;
+        $this->fields["orderprice"] = $price;
     }
 
-    public function getOrderPrice(): ?float
+    public function getOrderprice(): ?float
     {
-        return $this->fields["orderPrice"];
+        return $this->fields["orderprice"];
     }
 
-    public function setDeliveryPrice(float $price) {
+    public function setDeliveryprice(float $price) {
         if ($price < 0.0){
             throw new InvalidValueFormatException("The delivery price must not be minor than 0.0$");
         }
-        $this->fields["deliveryPrice"] = $price;
+        $this->fields["deliveryprice"] = $price;
     }
 
-    public function getDeliveryPrice(): ?float
+    public function getDeliveryprice(): ?float
     {
-        return $this->fields["deliveryPrice"];
+        return $this->fields["deliveryprice"];
     }
 
     public function setUser(User $user) {
@@ -88,6 +93,15 @@ class Order extends Model {
     public function getBranch(): ?Branch
     {
         return $this->fields["branch"];
+    }
+
+    public function setAddress(Address $address) {
+        $this->fields["address"] = $address;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->fields["address"];
     }
 
     public function setStatus(Status $status) {
@@ -109,19 +123,19 @@ class Order extends Model {
     }
 
     public function pay() {
-        (this->fields["status"])::PREPARING;
+        ($this->fields["status"])::PREPARING;
     }
 
     public function dispatch(){
-        (this->fields["status"])::DISPATCHED;
+        ($this->fields["status"])::DISPATCHED;
     }
 
     public function readyForPickup(){
-        (this->fields["status"])::READY_FOR_PICKUP;
+        ($this->fields["status"])::READY_FOR_PICKUP;
     }
 
     public function delivered(){
-        (this->fields["status"])::DELIVERED;
+        ($this->fields["status"])::DELIVERED;
     }
 
     public function toArray(): array

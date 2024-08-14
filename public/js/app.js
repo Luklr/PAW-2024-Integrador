@@ -51,6 +51,30 @@ class App {
                 })
             })
         }
+
+        if (currentUrl === "/branch_selection"){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("branchSelection", "js/components/branchSelection.js", () => {
+                    let branchSelection = new BranchSelection();
+                })
+            })
+        }
+
+        if (currentUrl === "/enter_address"){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("enterAddress", "js/components/enterAddress.js", () => {
+                    let enterAddress = new EnterAddress();
+                })
+            })
+        }
+
+        if (currentUrl === "/confirm_order"){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("confirmOrder", "js/components/confirmOrder.js", () => {
+                    let confirmOrder = new ConfirmOrder();
+                })
+            })
+        }
     }
 }
 

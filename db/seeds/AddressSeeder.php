@@ -13,31 +13,31 @@ class AddressSeeder extends AbstractSeed
                 'user_id' => 1,
                 'street' => 'Av. España',
                 'number' => 600,
-                'postal_code' => 'B1748',
+                'postalcode' => 'B1748',
                 'floor' => 2,
                 'apartment' => 3,
                 'province' => 'Buenos Aires',
-                'city' => 'General Rodríguez'
+                'locality' => 'General Rodríguez'
             ],
             [
                 'user_id' => 2,
                 'street' => 'Rawson',
                 'number' => 760,
-                'postal_code' => 'B1748',
+                'postalcode' => 'B1748',
                 'floor' => null,
                 'apartment' => null,
                 'province' => 'Buenos Aires',
-                'city' => 'General Rodríguez'
+                'locality' => 'General Rodríguez'
             ],
             [
                 'user_id' => 1,
                 'street' => 'Irigoyen',
                 'number' => 240,
-                'postal_code' => 'B6700',
+                'postalcode' => 'B6700',
                 'floor' => null,
                 'apartment' => null,
                 'province' => 'Buenos Aires',
-                'city' => 'Luján'
+                'locality' => 'Luján'
             ],
         ];
 

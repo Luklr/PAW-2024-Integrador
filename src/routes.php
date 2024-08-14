@@ -38,9 +38,14 @@ $router->get("/branch_selection", "PaymentController@branchSelection");
 $router->get("/cart", "PaymentController@cart");
 $router->post("/cart", "PaymentController@cartToOrder");
 $router->get("/confirm_order", "PaymentController@confirmOrder");
+$router->post("/confirm_order", "PaymentController@confirmOrderPost");
+$router->get("/registered_order", "PaymentController@registeredOrder");
 $router->get("/enter_address", "PaymentController@enterAddress");
 $router->get("/order_pickup", "PaymentController@orderPickUp");
 $router->get("/delete_item_cart", "PaymentController@deleteItemCart");
+$router->get("/set_branch_order", "PaymentController@setBranchOrder");
+$router->get("/set_address_order", "PaymentController@setAddressOrder");
+
 
 $router->get("/create_product", "IntranetController@createProduct");
 $router->post("/create_product", "IntranetController@createProductPost");
@@ -51,6 +56,8 @@ $router->get("/signin", "UserController@signin");
 $router->post("/signin", "UserController@signinPost");
 $router->get("/account", "UserController@account");
 $router->get("/account/logout", "UserController@logout");
+$router->get("/account/set_address", "UserController@setAddress");
+$router->post("/account/set_address", "UserController@setAddressForm");
 
 $router->get("/forbidden", "ErrorController@forbidden");
 $router->get("/not_found", "ErrorController@notFound");

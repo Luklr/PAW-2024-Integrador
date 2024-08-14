@@ -3,15 +3,18 @@
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
 use Paw\App\Repositories\UserRepository;
+use Paw\App\Repositories\AddressRepository;
 use Twig\Environment;
 
 class UserController extends Controller
 {
     private $userRepository;
+    private $addressRepository;
 
     public function __construct(Environment $twig) {
         parent::__construct($twig);
         $this->userRepository = UserRepository::getInstance();
+        $this->addressRepository = AddressRepository::getInstance();
     }
 
     public function logout(Request $request) {
@@ -145,4 +148,44 @@ class UserController extends Controller
         echo $this->render('user/account.view.twig', "Account", $request, ["user" => $request->user()]);
     }
 
+    public function setAddress(Request $request) {
+        if (!$request->session()->isLogged()){
+            $request->session()->set("loopback", $originPath);
+            $this->redirect("/login");
+        }
+        echo $this->render('user/set_address.view.twig', "Set address", $request, ["user" => $request->user()]);
+    }
+
+    public function setAddressForm(Request $request) {
+        if (!$request->session()->isLogged()){
+            $request->session()->set("loopback", $originPath);
+            $this->redirect("/login");
+        }
+        if (!$request->hasBodyParams(["street", "number" ,"postalcode", "province", "locality"])){
+            http_response_code(400);
+            echo json_encode(['message' => 'Bad Request: Missing parameters']);
+        }
+
+        $data = [];
+        $data["user"] = $request->user();
+        $data["street"] = $request->post("street");
+        $data["postalcode"] = $request->post("postalcode");
+        $data["province"] = $request->post("province");
+        $data["locality"] = $request->post("locality");
+        $data["number"] = (int)$request->post("number");
+        if ($request->post("floor") && $request->post("floor") !== "") {
+            $data["floor"] = (int)$request->post("floor");
+        } else {
+            $data["floor"] = null;
+        }
+        if ($request->post("apartment") && $request->post("apartment") !== "") {
+            $data["apartment"] = (int)$request->post("apartment");
+        } else {
+            $data["apartment"] = null;
+        }
+
+        $this->addressRepository->create($data);
+
+        echo $this->render('user/confirm_address.view.twig', "Confirm address", $request, ["user" => $request->user()]);
+    }
 }

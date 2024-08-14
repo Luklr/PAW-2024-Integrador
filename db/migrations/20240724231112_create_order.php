@@ -20,10 +20,10 @@ final class CreateOrder extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('order');
-        $table->addColumn('order_date', 'datetime')
-              ->addColumn('delivery_date', 'datetime')
-              ->addColumn('order_price', 'decimal', ['precision' => 10, 'scale' => 2])
-              ->addColumn('delivery_price', 'decimal', ['precision' => 10, 'scale' => 2])
+        $table->addColumn('orderdate', 'datetime')
+              ->addColumn('deliverydate', 'datetime', ["null" => true])
+              ->addColumn('orderprice', 'decimal', ['precision' => 10, 'scale' => 2])
+              ->addColumn('deliveryprice', 'decimal', ['precision' => 10, 'scale' => 2,"null" => true])
               ->addColumn('user_id', 'integer')
               ->addColumn('branch_id', 'integer', ['null' => true])
               ->addColumn('status', 'string', ['limit' => 100])

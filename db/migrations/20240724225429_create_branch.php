@@ -23,7 +23,7 @@ final class CreateBranch extends AbstractMigration
         $table->addColumn('name', 'string', ['limit' => 100])
               ->addColumn('locality', 'string', ['limit' => 100])
               ->addColumn('street', 'string', ['limit' => 100])
-              ->addColumn('number', 'string', ['limit' => 10])
+              ->addColumn('number', 'integer')
               ->create();
     }
 }

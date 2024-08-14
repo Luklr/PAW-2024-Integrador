@@ -8,21 +8,89 @@ use Paw\App\Models\Status;
 use Paw\App\Models\Components\Component;
 use Paw\App\Repositories\ComponentRepository;
 use Paw\App\Repositories\OrderRepository;
+use Paw\App\Repositories\BranchRepository;
+use Paw\App\Repositories\AddressRepository;
 use Twig\Environment;
 
 class PaymentController extends Controller
 {
     private $componentRepository;
     private $orderRepository;
+    private $branchRepository;
+    private $addressRepository;
 
     public function __construct(Environment $twig) {
         parent::__construct($twig);
         $this->componentRepository = ComponentRepository::getInstance();
         $this->orderRepository = OrderRepository::getInstance();
+        $this->branchRepository = BranchRepository::getInstance();
+        $this->addressRepository = AddressRepository::getInstance();
     }
 
     public function branchSelection(Request $request) {
-        echo $this->render('payment/branch_selection.view.twig', "Branch selection", $request);
+        $session = $request->session();
+        if(!$request->session()->isLogged()) {
+            $request->session()->set("loopback", $originPath);
+            $this->redirect("/login");
+        }
+        if(!$session->get("order_id")){
+            $this->redirect("/cart");
+        }
+        $branches = $this->branchRepository->getAll();
+        // echo "<pre>";
+        // var_dump($branches);die;
+        echo $this->render('payment/branch_selection.view.twig', "Branch selection", $request, ["branches" => $branches]);
+    }
+
+    public function enterAddress(Request $request) {
+        $session = $request->session();
+        if(!$request->session()->isLogged()) {
+            $request->session()->set("loopback", $originPath);
+            $this->redirect("/login");
+        }
+        if(!$session->get("order_id")){
+            $this->redirect("/cart");
+        }
+        $addresses = $this->addressRepository->getByUser($request->user()->getId());
+        // echo "<pre>";
+        // var_dump($addresses);die;
+        echo $this->render('payment/enter_address.view.twig', "Enter address", $request, ["addresses" => $addresses]);
+    }
+
+    public function setBranchOrder(Request $request) {
+        $session = $request->session();
+        if(!$session->get("order_id")){
+            http_response_code(400);
+            echo json_encode(['message' => 'Bad Request: order not started']);
+        }
+        if(!$request->get("id")){
+            http_response_code(400);
+            echo json_encode(['message' => 'Bad Request: Missing id']);
+        }
+        $idBranch = $request->get("id");
+        $idOrder = $session->get("order_id");
+        # modifico el order, le pongo el id branch
+        $this->orderRepository->setBranch($idOrder, $idBranch);
+        http_response_code(200);
+        echo json_encode(['success' => true, "branch_id" => $idBranch]);
+    }
+
+    public function setAddressOrder(Request $request) {
+        $session = $request->session();
+        if(!$session->get("order_id")){
+            http_response_code(400);
+            echo json_encode(['message' => 'Bad Request: order not started']);
+        }
+        if(!$request->get("id")){
+            http_response_code(400);
+            echo json_encode(['message' => 'Bad Request: Missing id']);
+        }
+        $idAddress = $request->get("id");
+        $idOrder = $session->get("order_id");
+        # modifico el order, le pongo el id branch
+        $this->orderRepository->setAddress($idOrder, $idAddress);
+        http_response_code(200);
+        echo json_encode(['success' => true, "address_id" => $idAddress]);
     }
 
     public function cart(Request $request) {
@@ -65,27 +133,27 @@ class PaymentController extends Controller
         # edito las cantidades de cada componente en base al formulario
         foreach ($components as $component){
             $quantity = $request->post("quantity-" . $component["component"]->getId());
-            $cart->editComponentQuantity($component, $quantity);
+            $cart->editComponentQuantity($component["component"], $quantity);
         }
 
         # creo el array para crear el order
         $data = [];
         $data["components"] = $components;
         $data["user"] = $cart->getUser();
-        $data["orderDate"] = new DateTime();
+        $data["orderdate"] = new \DateTime();
         $price = 0;
         foreach ($components as $component) {
             $price += $component["quantity"] * $component["component"]->getPrice();
         }
-        $data["orderPrice"] = $price;
+        $data["orderprice"] = $price;
         $data["status"] = Status::PENDING_PAYMENT;
 
         # creo la instancia en la bd
-        $order = $orderRepository->create($data);
-
+        $order = $this->orderRepository->create($data);
+        $session->set("order_id", $order->getId());
         # redirecciono a la pagina para que elija entre envio o ir a buscar a una sucursal
-        header("Location: /order_pickup", true, 301);
-        exit();
+        $session->unset("cart");
+        $this->redirect("/order_pickup");
     }
 
     public function deleteItemCart(Request $request) {
@@ -106,11 +174,38 @@ class PaymentController extends Controller
     }
 
     public function confirmOrder(Request $request) {
-        echo $this->render('payment/confirm_order.view.twig', "Confirm order", $request);
+        $session = $request->session();
+        if(!$request->session()->isLogged()) {
+            $request->session()->set("loopback", $originPath);
+            $this->redirect("/login");
+        }
+        if(!$session->get("order_id")){
+            $this->redirect("/cart");
+        }
+        $orderId = $session->get("order_id");
+        $order = $this->orderRepository->getById($orderId);
+        echo $this->render('payment/confirm_order.view.twig', "Confirm order", $request, ["order" => $order]);
     }
 
-    public function enterAddress(Request $request) {
-        echo $this->render('payment/enter_address.view.twig', "Enter address", $request);
+    public function confirmOrderPost(Request $request) {
+        $session = $request->session();
+        if(!$request->session()->isLogged()) {
+            $request->session()->set("loopback", $originPath);
+            $this->redirect("/login");
+        }
+        if(!$session->get("order_id")){
+            $this->redirect("/cart");
+        }
+        $orderId = $session->get("order_id");
+        $order = $this->orderRepository->getById($orderId);
+        $order->pay();
+        $this->orderRepository->setStatus($order);
+        $session->unset("order_id");
+        $this->redirect("/registered_order");
+    }
+
+    public function registeredOrder(Request $request){
+        echo $this->render('payment/registered_order.view.twig', "Registered order", $request);
     }
 
     public function orderPickUp(Request $request) {

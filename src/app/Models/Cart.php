@@ -60,7 +60,7 @@ class Cart extends Model {
         $componentId = $component->getId();
         unset($this->fields['components'][$componentId]);
     }
-
+    
     public function editComponentQuantity(Component $component, int $quantity){
         $componentId = $component->getId();
         if ($component->getStock() < $quantity) 

@@ -3,24 +3,14 @@
 namespace Paw\App\Repositories;
 
 use Paw\Core\Database\QueryBuilder;
-use Paw\App\Models\User;
+use Paw\App\Models\Branch;
 
-class UserRepository extends Repository
+class BranchRepository extends Repository
 {
     protected static $instance = null;
     //protected static $model = User::class;
     public function model() {
-        return User::class;
-    }
-
-    public function getByEmail($email)
-    {
-        $filter = "email = :email";
-        $result = self::$queryBuilder->table($this->table())->select($filter, [':email' => $email]);
-        if ($result) {
-            return new $this->model($result[0]);
-        }
-        return null;
+        return Branch::class;
     }
 
     public function getById($id)
@@ -33,4 +23,16 @@ class UserRepository extends Repository
         return null;
     }
 
+    public function getAll()
+    {
+        $results = self::$queryBuilder->table($this->table())->select();
+        if (!$results) {
+            return null;
+        }
+        $models = [];
+        foreach ($results as $result){
+            $models[] = new $this->model($result);
+        }
+        return $models;
+    }
 }

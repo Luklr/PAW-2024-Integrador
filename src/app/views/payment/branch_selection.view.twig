@@ -1,0 +1,20 @@
+{% extends 'view.twig' %}
+
+{% block main_class %}payment{% endblock %}
+
+{% block content %}
+    <h2>
+        Sucursales
+    </h2>
+    <ul>
+        {% for branch in branches %}
+        <li>
+            <article id="{{branch.id}}" class="branch-item"> <!--Si cliqueo en el articulo, un js envia el branch y luego me envia al confirm order-->
+                <h3>{{branch.name}}</h3>
+                <p>{{branch.street}} {{branch.number}}, {{branch.locality}}</p>
+            </article>
+        </li>
+        {% endfor %}
+    </ul>
+    <input type="button" value="continuar" class="submit form-submit">
+{% endblock %}
