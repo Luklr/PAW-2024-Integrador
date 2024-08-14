@@ -123,19 +123,19 @@ class Order extends Model {
     }
 
     public function pay() {
-        ($this->fields["status"])::PREPARING;
+        $this->fields["status"]= Status::PREPARING;
     }
 
     public function dispatch(){
-        ($this->fields["status"])::DISPATCHED;
+        $this->fields["status"]= Status::DISPATCHED;
     }
 
     public function readyForPickup(){
-        ($this->fields["status"])::READY_FOR_PICKUP;
+        $this->fields["status"]= Status::READY_FOR_PICKUP;
     }
 
     public function delivered(){
-        ($this->fields["status"])::DELIVERED;
+        $this->fields["status"]= Status::DELIVERED;
     }
 
     public function toArray(): array
