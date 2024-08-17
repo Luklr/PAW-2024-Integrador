@@ -83,6 +83,20 @@ class OrderRepository extends Repository
         return null;
     }
 
+    public function getOrdersForManagement(string $status){
+        # obtengo las listas de los orders con los status que me interesan
+        $filter = "status = :status";
+        $orders = self::$queryBuilder->table($this->table())->select($filter, [':status' => $status]);
+
+        # obtengo los objetos con el id, y con estos utilizo el getById()
+        $ordersObj = [];
+        foreach($orders as $order){
+            $ordersObj[] = $this->getById($order["id"]);
+        }
+
+        return $ordersObj;
+    }
+
     public function setBranch($idOrder, $idBranch){
         $filter = "id = :id";
         $data = ["branch_id" => $idBranch, "address_id" => null]; 
@@ -100,6 +114,17 @@ class OrderRepository extends Repository
         $data = ["status" => $order->getStatus()];
         $idOrder = $order->getId();
         $order = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $idOrder]);
+    }
+
+    public function confirmOrder($orderId){
+        $componentRepository = ComponentRepository::getInstance();
+        $order = $this->getById($orderId);
+        $order->pay();
+        $this->setStatus($order);
+        $components = $order->getComponents();
+        foreach($components as $component){
+            $componentRepository->reduceStockById($component["component"]->getId(), $component["quantity"]);
+        }
     }
 
     public function create(array $data)

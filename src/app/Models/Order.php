@@ -8,6 +8,7 @@ use Paw\App\Models\User;
 use Paw\App\Models\Branch;
 use Paw\App\Models\Address;
 use Paw\Core\Exceptions\InvalidValueFormatException;
+use Paw\Core\Exceptions\InvalidStatusException;
 
 class Order extends Model {
 
@@ -127,14 +128,20 @@ class Order extends Model {
     }
 
     public function dispatch(){
+        if (!$this->fields["address"]) 
+            throw new InvalidStatusException("The order must be picked up at the branch");
         $this->fields["status"]= Status::DISPATCHED;
     }
 
     public function readyForPickup(){
+        if (!$this->fields["branch"]) 
+            throw new InvalidStatusException("The order must be delivered to the address");
         $this->fields["status"]= Status::READY_FOR_PICKUP;
     }
 
     public function delivered(){
+        if ($this->fields["status"] === Status::PREPARING || $this->fields["status"] === Status::PENDING_PAYMENT) 
+            throw new InvalidStatusException("The order must have the status DISPATCHED or PENDING_PAYMENT before being delivered");
         $this->fields["status"]= Status::DELIVERED;
     }
 

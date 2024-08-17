@@ -47,6 +47,13 @@ class ComponentRepository extends Repository
         return $component[0]["stock"];
     }
 
+    public function reduceStockById(int $id, int $quantity) {
+        $component = $this->getByIdAndType($id);
+        $filter = "id = :id";
+        $data = ["stock" => ($component->getStock() - $quantity)];
+        $c = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $id]);
+    }
+
     public function create(array $data, string $type = null)
     {
         if ($type !== null) {

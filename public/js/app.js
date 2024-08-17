@@ -75,6 +75,14 @@ class App {
                 })
             })
         }
+
+        if (currentUrl === "/management_orders"){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("managementOrders", "js/components/managementOrders.js", () => {
+                    let managementOrders = new ManagementOrders();
+                })
+            })
+        }
     }
 }
 

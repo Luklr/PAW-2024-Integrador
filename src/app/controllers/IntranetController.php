@@ -6,21 +6,143 @@ use Exception;
 use Paw\App\Handlers\ImageHandler;
 use Paw\Core\Request;
 use Paw\App\Repositories\ComponentRepository;
+use Paw\App\Models\Status;
+use Paw\App\Models\Branch;
+use Paw\App\Models\Address;
+use Paw\App\Repositories\OrderRepository;
 use Paw\App\Validators\RequestCreateProduct;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 use Twig\Environment;
 use Paw\App\Models\Components\Component;
+use Paw\Core\Exceptions\InvalidStatusException;
 
 class IntranetController extends Controller
 {
     private $componentRepository;
+    private $orderRepository;
     private ImageHandler $imageHandler;
 
     public function __construct(Environment $twig)
     {
         parent::__construct($twig);
         $this->componentRepository = ComponentRepository::getInstance();
+        $this->orderRepository = OrderRepository::getInstance();
         $this->imageHandler = new ImageHandler($this->imagesDir);   # products/
+    }
+
+    public function managementOrders(Request $request){
+        $this->access($request, $request->url(), "admin");
+        $this->render('intranet/management_orders.view.twig', "Management Orders", $request);
+    }
+
+    public function managementOrder(Request $request){
+        $this->access($request, $request->url(), "admin");
+        $id = $request->get("order_id");
+        $order = $this->orderRepository->getById($id);
+        $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order]);
+    }
+
+    public function getOrdersForManagement(Request $request){
+        $this->access($request, $request->url(), "admin");
+        # todas las ordenes menos en estado PENDING_PAYMENT y DELIVERED
+        $ordersPreparing = $this->orderRepository->getOrdersForManagement(Status::PREPARING->label());
+        $ordersDispatched = $this->orderRepository->getOrdersForManagement(Status::DISPATCHED->label());
+        $ordersReadyForPickUp = $this->orderRepository->getOrdersForManagement(Status::READY_FOR_PICKUP->label());
+
+
+        $ordersPreparingArray = [];
+        $ordersDispatchedArray = [];
+        $ordersReadyForPickUpArray = [];
+        $orders = [];
+
+        foreach($ordersPreparing as $order){
+            $ordersPreparingArray[] = [
+                "id" => $order->getId(),
+                "order_date" => $order->getOrderdate(),
+                "user_id" => $order->getUser()->getId(),
+                "branch" => $order->getBranch() ? $order->getBranch()->toArray() : null,
+                "address" => $order->getAddress() ? $order->getAddress()->toArray() : null,
+            ];
+        }
+        $orders[Status::PREPARING->label()] = $ordersPreparingArray;
+
+        foreach($ordersDispatched as $order){
+            $ordersDispatchedArray[] = [
+                "id" => $order->getId(),
+                "order_date" => $order->getOrderdate(),
+                "user_id" => $order->getUser()->getId(),
+                "branch" => $order->getBranch() ? $order->getBranch()->toArray() : null,
+                "address" => $order->getAddress() ? $order->getAddress()->toArray() : null,
+            ];
+        }
+        $orders[Status::DISPATCHED->label()] = $ordersDispatchedArray;
+
+        foreach($ordersReadyForPickUp as $order){
+            $ordersReadyForPickUpArray[] = [
+                "id" => $order->getId(),
+                "order_date" => $order->getOrderdate(),
+                "user_id" => $order->getUser()->getId(),
+                "branch" => $order->getBranch() ? $order->getBranch()->toArray() : null,
+                "address" => $order->getAddress() ? $order->getAddress()->toArray() : null,
+            ];
+        }
+        $orders[Status::READY_FOR_PICKUP->label()] = $ordersReadyForPickUpArray;
+
+        http_response_code(200);
+        echo json_encode(['orders' => $orders]);
+    }
+
+    public function setOrderStatus(Request $request) {
+        $this->access($request, $request->url(), "admin");
+        $json = file_get_contents('php://input');
+
+        $data = json_decode($json, true);
+
+        if ($data === null) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Invalid JSON']);
+            exit;
+        }
+        if (!isset($data['order_id']) || !isset($data['status'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Missing id or quantity']);
+            exit;
+        }
+
+        var_dump($data);
+
+        $order = $this->orderRepository->getById($data["order_id"]);
+        $statusNow = $order->getStatus();
+        $statusNew = $data["status"];
+
+        # verifica que el nuevo status no sea incorrecto
+        try{
+            switch($statusNew){
+                case Status::PREPARING->label():
+                    $order->pay();
+                    break;
+                case Status::DISPATCHED->label():
+                    $order->dispatch();
+                    break;
+                case Status::READY_FOR_PICKUP->label():
+                    $order->readyForPickup();
+                    break;
+                case Status::DELIVERED->label():
+                    $order->delivered();
+                    break;
+                default:
+                    throw new InvalidStatusException("Invalid sent status");
+            }
+        } catch (InvalidStatusException $e){
+            http_response_code(400);
+            $message = $e->getMessage();
+            echo json_encode(['error' => $message, "correction" => $statusNow]);
+            exit;
+        }
+        
+        $this->orderRepository->setStatus($order);
+        http_response_code(200);
+        echo json_encode(['success' => true]);
     }
 
     public function createProduct(Request $request, $mensaje="") {
@@ -34,7 +156,6 @@ class IntranetController extends Controller
         $data = [
             "type" => $type, 
             "mensaje" => $mensaje,
-        
             "types" => $types];
         $this->render('intranet/create_product.view.twig', "Create Product", $request, $data);
     }

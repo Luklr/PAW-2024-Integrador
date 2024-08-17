@@ -197,9 +197,7 @@ class PaymentController extends Controller
             $this->redirect("/cart");
         }
         $orderId = $session->get("order_id");
-        $order = $this->orderRepository->getById($orderId);
-        $order->pay();
-        $this->orderRepository->setStatus($order);
+        $this->orderRepository->confirmOrder($orderId);
         $session->unset("order_id");
         $this->redirect("/registered_order");
     }

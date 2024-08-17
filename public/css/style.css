@@ -463,3 +463,44 @@ article.product h3 {
     justify-content: flex-end;
     align-items: center;
 }
+
+.management_orders {
+    display: grid !important;
+    grid-template-areas: "preparing dispatched readyForPickUp delivered";
+    gap: 20px;
+    padding: 0 !important; 
+    margin-top: 0 !important;
+}
+
+.management_orders section {
+    padding: 15px;
+    display: flex; /* Utiliza flexbox para alinear el contenido */
+    flex-direction: column; /* Organiza el contenido en columnas */
+    justify-content: flex-start; /* Distribuye el espacio verticalmente */
+    height: 100%; /* Asegura que cada sección ocupe todo el espacio vertical disponible */
+}
+
+.management_orders .preparing{
+    grid-area: preparing;
+}
+
+.management_orders .dispatched{
+    grid-area: dispatched;
+}
+
+.management_orders .readyForPickUp{
+    grid-area: readyForPickUp;
+}
+
+.management_orders .delivered {
+    grid-area: delivered;
+}
+
+.management_orders article {
+    background-color: var(--large);
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: var(--background);
+}

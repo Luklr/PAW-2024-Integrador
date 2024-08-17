@@ -19,7 +19,6 @@ class User extends Model{
         "email" => null,
         "password" => null,
         "role" => null,
-        "address_id" => null,
     ];
 
     public function setName(string $name) {
@@ -122,15 +121,6 @@ class User extends Model{
     public function getRole(): ?string
     {
         return $this->fields["role"];
-    }
-
-    public function setAddress_id(Address $address) {
-        $this->fields["address_id"] = $address;
-    }
-
-    public function getAddress_id(): ?Address
-    {
-        return $this->fields["address_id"];
     }
 
     public function setOrder(Order $order) {

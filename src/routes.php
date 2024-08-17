@@ -49,6 +49,10 @@ $router->get("/set_address_order", "PaymentController@setAddressOrder");
 
 $router->get("/create_product", "IntranetController@createProduct");
 $router->post("/create_product", "IntranetController@createProductPost");
+$router->get("/management_orders", "IntranetController@managementOrders");
+$router->get("/management_order", "IntranetController@managementOrder");
+$router->get("/get_orders_management", "IntranetController@getOrdersForManagement");
+$router->post("/set_order_status", "IntranetController@setOrderStatus");
 
 $router->get("/login", "UserController@login");
 $router->post("/login", "UserController@loginPost");
