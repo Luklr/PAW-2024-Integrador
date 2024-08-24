@@ -39,7 +39,7 @@ class IntranetController extends Controller
         $this->access($request, $request->url(), "admin");
         $id = $request->get("order_id");
         $order = $this->orderRepository->getById($id);
-        $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order]);
+        $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => null]);
     }
 
     public function getOrdersForManagement(Request $request){
@@ -90,6 +90,24 @@ class IntranetController extends Controller
 
         http_response_code(200);
         echo json_encode(['orders' => $orders]);
+    }
+
+    public function setDeliveryPrice(Request $request) {
+        $this->access($request, $request->url(), "admin");
+        if(!$request->get("order_id")){
+            $this->render('error/bad_request.view.twig', "Management Order", $request);
+            exit;
+        }
+        if (!$request->post("deliveryprice")){
+            $message = "Form incomplete, missing delivery price parameter";
+            $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => $message]);
+            exit;
+        }
+        $orderId = $request->get("order_id");
+        $orderDeliveryPrice = floatval($request->post("deliveryprice"));
+        $this->orderRepository->setDeliveryPrice($orderId,$orderDeliveryPrice);
+        $message = "Delivery price setted";
+        $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => $message]);
     }
 
     public function setOrderStatus(Request $request) {

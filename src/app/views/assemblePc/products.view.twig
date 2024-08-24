@@ -3,10 +3,42 @@
 {% block main_class %}products{% endblock %}
 
 {% block content %}
-        <form class="searchbar-form">
+        <form id="search-form" class="searchbar-form">
             <label for="searchbar-templates">Buscar</label>
-            <input type="text" id="searchbar-templates" name="searchbar-templates" class="searchbar-input" tabindex="1" autocomplete="on" autofocus required>
+            <input type="text" id="searchbar-templates" name="searchbar-templates" class="searchbar-input" tabindex="1" autocomplete="on" autofocus>
+
             <input type="submit" value="Buscar" class="submit searchbar-submit">
+
+            <fieldset class="search-fieldset">
+                <input id="cpu" name="type" type="radio" value="cpu">
+                <label for="cpu">CPU</label>
+
+                <input id="videoCard" name="type" type="radio" value="videoCard">
+                <label for="videoCard">GPU</label>
+
+                <input id="motherboard" name="type" type="radio" value="motherboard">
+                <label for="motherboard">Motherboard</label>
+
+                <input id="memory" name="type" type="radio" value="memory">
+                <label for="memory">RAM</label>
+
+                <input id="internalHardDrive" name="type" type="radio" value="internalHardDrive">
+                <label for="internalHardDrive">Hard Drive</label>
+
+                <input id="cpuFan" name="type" type="radio" value="cpuFan">
+                <label for="cpuFan">Cpu Fan</label>
+
+                <input id="monitor" name="type" type="radio" value="monitor">
+                <label for="monitor">Monitor</label>
+
+                <input id="casePc" name="type" type="radio" value="casePc">
+                <label for="casePc">Case</label>
+
+                <input id="powerSuply" name="type" type="radio" value="powerSuply">
+                <label for="powerSuply">Power Suply</label>
+            </fieldset>
+
+            
         </form>
         {# {% for item in products %}
             <a href="{%%}">

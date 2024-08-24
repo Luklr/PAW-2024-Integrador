@@ -97,22 +97,39 @@ class OrderRepository extends Repository
         return $ordersObj;
     }
 
-    public function setBranch($idOrder, $idBranch){
+    public function setBranch(int $idOrder, int $idBranch){
         $filter = "id = :id";
         $data = ["branch_id" => $idBranch, "address_id" => null]; 
         $order = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $idOrder]);
     }
 
-    public function setAddress($idOrder, $idAddress){
+    public function setAddress(int $idOrder, int $idAddress){
         $filter = "id = :id";
         $data = ["address_id" => $idAddress, "branch_id" => null];
         $order = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $idOrder]);
     }
 
-    public function setStatus($order){
-        $filter = "id = :id";
+    public function setStatus(Order $order){
+        
         $data = ["status" => $order->getStatus()];
         $idOrder = $order->getId();
+        if ($order->getStatus() === Status::DISPATCHED->label()){
+            $now = new \DateTime();
+            $this->setDeliveryDate($idOrder, $now);
+        }
+        $order = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $idOrder]);
+    }
+
+    public function setDeliveryDate(int $idOrder, \DateTime $date) {
+        $filter = "id = :id";
+        $deliveryDate = $date->format('Y-m-d H:i:s');
+        $data = ["deliverydate" => $deliveryDate];
+        $order = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $idOrder]);
+    }
+
+    public function setDeliveryPrice(int $idOrder, float $deliveryPrice) {
+        $filter = "id = :id";
+        $data = ["deliveryprice" => $deliveryPrice];
         $order = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $idOrder]);
     }
 

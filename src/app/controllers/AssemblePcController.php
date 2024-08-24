@@ -90,8 +90,10 @@ class AssemblePcController extends Controller
     function productsPage(Request $request) {
         $get = $request->get();
         $page = isset($get['page']) ? (int)$get['page'] : 0;
+        $query = isset($_GET['query']) ? $_GET['query'] : null;
+        $type = isset($_GET['type']) ? $_GET['type'] : null;
         $itemsPerPage = 30;
-        $products = $this->componentRepository->getPage($itemsPerPage, $page);
+        $products = $this->componentRepository->getPage($itemsPerPage, $page, $query, $type);
 
         header('Content-Type: application/json');
         echo json_encode($products);

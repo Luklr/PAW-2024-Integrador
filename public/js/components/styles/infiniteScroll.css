@@ -1,0 +1,22 @@
+.searchbar-form {
+    display: flex !important;
+    /* grid-template-columns: 1fr 1fr !important; */
+    flex-wrap: wrap;
+    width: 35vw !important;
+}
+
+.searchbar-input{
+    width: 80% !important;
+}
+
+.search-fieldset{
+    display: flex !important;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    grid-column: 1 / -1 !important;
+}
+
+label {
+    color: black !important;
+}

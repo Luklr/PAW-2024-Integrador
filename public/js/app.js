@@ -31,7 +31,7 @@ class App {
         if (currentUrl === "/products") {
             document.addEventListener("DOMContentLoaded", () => {
                 tools.cargarScript("infiniteScroll", "js/components/infiniteScroll.js", () => {
-                    let products = new ScrollInfinito();
+                    let infiniteScroll = new InfiniteScroll();
                 });
             });
         }

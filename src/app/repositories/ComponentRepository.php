@@ -83,10 +83,26 @@ class ComponentRepository extends Repository
         }
     }
 
-    public function getPage(int $itemsPerPage, int $page)
+    public function getPage(int $itemsPerPage, int $page, string $query = null, string $type = null)
     {
         $offset = $itemsPerPage * $page;
-        $results = self::$queryBuilder->table($this->table())->selectPage(null, [], $itemsPerPage, $offset);
+
+        $filters = [];
+        $params = [];
+
+        if ($query) {
+            $filters[] = "LOWER(description) LIKE :query";
+            $params[':query'] = '%' . strtolower($query) . '%';
+        }
+
+        if ($type) {
+            $filters[] = "type = :type";
+            $params[':type'] = $type;
+        }
+
+        $filterQuery = $filters ? implode(' AND ', $filters) : null;
+
+        $results = self::$queryBuilder->table($this->table())->selectPage($filterQuery, $params, $itemsPerPage, $offset);
         if ($results) {
             return $results;
         }

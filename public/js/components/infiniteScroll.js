@@ -1,9 +1,35 @@
-class ScrollInfinito{
-    constructor(){
+class InfiniteScroll {
+    constructor() {
+        var css = tools.nuevoElemento("link","",{rel: "stylesheet",href:"/js/components/styles/infiniteScroll.css"})
+            document.head.appendChild(css);
         this.page = 0;
-        
+        this.query = '';
+        this.type = '';
+
         this.loading = document.getElementById('loading');
         this.container = document.getElementsByClassName('products')[0];
+
+        this.initSearch();
+        this.initObserver();
+    }
+
+    initSearch() {
+        const form = document.getElementById('search-form');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            this.page = 0;
+            this.query = document.getElementById('searchbar-templates').value;
+            this.type = document.querySelector('input[name="type"]:checked')?.value || '';
+            
+            // Borra solo los productos y no el formulario o el div de loading
+            const products = document.querySelectorAll('.products .product');
+            products.forEach(product => product.remove());
+    
+            this.chargeMoreProducts();
+        });
+    }
+
+    initObserver() {
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
                 this.chargeMoreProducts();
@@ -15,13 +41,11 @@ class ScrollInfinito{
         });
 
         observer.observe(this.loading);
-        // this.loading.style.display = 'none';
     }
 
     async chargeMoreProducts() {
         try {
-            // this.loading.style.display = 'block';
-            const response = await fetch(`${window.location.origin}/products_page?page=${this.page}`);
+            const response = await fetch(`${window.location.origin}/products_page?page=${this.page}&query=${this.query}&type=${this.type}`);
             const data = await response.json();
 
             data.forEach(item => {
@@ -31,11 +55,10 @@ class ScrollInfinito{
                 const img = document.createElement("img");
                 const h3 = document.createElement("h3");
                 const p =  document.createElement("p");
-                console.log(item);
+
                 a.href = `${window.location.origin}/product?id=${item["id"]}`;
                 art.className = 'product';
 
-                // img.src = item.fields["path_img"] ? item.fields["path_img"] : "#";
                 pic.appendChild(img);
                 h3.textContent = item["description"];
                 p.textContent = `${item["stock"]} - $${item["price"]}`;
@@ -50,8 +73,6 @@ class ScrollInfinito{
             this.page++;
         } catch (error) {
             console.error('Error loading more data:', error);
-        } finally {
-            // this.loading.style.display = 'none';
         }
-    };
+    }
 }

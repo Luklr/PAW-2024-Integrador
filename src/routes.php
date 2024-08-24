@@ -53,6 +53,7 @@ $router->get("/management_orders", "IntranetController@managementOrders");
 $router->get("/management_order", "IntranetController@managementOrder");
 $router->get("/get_orders_management", "IntranetController@getOrdersForManagement");
 $router->post("/set_order_status", "IntranetController@setOrderStatus");
+$router->post("/set_delivery_price", "IntranetController@setDeliveryPrice");
 
 $router->get("/login", "UserController@login");
 $router->post("/login", "UserController@loginPost");

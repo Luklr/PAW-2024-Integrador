@@ -142,6 +142,8 @@ class Order extends Model {
     public function delivered(){
         if ($this->fields["status"] === Status::PREPARING || $this->fields["status"] === Status::PENDING_PAYMENT) 
             throw new InvalidStatusException("The order must have the status DISPATCHED or PENDING_PAYMENT before being delivered");
+        if ($this->fields["address"] && !$this->fields["deliverydate"] && !$this->fields["deliveryprice"])
+            throw new InvalidStatusException("The order must have the delivery date and price before being delivered");
         $this->fields["status"]= Status::DELIVERED;
     }
 

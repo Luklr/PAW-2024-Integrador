@@ -1,0 +1,62 @@
+{% extends 'view.twig' %}
+
+{% block main_class %}payment{% endblock %}
+
+{% block content %}
+    <h2>
+        Confirmar pedido
+    </h2>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="5">Producto</th>
+                    <th colspan="2">Precio</th>
+                    <th colspan="3">Cantidad</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th colspan="5">Total</th>
+                    <td colspan="2" id="totalPrice">0$</td>
+                    <td colspan="3"></td>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for item in order.components %}
+                    <tr id="col-{{ item.component.id }}" class="component">
+                        <td colspan="5">{{ item.component.description }}</td>
+                        <td colspan="2" class="price" data-price="{{ item.component.price }}">{{ item.component.price }}$</td>
+                        <td colspan="3" class="quantity" data-quantity="{{ item.quantity }}">{{ item.quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if order.branch %}
+            <article id="{{order.branch.id}}">
+                <h3>{{order.branch.name}}</h3>
+                <p>{{order.branch.street}} {{order.branch.number}}, {{order.branch.locality}}</p>
+            </article>
+        {% endif %}
+        {% if order.address %}
+            <article id="{{order.address.id}}">
+                <h3>{{order.address.street}} {{order.address.number}}, {{order.address.locality}}, {{order.address.province}}</h3>
+                <ul>
+                    <li>Código postal {{order.address.postalcode}}</li>
+                    {% if order.address.floor %}
+                        <li>Piso {{order.address.floor}}</li>
+                    {% endif %}
+                    {% if order.address.apartment %}
+                        <li>Apartamento {{order.address.apartment}}</li>
+                    {% endif %}
+                </ul>
+            </article>
+            <form name="setDeliveryPrice" action="/set_delivery_price?order_id={{order.id}}" method="POST">
+                <label for="deliveryprice">Precio de envío:</label>
+                <input type="number" id="deliveryprice" name="deliveryprice" step="0.01" min="0">
+                <input type="submit" value="Confirmar" class="submit form-submit">
+            </form>
+            {% if message is not null %}
+                <p class="error_message">{{message}}</p>
+            {% endif %}
+        {% endif %}
+{% endblock %}
