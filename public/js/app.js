@@ -12,6 +12,9 @@ class App {
             });
         }
         */
+        tools.cargarScript("notifications", "js/components/notifications.js", () => {
+            let notifications = new Notifications();
+        });
 
         if (currentUrl === "/create_product") {
             //Cargar el script solo en la página de inicio

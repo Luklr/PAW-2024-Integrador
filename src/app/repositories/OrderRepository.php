@@ -113,6 +113,7 @@ class OrderRepository extends Repository
         
         $data = ["status" => $order->getStatus()];
         $idOrder = $order->getId();
+        $filter = "id = :id";
         if ($order->getStatus() === Status::DISPATCHED->label()){
             $now = new \DateTime();
             $this->setDeliveryDate($idOrder, $now);

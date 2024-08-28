@@ -6,6 +6,8 @@ use Exception;
 use Paw\App\Handlers\ImageHandler;
 use Paw\Core\Request;
 use Paw\App\Repositories\ComponentRepository;
+use Paw\App\Repositories\NotificationRepository;
+use Paw\App\Repositories\UserRepository;
 use Paw\App\Models\Status;
 use Paw\App\Models\Branch;
 use Paw\App\Models\Address;
@@ -20,6 +22,8 @@ class IntranetController extends Controller
 {
     private $componentRepository;
     private $orderRepository;
+    private $notificationRepository;
+    private $userRepository;
     private ImageHandler $imageHandler;
 
     public function __construct(Environment $twig)
@@ -27,6 +31,8 @@ class IntranetController extends Controller
         parent::__construct($twig);
         $this->componentRepository = ComponentRepository::getInstance();
         $this->orderRepository = OrderRepository::getInstance();
+        $this->notificationRepository = NotificationRepository::getInstance();
+        $this->userRepository = UserRepository::getInstance();
         $this->imageHandler = new ImageHandler($this->imagesDir);   # products/
     }
 
@@ -39,7 +45,7 @@ class IntranetController extends Controller
         $this->access($request, $request->url(), "admin");
         $id = $request->get("order_id");
         $order = $this->orderRepository->getById($id);
-        $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => null]);
+        $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => null, "error" => false]);
     }
 
     public function getOrdersForManagement(Request $request){
@@ -99,15 +105,18 @@ class IntranetController extends Controller
             exit;
         }
         if (!$request->post("deliveryprice")){
+            $orderId = $request->get("order_id");
+            $order = $this->orderRepository->getById($orderId);
             $message = "Form incomplete, missing delivery price parameter";
-            $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => $message]);
+            $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => $message, "error" => true]);
             exit;
         }
         $orderId = $request->get("order_id");
         $orderDeliveryPrice = floatval($request->post("deliveryprice"));
         $this->orderRepository->setDeliveryPrice($orderId,$orderDeliveryPrice);
         $message = "Delivery price setted";
-        $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => $message]);
+        $order = $this->orderRepository->getById($orderId);
+        $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => $message, "error" => false]);
     }
 
     public function setOrderStatus(Request $request) {
@@ -132,21 +141,26 @@ class IntranetController extends Controller
         $order = $this->orderRepository->getById($data["order_id"]);
         $statusNow = $order->getStatus();
         $statusNew = $data["status"];
+        $notificationType = null;
 
         # verifica que el nuevo status no sea incorrecto
         try{
             switch($statusNew){
                 case Status::PREPARING->label():
                     $order->pay();
+                    $notificationType = $this->notificationRepository->getNotificationTypeByName(Status::PREPARING->label());
                     break;
                 case Status::DISPATCHED->label():
                     $order->dispatch();
+                    $notificationType = $this->notificationRepository->getNotificationTypeByName(Status::DISPATCHED->label());
                     break;
                 case Status::READY_FOR_PICKUP->label():
                     $order->readyForPickup();
+                    $notificationType = $this->notificationRepository->getNotificationTypeByName(Status::READY_FOR_PICKUP->label());
                     break;
                 case Status::DELIVERED->label():
                     $order->delivered();
+                    $notificationType = $this->notificationRepository->getNotificationTypeByName(Status::DELIVERED->label());
                     break;
                 default:
                     throw new InvalidStatusException("Invalid sent status");
@@ -159,8 +173,31 @@ class IntranetController extends Controller
         }
         
         $this->orderRepository->setStatus($order);
+        $notificationArray =
+        [
+            "notification_type" => $notificationType,
+            "order" => $order,
+            "user" => $order->getUser(),
+            "timestamp" => new \DateTime()
+        ];
+        $this->notificationRepository->create($notificationArray);
         http_response_code(200);
         echo json_encode(['success' => true]);
+    }
+
+    public function aguante(Request $request){
+        $notificationArray = [
+            'user' => $this->userRepository->getById(1),
+            'seen' => true,  // Asegúrate de usar el valor booleano
+            'notification_type' => ["id" => 2],
+            'order' => $this->orderRepository->getById(1),
+            'timestamp' => new \DateTime()
+        ];
+        // echo("<pre>");
+        // var_dump($notificationArray);
+        // die;
+        $not = $this->notificationRepository->create($notificationArray);
+        var_dump($not);
     }
 
     public function createProduct(Request $request, $mensaje="") {

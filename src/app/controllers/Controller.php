@@ -3,6 +3,8 @@
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
 use Twig\Environment;
+use Paw\App\Models\Notification;
+use Paw\App\Repositories\NotificationRepository;
 
 class Controller
 {  
@@ -75,6 +77,7 @@ class Controller
     
     public function render($url, $title, $request, $values = null) {
         //Modo de uso: ingresar la ubicacion del archivo, el titulo, y un array key value con las demas variables (opcional)
+        
         $varsRender = [
             "footer" => $this->footer,
             "title" => $title,
@@ -86,7 +89,23 @@ class Controller
         ];
         $user = $request->user();
         if ($user) {
+            # agregamos username
             $varsRender = array_merge($varsRender,  ["username" => $user->getUsername()]);
+
+            # agregamos las notificaciones
+            $notifications = [];
+            $notificationRepository = NotificationRepository::getInstance();
+            $notificationsObj = $notificationRepository->getByUser($user->getId());
+            if ($notificationsObj){
+                foreach($notificationsObj as $notificationObj){
+                    $notification = $notificationObj->toArray();
+                    unset($notification["user"]);
+                    $notification["timestamp"] = $notification["timestamp"]->format('Y-m-d H:i:s');
+                    
+                    $notifications[] = $notification;
+                }
+                $varsRender = array_merge($varsRender, ["notifications" => $notifications]);
+            }
         }
 
         if ($values) {

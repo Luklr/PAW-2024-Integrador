@@ -4,6 +4,7 @@ namespace Paw\Core;
 use Paw\App\Models\User;
 use Paw\Core\Session;
 use Paw\Core\Database\QueryBuilder;
+use Paw\App\Repositories\NotificationRepository;
 
 class Request
 {
@@ -27,6 +28,16 @@ class Request
             return $this->user;
         } else {
             return null;
+        }
+    }
+
+    public function notificationsSeened(): bool
+    {
+        $notificationRepository = NotificationRepository::getInstance();
+        if ($this->session->isLogged()){
+            if (!isset($this->user)){
+                $notificationRepository->getByUser($this->user->getId());
+            }
         }
     }
 

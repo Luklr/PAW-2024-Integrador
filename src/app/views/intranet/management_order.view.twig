@@ -32,14 +32,16 @@
             </tbody>
         </table>
         {% if order.branch %}
+            <h3>Sucursal</h3>
             <article id="{{order.branch.id}}">
-                <h3>{{order.branch.name}}</h3>
+                <h4>{{order.branch.name}}</h4>
                 <p>{{order.branch.street}} {{order.branch.number}}, {{order.branch.locality}}</p>
             </article>
         {% endif %}
         {% if order.address %}
+            <h3>Envío</h3>
             <article id="{{order.address.id}}">
-                <h3>{{order.address.street}} {{order.address.number}}, {{order.address.locality}}, {{order.address.province}}</h3>
+                <h4>{{order.address.street}} {{order.address.number}}, {{order.address.locality}}, {{order.address.province}}</h4>
                 <ul>
                     <li>Código postal {{order.address.postalcode}}</li>
                     {% if order.address.floor %}
@@ -56,7 +58,7 @@
                 <input type="submit" value="Confirmar" class="submit form-submit">
             </form>
             {% if message is not null %}
-                <p class="error_message">{{message}}</p>
+                <p {% if error %} class="error_message" {% else %} class="confirm_message" {% endif %}>{{message}}</p>
             {% endif %}
         {% endif %}
 {% endblock %}

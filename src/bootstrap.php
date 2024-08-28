@@ -18,6 +18,7 @@ use Paw\App\Repositories\ComponentRepository;
 use Paw\App\Repositories\AddressRepository;
 use Paw\App\Repositories\BranchRepository;
 use Paw\App\Repositories\OrderRepository;
+use Paw\App\Repositories\NotificationRepository;
 
 require "routes.php";
 
@@ -50,12 +51,16 @@ $querybuilder3->setLogger($log);
 $querybuilder4 = QueryBuilder::getInstance($connection);
 $querybuilder4->setLogger($log);
 
+$querybuilder5 = QueryBuilder::getInstance($connection);
+$querybuilder5->setLogger($log);
+
 # Inicializar los Repository singleton:
 UserRepository::getInstance($querybuilder);
 ComponentRepository::getInstance($querybuilder1);
 AddressRepository::getInstance($querybuilder2);
 BranchRepository::getInstance($querybuilder3);
 OrderRepository::getInstance($querybuilder4);
+NotificationRepository::getInstance($querybuilder5);
 
 $request = new Request;
 

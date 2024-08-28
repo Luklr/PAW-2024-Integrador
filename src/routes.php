@@ -63,6 +63,9 @@ $router->get("/account", "UserController@account");
 $router->get("/account/logout", "UserController@logout");
 $router->get("/account/set_address", "UserController@setAddress");
 $router->post("/account/set_address", "UserController@setAddressForm");
+// $router->get("/get_notifications", "UserController@getNotifications");
+$router->get("/delete_notification", "UserController@deleteNotification");
+$router->post("/set_notifications_seen", "UserController@setNotificationsSeen");
 
 $router->get("/forbidden", "ErrorController@forbidden");
 $router->get("/not_found", "ErrorController@notFound");

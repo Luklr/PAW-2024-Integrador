@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Create the database
+# Crear la base de datos
 .\vendor\robmorgan\phinx\bin\phinx rollback -t 0
 .\vendor\robmorgan\phinx\bin\phinx migrate
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s UserSeeder
@@ -14,3 +14,4 @@
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s AddressSeeder
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s BranchSeeder
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s CpuSeeder
+.\vendor\robmorgan\phinx\bin\phinx seed:run -s NotificationTypeSeeder

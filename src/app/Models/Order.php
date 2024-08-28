@@ -125,12 +125,16 @@ class Order extends Model {
 
     public function pay() {
         $this->fields["status"]= Status::PREPARING;
+        $this->fields["deliverydate"]= null;
     }
 
     public function dispatch(){
         if (!$this->fields["address"]) 
             throw new InvalidStatusException("The order must be picked up at the branch");
+        if ($this->fields["address"] && !$this->fields["deliveryprice"])
+            throw new InvalidStatusException("The order must have the delivery date and price before being dispatched");
         $this->fields["status"]= Status::DISPATCHED;
+        $this->setDeliverydate(new \DateTime());
     }
 
     public function readyForPickup(){
@@ -142,8 +146,7 @@ class Order extends Model {
     public function delivered(){
         if ($this->fields["status"] === Status::PREPARING || $this->fields["status"] === Status::PENDING_PAYMENT) 
             throw new InvalidStatusException("The order must have the status DISPATCHED or PENDING_PAYMENT before being delivered");
-        if ($this->fields["address"] && !$this->fields["deliverydate"] && !$this->fields["deliveryprice"])
-            throw new InvalidStatusException("The order must have the delivery date and price before being delivered");
+        
         $this->fields["status"]= Status::DELIVERED;
     }
 

@@ -123,7 +123,7 @@ class ManagementOrders {
                             <p><strong>User ID:</strong> ${order.user_id}</p>
                             <p><strong>Branch:</strong> ${order.branch ? order.branch.name : 'N/A'}</p>
                             <p><strong>Address:</strong> ${order.address ? `${order.address.street} ${order.address.number}` : 'N/A'}</p>
-                            <a href="/management_order?id=${order.id}"><p class="link">Detalles...</p></a>
+                            <a href="/management_order?order_id=${order.id}"><p class="link">Detalles...</p></a>
                         `;
                         article.addEventListener('dragstart', (event) => this.drag(event, article));
                         section.appendChild(article);

@@ -12,3 +12,4 @@
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s AddressSeeder
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s BranchSeeder
 .\vendor\robmorgan\phinx\bin\phinx seed:run -s CpuSeeder
+.\vendor\robmorgan\phinx\bin\phinx seed:run -s NotificationTypeSeeder

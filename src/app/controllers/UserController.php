@@ -3,18 +3,22 @@
 namespace Paw\App\Controllers;
 use Paw\Core\Request;
 use Paw\App\Repositories\UserRepository;
+use Paw\App\Models\Notification;
 use Paw\App\Repositories\AddressRepository;
+use Paw\App\Repositories\NotificationRepository;
 use Twig\Environment;
 
 class UserController extends Controller
 {
     private $userRepository;
     private $addressRepository;
+    private $notificationRepository;
 
     public function __construct(Environment $twig) {
         parent::__construct($twig);
         $this->userRepository = UserRepository::getInstance();
         $this->addressRepository = AddressRepository::getInstance();
+        $this->notificationRepository = NotificationRepository::getInstance();
     }
 
     public function logout(Request $request) {
@@ -146,6 +150,40 @@ class UserController extends Controller
             $this->redirect("/login");
         } 
         echo $this->render('user/account.view.twig', "Account", $request, ["user" => $request->user()]);
+    }
+
+    public function setNotificationsSeen(Request $request) {
+        if (!$request->session()->isLogged()) {
+            http_response_code(404);
+            echo json_encode(['message' => 'Forbidden: Access denied']);
+        }
+        $userId = $request->user()->getId();
+        $notifications = $this->notificationRepository->getByUser($userId);
+        if ($notifications){
+            foreach($notifications as $notification){
+                $this->notificationRepository->setSeen($notification->getId());
+            }
+        }
+        
+        http_response_code(200);
+        echo json_encode(['success' => true]);
+    }
+
+    public function deleteNotification(Request $request){
+        if (!$request->session()->isLogged()) {
+            http_response_code(404);
+            echo json_encode(['message' => 'Forbidden: Access denied']);
+        }
+
+        if (!$request->get("id")){
+            http_response_code(400);
+            echo json_encode(['message' => 'Bad Request: Missing parameters']);
+        }
+
+        $notificationId = (int) $request->get("id");
+        $this->notificationRepository->deleteById($notificationId);
+        http_response_code(200);
+        echo json_encode(['success' => true]);
     }
 
     public function setAddress(Request $request) {
