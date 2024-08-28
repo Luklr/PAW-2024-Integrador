@@ -81,7 +81,17 @@ class dragAndDrop {
                     processFile(file);
                 });
             } else if (files.length > maxImages) {
-                alert("Solo puedes subir " + maxImages + " archivo/s como máximo");
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Solo puedes subir " + maxImages + " archivo/s como máximo",
+                    customClass: {
+                        title: "swal-title",
+                        content: "swal-content",
+                        confirmButton: "swal-confirm-button",
+                        cancelButton: "swal-cancel-button"
+                    }
+                });
             }
         }
 
@@ -92,7 +102,17 @@ class dragAndDrop {
 
             const fileContainers = document.querySelectorAll(".file-container");
             if (fileContainers.length >= maxImages) {
-                alert("Solo puedes subir " + maxImages + " archivo/s como máximo");
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Solo puedes subir " + maxImages + " archivo/s como máximo",
+                    customClass: {
+                        title: "swal-title",
+                        content: "swal-content",
+                        confirmButton: "swal-confirm-button",
+                        cancelButton: "swal-cancel-button"
+                    }
+                });
                 return; // Salir de la función para no procesar más archivos
             }
 
@@ -119,7 +139,17 @@ class dragAndDrop {
                 fileReader.readAsDataURL(file);
                 //uploadFile(file, id);
             } else {
-                alert("No es un archivo válido");
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "No es un archivo válido",
+                    customClass: {
+                        title: "swal-title",
+                        content: "swal-content",
+                        confirmButton: "swal-confirm-button",
+                        cancelButton: "swal-cancel-button"
+                    }
+                });
             }
 
         }

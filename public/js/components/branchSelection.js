@@ -39,9 +39,30 @@ class BranchSelection
         // Manejar clic en el botón de continuar
         continueButton.addEventListener('click', function() {
             if (selectedBranchId) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Sucursal elegida!",
+                    timer: 5000,
+                    customClass: {
+                        title: "swal-title",
+                        content: "swal-content",
+                        confirmButton: "swal-confirm-button",
+                        cancelButton: "swal-cancel-button"
+                    }
+                });
                 window.location.href = "/confirm_order";
             } else {
-                alert('Por favor, selecciona una sucursal.');
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Por favor, selecciona una sucursal",
+                    customClass: {
+                        title: "swal-title",
+                        content: "swal-content",
+                        confirmButton: "swal-confirm-button",
+                        cancelButton: "swal-cancel-button"
+                    }
+                });
             }
         });
     }

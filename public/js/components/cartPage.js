@@ -70,9 +70,29 @@ class CartPage {
 
         if (!isValid) {
             event.preventDefault();  // Prevent form submission if validation fails
-            alert('Please correct the errors in the form.');
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Por favor, corrija los errores en el formulario",
+                customClass: {
+                    title: "swal-title",
+                    content: "swal-content",
+                    confirmButton: "swal-confirm-button",
+                    cancelButton: "swal-cancel-button"
+                }
+            });
         } else {
-            alert('Form is valid and ready to submit.');
+            Swal.fire({
+                icon: "success",
+                title: "Pedido realizado!",
+                timer: 5000,
+                customClass: {
+                    title: "swal-title",
+                    content: "swal-content",
+                    confirmButton: "swal-confirm-button",
+                    cancelButton: "swal-cancel-button"
+                }
+            });
         }
     }
 

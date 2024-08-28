@@ -76,10 +76,32 @@ class ManagementOrders {
                 const originalSection = document.querySelector(`section.${originalSectionClass}`);
                 if (originalSection) {
                     originalSection.appendChild(element);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: 'Validacion fallida: ' + error,
+                        customClass: {
+                            title: "swal-title",
+                            content: "swal-content",
+                            confirmButton: "swal-confirm-button",
+                            cancelButton: "swal-cancel-button"
+                        }
+                    });
                     console.error('Error: Validation failed. The order has been returned to the original section.');
                 }
             } else {
                 console.error('Error:', error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: error,
+                    customClass: {
+                        title: "swal-title",
+                        content: "swal-content",
+                        confirmButton: "swal-confirm-button",
+                        cancelButton: "swal-cancel-button"
+                    }
+                });
             }
         });
     }

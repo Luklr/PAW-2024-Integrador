@@ -27,6 +27,17 @@ class EnterAddress
                     localStorage.setItem('selectedAddressId', selectedAddressId);
                     console.log(data.address_id);
                     console.log(data.success);
+                    Swal.fire({
+                        icon: "success",
+                        title: "Dirección elegida correctamente!",
+                        timer: 5000,
+                        customClass: {
+                            title: "swal-title",
+                            content: "swal-content",
+                            confirmButton: "swal-confirm-button",
+                            cancelButton: "swal-cancel-button"
+                        }
+                    });
                 } else {
                     selectedAddressId = null;
                     localStorage.setItem('selectedAddressId', selectedAddressId);
@@ -41,7 +52,17 @@ class EnterAddress
             if (selectedAddressId) {
                 window.location.href = "/confirm_order";
             } else {
-                alert('Por favor, selecciona una sucursal.');
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: 'Por favor, selecciona una sucursal',
+                    customClass: {
+                        title: "swal-title",
+                        content: "swal-content",
+                        confirmButton: "swal-confirm-button",
+                        cancelButton: "swal-cancel-button"
+                    }
+                });
             }
         });
     }
