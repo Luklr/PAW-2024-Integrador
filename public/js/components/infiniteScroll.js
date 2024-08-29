@@ -58,16 +58,19 @@ class InfiniteScroll {
 
                 a.href = `${window.location.origin}/product?id=${item["id"]}`;
                 art.className = 'product';
-
+                img.src = item["path_img"];
+                img.className = "products-list";
                 pic.appendChild(img);
                 h3.textContent = item["description"];
-                p.textContent = `${item["stock"]} - $${item["price"]}`;
+                p.textContent = `$${item["price"]}`;
                 
                 art.appendChild(pic);
                 art.appendChild(h3);
                 art.appendChild(p);
                 a.appendChild(art);
-                this.container.insertBefore(a, this.container.lastElementChild);
+                if (item["stock"] > 0){
+                    this.container.insertBefore(a, this.container.lastElementChild);
+                }
             });
 
             this.page++;

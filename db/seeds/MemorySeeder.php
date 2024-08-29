@@ -8,6 +8,15 @@ class MemorySeeder extends AbstractSeed
 {
     public function run(): void
     {
+        // Ruta imagenes
+        $imagesPath = '/images/components/';
+
+        // Generador de imagenes
+        $randomImages = function () use ($imagesPath) {
+            $strings = ["memory-1.png", "memory-2.png", "memory-3.png"];
+            return $imagesPath . $strings[array_rand($strings)];
+        };
+
         // Ruta del archivo CSV
         $csvFile = __DIR__ . '/csv/memory.csv';
 
@@ -35,6 +44,7 @@ class MemorySeeder extends AbstractSeed
                 'type' => 'memory',
                 'price' => (float)$row[1],
                 'stock' => $randomStock(),
+                "path_img" => $randomImages(),
             ];
 
             // Datos para la tabla 'memory'

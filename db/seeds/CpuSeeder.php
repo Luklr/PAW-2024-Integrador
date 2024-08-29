@@ -8,6 +8,15 @@ class CpuSeeder extends AbstractSeed
 {
     public function run(): void
     {
+        // Ruta imagenes
+        $imagesPath = '/images/components/';
+
+        // Generador de imagenes
+        $randomImages = function () use ($imagesPath) {
+            $strings = ["cpu-1.png", "cpu-2.png", "cpu-3.webp"];
+            return $imagesPath . $strings[array_rand($strings)];
+        };
+
         // Ruta del archivo CSV
         $csvFile = __DIR__ . '/csv/cpu.csv';
 
@@ -26,7 +35,7 @@ class CpuSeeder extends AbstractSeed
             return rand(10, 50);
         };
 
-        $id = 37611; // ID inicial
+        $id = 40698; // ID inicial
 
         foreach ($rows as $row) {
             // Datos para la tabla 'component'
@@ -35,6 +44,7 @@ class CpuSeeder extends AbstractSeed
                 'type' => 'cpu',
                 'price' => (float)$row[1],
                 'stock' => $randomStock(),
+                "path_img" => $randomImages(),
             ];
 
             // Determinar el tamaño (size)

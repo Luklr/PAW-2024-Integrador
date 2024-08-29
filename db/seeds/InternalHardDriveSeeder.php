@@ -8,6 +8,15 @@ class InternalHardDriveSeeder extends AbstractSeed
 {
     public function run(): void
     {
+        // Ruta imagenes
+        $imagesPath = '/images/components/';
+
+        // Generador de imagenes
+        $randomImages = function () use ($imagesPath) {
+            $strings = ["internalharddrive-1.png", "internalharddrive-2.png", "internalharddrive-3.png"];
+            return $imagesPath . $strings[array_rand($strings)];
+        };
+
         // Ruta del archivo CSV
         $csvFile = __DIR__ . '/csv/internal_hard_drive.csv';
 
@@ -35,6 +44,7 @@ class InternalHardDriveSeeder extends AbstractSeed
                 'type' => 'internalHardDrive',
                 'price' => (float)$row[1],
                 'stock' => $randomStock(),
+                "path_img" => $randomImages(),
             ];
 
             // Datos para la tabla 'internalHardDrive'

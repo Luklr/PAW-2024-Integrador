@@ -8,6 +8,15 @@ class CasePcSeeder extends AbstractSeed
 {
     public function run(): void
     {
+        // Ruta imagenes
+        $imagesPath = '/images/components/';
+
+        // Generador de imagenes
+        $randomImages = function () use ($imagesPath) {
+            $strings = ["casecpu-1.png", "casecpu-2.png", "casecpu-3.png"];
+            return $imagesPath . $strings[array_rand($strings)];
+        };
+
         // Ruta del archivo CSV
         $csvFile = __DIR__ . '/csv/case_pc.csv';
 
@@ -41,6 +50,7 @@ class CasePcSeeder extends AbstractSeed
                 'type' => 'casePc',
                 'price' => (float)$row[1],
                 'stock' => $randomStock(),
+                "path_img" => $randomImages(),
             ];
 
             // Determinar el valor para external_volume

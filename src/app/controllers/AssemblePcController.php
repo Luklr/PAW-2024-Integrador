@@ -27,12 +27,10 @@ class AssemblePcController extends Controller
     public function product(Request $request) {
         $id = $request->get("id");
         $component = $this->componentRepository->getByIdAndType($id);
-        
+
         $specificComponent = $component->getSpecificComponent();
         $specificComponent = $specificComponent->toArray();
-        // echo("<pre>");
-        // var_dump($specificComponent);
-        // die;
+        
         $this->render('assemblePc/product.view.twig', $component->getDescription(), $request, ["product" => $component, "productSpecific" => $specificComponent]);
     }
 

@@ -8,6 +8,15 @@ class PowerSuplySeeder extends AbstractSeed
 {
     public function run(): void
     {
+        // Ruta imagenes
+        $imagesPath = '/images/components/';
+
+        // Generador de imagenes
+        $randomImages = function () use ($imagesPath) {
+            $strings = ["powersupply-1.png", "powersupply-2.png", "powersupply-3.png"];
+            return $imagesPath . $strings[array_rand($strings)];
+        };
+
         // Ruta del archivo CSV
         $csvFile = __DIR__ . '/csv/power_suply.csv';
 
@@ -35,6 +44,7 @@ class PowerSuplySeeder extends AbstractSeed
                 'type' => 'powerSupply',
                 'price' => (float)$row[1],
                 'stock' => $randomStock(),
+                "path_img" => $randomImages(),
             ];
 
             // Determinar si es modular (true/false)

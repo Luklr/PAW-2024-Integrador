@@ -8,6 +8,15 @@ class CpuFanSeeder extends AbstractSeed
 {
     public function run(): void
     {
+        // Ruta imagenes
+        $imagesPath = '/images/components/';
+
+        // Generador de imagenes
+        $randomImages = function () use ($imagesPath) {
+            $strings = ["cpufan-1.png", "cpufan-2.png", "cpufan-3.png"];
+            return $imagesPath . $strings[array_rand($strings)];
+        };
+
         // Ruta del archivo CSV
         $csvFile = __DIR__ . '/csv/cpu_fan.csv';
 
@@ -35,6 +44,7 @@ class CpuFanSeeder extends AbstractSeed
                 'type' => 'cpuFan',
                 'price' => (float)$row[1],
                 'stock' => $randomStock(),
+                "path_img" => $randomImages(),
             ];
 
             // Determinar el tamaño (size)

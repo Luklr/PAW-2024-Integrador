@@ -1,10 +1,10 @@
 {% extends 'view.twig' %}
 
-{% block main_class %}product{% endblock %}
+{% block main_class %}product-unit{% endblock %}
 
 {% block content %}
-    <picture>
-        {# <img src= "{{item.pathImg}}" > #}#
+    <picture class="products-list">
+        <img src= "{{product.path_img}}" > 
     </picture>
     <section id="{{ product.id }}">
         <h3>{{product.description}}</h3>

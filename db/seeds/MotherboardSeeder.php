@@ -8,6 +8,15 @@ class MotherboardSeeder extends AbstractSeed
 {
     public function run(): void
     {
+        // Ruta imagenes
+        $imagesPath = '/images/components/';
+
+        // Generador de imagenes
+        $randomImages = function () use ($imagesPath) {
+            $strings = ["motherboard-1.png", "motherboard-2.png", "motherboard-3.png"];
+            return $imagesPath . $strings[array_rand($strings)];
+        };
+
         $csvFile = __DIR__ . '/csv/motherboard.csv';
         $rows = array_map('str_getcsv', file($csvFile));
         
@@ -32,6 +41,7 @@ class MotherboardSeeder extends AbstractSeed
                 'type' => 'motherboard',
                 'price' => (float)$row[1],
                 'stock' => $randomStock(),
+                "path_img" => $randomImages(),
             ];
 
             // Datos para la tabla 'motherboard'

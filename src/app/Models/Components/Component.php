@@ -13,7 +13,8 @@ class Component extends Model {
         "id" => null,
         "description" => null,
         "price" => null,
-        "stock" => null
+        "stock" => null,
+        "path_img" => null
     ];
 
     protected SpecificComponent $specificComponent;
@@ -29,6 +30,14 @@ class Component extends Model {
     public function getId(): ?int
     {
         return $this->fields["id"];
+    }
+
+    public function setPath_img(string $path_img) {
+        $this->fields["path_img"] = $path_img;
+    }
+    public function getPath_img(): ?string
+    {
+        return $this->fields["path_img"];
     }
 
     public function setSpecificComponent(SpecificComponent $specificComponent) {

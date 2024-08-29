@@ -8,6 +8,15 @@ class VideoCardSeeder extends AbstractSeed
 {
     public function run(): void
     {
+        // Ruta imagenes
+        $imagesPath = '/images/components/';
+
+        // Generador de imagenes
+        $randomImages = function () use ($imagesPath) {
+            $strings = ["gpu-1.png", "gpu-2.png", "gpu-3.png"];
+            return $imagesPath . $strings[array_rand($strings)];
+        };
+
         $csvFile = __DIR__ . '/csv/video_card.csv';
         $rows = array_map('str_getcsv', file($csvFile));
         
@@ -31,6 +40,7 @@ class VideoCardSeeder extends AbstractSeed
                 'type' => 'videoCard',
                 'price' => (float)$row[1],
                 'stock' => $randomStock(),
+                "path_img" => $randomImages(),
             ];
 
             // Datos para la tabla 'videoCard'

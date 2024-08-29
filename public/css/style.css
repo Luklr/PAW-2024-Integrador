@@ -421,44 +421,63 @@ article.product h3 {
     padding:0.3rem;
 }
 
-.product {
+.product-unit {
     display: grid !important;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr;
     padding-left: 2rem;
     padding-right: 2rem;
 }
 
-.product .form{
+.product-unit .form{
     display: inline-block;
     margin-block-end: 0;
 }
 
-.product .form input[type="number"] {
+.product-unit .form input[type="number"] {
     max-width: 4rem;
 }
 
-.product section {
+.product-unit section {
     grid-column: 1;
     grid-row: 1;
     display: flex;
     flex-direction: column;
 }
 
-.product picture {
-    grid-column: 2;
-    grid-row: 1;
+.product {
+    width: 300px;
+    height: 400px;
 }
 
-.product section p{
+.product-unit picture {
+    grid-column: 2;
+    grid-row: 1;
+    display: block; 
+    max-width: 100%;
+    height: 300px;
+}
+
+.product picture {
+    display: block; 
+    max-width: 100%;
+    height: 300px;
+}
+
+.products-list {
+    display: block;  
+    max-height: 100%;
+}
+
+.product-unit section p{
     font-size: 1.4rem;
 }
 
-.product section p, .product .form {
+.product-unit section p, .product .form {
     text-align: end;
 }
 
-.product .form .input-group {
+.product-unit .form .input-group {
     display: flex;
     justify-content: flex-end;
     align-items: center;
