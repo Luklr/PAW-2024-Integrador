@@ -10,16 +10,21 @@
             <h2>
                 Ultimos productos
             </h2>
-            {% for item in products %}
-            <article class="product">
-                <picture>
-                    {# <img src= "{{item.pathImg}}" > #}
-                </picture>
-                <h3>{{item.description}}</h3>
-                <p> 
-                    {{item.stock}} - ${{item.price}}
-                </p>
-            </article>
-            {% endfor %}
+            <section class="principal">
+                <div class="principal_carousell">
+                    {% for item in products %}
+                    <article class="product">
+                        <picture>
+                            <img src="{{item.path_img}}" >
+                        </picture>
+                        <h3>{{item.description}}</h3>
+                        <p> 
+                            ${{item.price}}
+                        </p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            
         </section>
 {% endblock %}

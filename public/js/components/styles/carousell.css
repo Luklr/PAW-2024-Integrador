@@ -1,0 +1,51 @@
+.principal {
+    overflow: hidden;
+    max-width: 62vw;
+}
+
+.principal_carousell {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: space-evenly;
+    transition: transform 0.35s ease;
+}
+
+.principal_carousell article{   
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    height: 65vh;
+    min-width: 60vw;
+}
+
+.principal_carousell article picture{
+    /* display:flex;
+    height: 60vh;
+    max-width: 100%;
+    justify-content: center;
+    align-items: center; */
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 86%;
+} 
+.principal_carousell article picture img {
+    /* display: block; 
+    width: auto !important;
+    max-width: 100% !important;
+    height: 50vh; */
+    max-width: 100%;
+    height: 100%;
+}
+
+@media (480px < width < 1080px){
+    .principal_carousell article picture{
+        width: 80vw;
+    } 
+}
+
+.buttonCarousell {
+    background-color: var(--beige-marca-light);
+    border-radius: 300px;
+}

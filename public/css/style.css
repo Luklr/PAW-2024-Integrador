@@ -347,19 +347,9 @@ article.product h3 {
 }
 */
 
-.index-products h2 {
-    grid-row: 1;
-    grid-column: 2;
-}
-
-.index-products .product {
-    grid-row: 2;
-}
-
-
 .index-products {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
 }
 
 /* DRAG AND DROP ---------------------------------------------*/

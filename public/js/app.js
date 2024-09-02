@@ -16,6 +16,13 @@ class App {
             let notifications = new Notifications();
         });
 
+        if (currentUrl === "/") {
+            //Cargar el script solo en la página de inicio
+            tools.cargarScript("carousell", "js/components/carousell.js", () => {
+                let carousell = new Carousell();
+            });
+        }
+
         if (currentUrl === "/create_product") {
             //Cargar el script solo en la página de inicio
             tools.cargarScript("selectProductForm", "js/components/selectProductForm.js", () => {
