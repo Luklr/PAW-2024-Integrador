@@ -45,8 +45,64 @@ class AssemblePcController extends Controller
         }
     }
 
-    function assemblePc(Request $request) {
-        $this->render('assemblePc/assemble_pc.view.twig', "Assemble your PC", $request);
+    function assemblePc(Request $request, bool $messageBoolean = false) {
+        $components = null;
+        $array = ["cpu","videoCard","memory","motherboard","internalHardDrive","cpuFan","powerSupply","casePc"];
+        foreach ($array as $component){
+            $components[$component] = [
+                "path_img" => $request->session()->get("AyPC_" . $component) ? 
+                ($request->session()->get("AyPC_" . $component)->getPath_img() ?: null) : null,
+                "description" => $request->session()->get("AyPC_" . $component) ? 
+                ($request->session()->get("AyPC_" . $component)->getDescription() ?: null) : null
+            ];
+        }
+        $this->render('assemblePc/assemble_pc.view.twig', "Assemble your PC", $request, 
+        ["components" => $components, "messageBoolean" => $messageBoolean]);
+    }
+
+    function verifyAssemblePcNextComponent(Request $request) {
+        $componentsOrder = [
+            1 => "cpu",
+            2 => "motherboard",
+            3 => "memory",
+            4 => "videoCard",
+            5 => "internalHardDrive",
+            6 => "cpuFan",
+            7 => "powerSupply",
+            8 => "casePc"
+        ];
+
+        if (!$request->get("type")) {
+            http_response_code(400);
+            echo json_encode(["error" => "Bad Request: Missing param 'type'"]);
+            return;
+        }
+
+        $currentType = $request->get("type");
+        $currentIndex = array_search($currentType, $componentsOrder);
+
+        // Si no encuentra el tipo, retorna un error (400)
+        if ($currentIndex === false) {
+            http_response_code(400);
+            echo json_encode(["error" => "Bad Request: invalid type"]);
+            return;
+        }
+
+        // Si el índice no es el primero, verifica que el componente anterior esté en la sesión
+        if ($currentIndex > 1) {
+            $previousType = $componentsOrder[$currentIndex - 1];
+
+            // Verifica si el componente anterior está en la sesión
+            if (!$request->session()->get("AyPC_" . $previousType)) {
+                http_response_code(400);
+                echo json_encode(["error" => "Bad Request: You must select the previous component: $previousType"]);
+                return;
+            }
+        }
+
+        // Si todo está bien, retorna un código 200
+        http_response_code(200);
+        echo json_encode(["success" => true]);
     }
 
     function assemblePcCase(Request $request) {
@@ -73,8 +129,12 @@ class AssemblePcController extends Controller
         $this->render('assemblePc/assemble_pc_disk.view.twig', "Assemble your PC", $request);
     }
 
-    function assemblePcPowerSuply(Request $request) {
-        $this->render('assemblePc/assemble_pc_power_suply.view.twig', "Assemble your PC", $request);
+    function assemblePcPowerSupply(Request $request) {
+        $this->render('assemblePc/assemble_pc_power_supply.view.twig', "Assemble your PC", $request);
+    }
+
+    function assemblePcCpuFan(Request $request) {
+        $this->render("assemblePc/assemble_pc_cpu_fan.view.twig", "Assemble your PC", $request);
     }
 
     function templates(Request $request) {

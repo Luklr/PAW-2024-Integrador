@@ -14,9 +14,7 @@ abstract class SpecificComponent extends Model {
      */
     protected abstract function compatibility(SpecificComponent $component2);
 
-    public function compatibleWith(SpecificComponent $component2){
-        return $component2->compatibility($this);
-    }
+    
 
     public function getKeys(): ?array
     {

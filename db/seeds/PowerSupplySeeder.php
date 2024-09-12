@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Seed\AbstractSeed;
 
-class PowerSuplySeeder extends AbstractSeed
+class PowerSupplySeeder extends AbstractSeed
 {
     public function run(): void
     {
@@ -18,7 +18,7 @@ class PowerSuplySeeder extends AbstractSeed
         };
 
         // Ruta del archivo CSV
-        $csvFile = __DIR__ . '/csv/power_suply.csv';
+        $csvFile = __DIR__ . '/csv/power_supply.csv';
 
         // Leer el contenido del archivo CSV
         $rows = array_map('str_getcsv', file($csvFile));
@@ -50,7 +50,7 @@ class PowerSuplySeeder extends AbstractSeed
             // Determinar si es modular (true/false)
             $isModular = strtolower($row[5]) === 'false' ? false : true;
 
-            // Datos para la tabla 'powerSuply'
+            // Datos para la tabla 'powerSupply'
             $powerSupplyData[] = [
                 'component_id' => $id,
                 'type' => $row[2],
@@ -65,7 +65,7 @@ class PowerSuplySeeder extends AbstractSeed
         // Insertar datos en la tabla 'component'
         $this->table('component')->insert($componentsData)->saveData();
 
-        // Insertar datos en la tabla 'powerSuply'
-        $this->table('powerSuply')->insert($powerSupplyData)->saveData();
+        // Insertar datos en la tabla 'powerSupply'
+        $this->table('powerSupply')->insert($powerSupplyData)->saveData();
     }
 }

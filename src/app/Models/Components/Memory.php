@@ -12,11 +12,12 @@ class Memory extends SpecificComponent {
     protected array $fields = [
         "speed" => null,
         "modules" => null,
+        "size" => null
     ];
 
     protected function compatibility(SpecificComponent $component){
-        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
-        $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "PowerSuply", "VideoCard"];
+        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSupply", "VideoCard"];
+        $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "PowerSupply", "VideoCard"];
 
         $componentStr = get_class($component);
         if (in_array($componentStr, $types)) {
@@ -24,9 +25,8 @@ class Memory extends SpecificComponent {
         }
 
         if ($componentStr == "Motherboard"){
-            $parts = explode(',', $this->getModules());
-            $memory_slots = $parts[0];
-            if ($component->getMemory_slots() >= $memory_slots){
+            
+            if ($component->getMemory_slots() >= $this->getModules()){
                 return true;
             }
         }
@@ -41,11 +41,18 @@ class Memory extends SpecificComponent {
         return $this->fields["speed"];
     }
 
-    public function setModules(?string $modules){
+    public function setModules(?int $modules){
         $this->fields["modules"] = $modules;
     }
-    public function getModules(): ?string{
+    public function getModules(): ?int{
         return $this->fields["modules"];
+    }
+
+    public function setSize(?int $size){
+        $this->fields["size"] = $size;
+    }
+    public function getSize(): ?int{
+        return $this->fields["size"];
     }
 
     public function toArrayChild(): array

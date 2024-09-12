@@ -23,6 +23,14 @@ class Component extends Model {
         $this->set($values);
     }
 
+    public function compatibleWith(Component $component2){
+        $specificComponent2 = $component2->getSpecificComponent();
+        if ($specificComponent2){
+            return $specificComponent2->compatibility($this->specificComponent);
+        }
+        return null;
+    }
+
     public function setId(int $id) {
         $this->fields["id"] = $id;
     }

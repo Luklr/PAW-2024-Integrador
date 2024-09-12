@@ -15,8 +15,8 @@ class Motherboard extends SpecificComponent {
     ];
 
     protected function compatibility(SpecificComponent $component){
-        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
-        $types = ["CasePc", "CpuFan", "InternalHardDrive", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
+        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSupply", "VideoCard"];
+        $types = ["CasePc", "CpuFan", "InternalHardDrive", "Monitor", "Motherboard", "PowerSupply", "VideoCard"];
 
         $componentStr = get_class($component);
         if (in_array($componentStr, $types)) {
@@ -24,9 +24,7 @@ class Motherboard extends SpecificComponent {
         }
 
         if ($componentStr == "Memory"){
-            $parts = explode(',', $component->getModules());
-            $memory_slots = $parts[0];
-            if ($this->getMemory_slots() >= $memory_slots){
+            if ($this->getMemory_slots() >= $component->getModules()){
                 return true;
             }
         }

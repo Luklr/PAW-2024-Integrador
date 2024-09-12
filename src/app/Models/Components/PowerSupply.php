@@ -5,9 +5,9 @@ namespace Paw\App\Models\Components;
 use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
-class PowerSuply extends SpecificComponent {
+class PowerSupply extends SpecificComponent {
 
-    static public string $tableChild = 'powerSuply';
+    static public string $tableChild = 'powerSupply';
 
     protected array $fields = [
         "type" => null,
@@ -17,8 +17,8 @@ class PowerSuply extends SpecificComponent {
     ];
 
     protected function compatibility(SpecificComponent $component){
-        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
-        $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSuply", "VideoCard"];
+        $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSupply", "VideoCard"];
+        $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSupply", "VideoCard"];
 
         $componentStr = get_class($component);
         if (in_array($componentStr, $types)) {

@@ -3,22 +3,11 @@
 {% block main_class %}products{% endblock %}
 
 {% block content %}
-        <form class="searchbar-form">
+        <form id="search-form" class="searchbar-form" data-type="casePc">
             <label for="searchbar-templates">Buscar</label>
-            <input type="text" id="searchbar-templates" name="searchbar-templates" class="searchbar-input" tabindex="1" autocomplete="on" autofocus required>
-            <input type="submit" value="Subir" class="submit searchbar-submit">
+            <input type="text" id="searchbar-templates" name="searchbar-templates" class="searchbar-input" tabindex="1" autocomplete="on" autofocus>
+
+            <input type="submit" value="Buscar" class="submit searchbar-submit">
         </form>
-        {% for item in products %}
-            <article>
-                <picture>
-                    <img src= "{{item.pathImg}}" >
-                </picture>
-                <h3>{{item.nombre}}</h3>
-                <p> 
-                    {{item.descripcion}}
-                    <br>
-                    {{item.precio}}
-                </p>
-            </article>
-        {% endfor %}
+        <div class="loading" id="loading"> loading... </div>
 {% endblock %}

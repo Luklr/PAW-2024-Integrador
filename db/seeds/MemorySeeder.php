@@ -46,12 +46,15 @@ class MemorySeeder extends AbstractSeed
                 'stock' => $randomStock(),
                 "path_img" => $randomImages(),
             ];
-
+            $parts = explode(',', $row[3]);
+            $modules = (int)$parts[0];
+            $size = (int)$parts[1];
             // Datos para la tabla 'memory'
             $memoryData[] = [
                 'component_id' => $id,
                 'speed' => (int)$row[2],
-                'modules' => $row[3],
+                'modules' => $modules,
+                'size' => $size
             ];
 
             $id++;

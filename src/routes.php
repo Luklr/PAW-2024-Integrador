@@ -22,11 +22,12 @@ $router->get("/assemble_pc_gpu", 'AssemblePcController@assemblePcGpu');
 $router->get("/assemble_pc_ram", 'AssemblePcController@assemblePcRam');
 $router->get("/assemble_pc_motherboard", 'AssemblePcController@assemblePcMotherboard');
 $router->get("/assemble_pc_disk", 'AssemblePcController@assemblePcDisk');
-$router->get("/assemble_pc_power_suply", 'AssemblePcController@assemblePcPowerSuply');
+$router->get("/assemble_pc_power_supply", 'AssemblePcController@assemblePcPowerSupply');
 $router->get("/templates", 'AssemblePcController@templates');
 $router->get("/template", 'AssemblePcController@template');
 $router->get("/products_page", "AssemblePcController@productsPage");
 $router->get("/stock_id", "AssemblePcController@stockById");
+$router->get("/verify_assemble_pc_next_component", "AssemblePcController@verifyAssemblePcNextComponent");
 
 $router->get("/about_us", "OrgInformationController@aboutUs");
 $router->get("/branches", "OrgInformationController@branches");

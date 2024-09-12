@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreatePowerSuply extends AbstractMigration
+final class PowerSupply extends AbstractMigration
 {
     /**
      * Change Method.
@@ -19,7 +19,7 @@ final class CreatePowerSuply extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('powerSuply');
+        $table = $this->table('powerSupply');
         $table
             ->addColumn('component_id', 'integer')
             ->addIndex(["component_id"],['unique' => true])

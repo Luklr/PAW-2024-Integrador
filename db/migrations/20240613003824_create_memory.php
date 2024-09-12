@@ -25,7 +25,8 @@ final class CreateMemory extends AbstractMigration
             ->addIndex(["component_id"],['unique' => true])
             ->addForeignKey('component_id', 'component', 'id', ['update' => 'NO_ACTION'])
             ->addColumn('speed', 'integer')
-            ->addColumn('modules', 'string', ['limit' => 20])
+            ->addColumn('modules', 'integer')
+            ->addColumn('size', 'integer')
             ->create();
     }
 }

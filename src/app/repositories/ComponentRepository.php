@@ -108,4 +108,166 @@ class ComponentRepository extends Repository
         }
         return $results;
     }
+
+    public function getPageAyPcCpu(int $itemsPerPage, int $page, string $socket = null, string $query = null)
+    {
+        $offset = $itemsPerPage * $page;
+        $type = "cpu";
+        $filters = [];
+        $params = [];
+        if ($query) {
+            $filters[] = "LOWER(description) LIKE :query";
+            $params[':query'] = '%' . strtolower($query) . '%';
+        }
+        if ($socket) {
+            $filters[] = "socket = :socket";
+            $params[':socket'] = $socket;
+        }
+        $filterQuery = $filters ? implode(' AND ', $filters) : null;
+
+        return $this->getPageAyPc($offset, $itemsPerPage, $type, $filterQuery, $params);
+    }
+
+    public function getPageAyPcVideoCard(int $itemsPerPage, int $page, string $query = null)
+    {
+        $offset = $itemsPerPage * $page;
+        $type = "videoCard";
+        $filters = [];
+        $params = [];
+        if ($query) {
+            $filters[] = "LOWER(description) LIKE :query";
+            $params[':query'] = '%' . strtolower($query) . '%';
+        }
+        $filterQuery = $filters ? implode(' AND ', $filters) : null;
+
+        return $this->getPageAyPc($offset, $itemsPerPage, $type, $filterQuery, $params);
+    }
+
+    public function getPageAyPcMotherboard(int $itemsPerPage, int $page, string $socket = null, int $memory_slots = null, string $query = null)
+    {
+        $offset = $itemsPerPage * $page;
+        $type = "motherboard";
+        $filters = [];
+        $params = [];
+        if ($query) {
+            $filters[] = "LOWER(description) LIKE :query";
+            $params[':query'] = '%' . strtolower($query) . '%';
+        }
+        if ($socket) {
+            $filters[] = "socket = :socket";
+            $params[':socket'] = $socket;
+        }
+        if ($memory_slots) {
+            $filters[] = "memory_slots = :memory_slots";
+            $params[':memory_slots'] = $memory_slots;
+        }
+        $filterQuery = $filters ? implode(' AND ', $filters) : null;
+
+        return $this->getPageAyPc($offset, $itemsPerPage, $type, $filterQuery, $params);
+    }
+
+    public function getPageAyPcMemory(int $itemsPerPage, int $page, int $modules = null, string $query = null)
+    {
+        $offset = $itemsPerPage * $page;
+        $type = "memory";
+        $filters = [];
+        $params = [];
+        if ($query) {
+            $filters[] = "LOWER(description) LIKE :query";
+            $params[':query'] = '%' . strtolower($query) . '%';
+        }
+        if ($modules) {
+            $filters[] = "modules = :modules";
+            $params[':modules'] = $modules;
+        }
+        $filterQuery = $filters ? implode(' AND ', $filters) : null;
+
+        return $this->getPageAyPc($offset, $itemsPerPage, $type, $filterQuery, $params);
+    }
+
+    public function getPageAyPcPowerSupply(int $itemsPerPage, int $page, string $typeCase = null, string $query = null)
+    {
+        $offset = $itemsPerPage * $page;
+        $type = "powerSupply";
+        $filters = [];
+        $params = [];
+        if ($query) {
+            $filters[] = "LOWER(description) LIKE :query";
+            $params[':query'] = '%' . strtolower($query) . '%';
+        }
+        if ($typeCase) {
+            $filters[] = "type = :type";
+            $params[':type'] = $typeCase;
+        }
+        $filterQuery = $filters ? implode(' AND ', $filters) : null;
+
+        return $this->getPageAyPc($offset, $itemsPerPage, $type, $filterQuery, $params);
+    }
+
+    public function getPageAyPcInternalHardDrive(int $itemsPerPage, int $page, string $query = null)
+    {
+        $offset = $itemsPerPage * $page;
+        $type = "internalHardDrive";
+        $filters = [];
+        $params = [];
+        if ($query) {
+            $filters[] = "LOWER(description) LIKE :query";
+            $params[':query'] = '%' . strtolower($query) . '%';
+        }
+        $filterQuery = $filters ? implode(' AND ', $filters) : null;
+
+        return $this->getPageAyPc($offset, $itemsPerPage, $type, $filterQuery, $params);
+    }
+
+    public function getPageAyPcCpuFan(int $itemsPerPage, int $page, string $query = null)
+    {
+        $offset = $itemsPerPage * $page;
+        $type = "cpuFan";
+        $filters = [];
+        $params = [];
+        if ($query) {
+            $filters[] = "LOWER(description) LIKE :query";
+            $params[':query'] = '%' . strtolower($query) . '%';
+        }
+        $filterQuery = $filters ? implode(' AND ', $filters) : null;
+
+        return $this->getPageAyPc($offset, $itemsPerPage, $type, $filterQuery, $params);
+    }
+
+    public function getPageAyPcCasePc(int $itemsPerPage, int $page, string $typePowerSupply = null, string $query = null)
+    {
+        $offset = $itemsPerPage * $page;
+        $type = "casePc";
+        $filters = [];
+        $params = [];
+        if ($query) {
+            $filters[] = "LOWER(description) LIKE :query";
+            $params[':query'] = '%' . strtolower($query) . '%';
+        }
+        if ($typePowerSupply) {
+            $filters[] = "type = :type";
+            $params[':type'] = $typePowerSupply;
+        }
+        $filterQuery = $filters ? implode(' AND ', $filters) : null;
+
+        return $this->getPageAyPc($offset, $itemsPerPage, $type, $filterQuery, $params);
+    }
+
+    private function getPageAyPc(int $offset, int $itemsPerPage, string $type, $filterQuery = null, $params = null)
+    {
+        $results = self::$queryBuilder->table("\"" . $type . "\"")->selectPage($filterQuery, $params, $itemsPerPage, $offset);
+        if (!$results) {
+            return null;
+        }
+
+        $components = [];
+        $filter = "id = :id";
+
+        foreach($results as $result){
+            $component = self::$queryBuilder->table($this->table())->select($filter, [':id' => $result["component_id"]]);
+            $components = array_merge($components, $component);
+        }
+
+        return $components;
+    }
 }

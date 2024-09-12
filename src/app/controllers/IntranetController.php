@@ -207,7 +207,7 @@ class IntranetController extends Controller
             $type = "";
         }
 
-        $types = ["videoCard","motherboard","memory","internalHardDrive","cpuFan","monitor","casePc","powerSuply"];
+        $types = ["videoCard","motherboard","memory","internalHardDrive","cpuFan","monitor","casePc","powerSupply"];
         $data = [
             "type" => $type, 
             "mensaje" => $mensaje,

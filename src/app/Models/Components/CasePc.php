@@ -22,7 +22,7 @@ class CasePc extends SpecificComponent {
             return true;
         }
 
-        if ($componentStr == "PowerSuply"){
+        if ($componentStr == "PowerSupply"){
             if ($this->getType() == $component->getType()){
                 return true;
             }
