@@ -136,22 +136,24 @@
         </article>
     </section>
 {% endblock %}
-{% if messageBoolean %}
-<script>
-    Swal.fire({
-        icon: "success",
-        title: "Componente agregado correctamente!",
-        backdrop: true,
-        toast: true,
-        position: "top-end",
-        timer: 5000,
-        timerProgressBar: true,
-        customClass: {
-            title: "swal-title",
-            content: "swal-content",
-            confirmButton: "swal-confirm-button",
-            cancelButton: "swal-cancel-button"
-        }
-    });
-</script>
-{% endif %}
+{% block javascripts %}
+    {% if messageBoolean %}
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Componente agregado correctamente!",
+            backdrop: true,
+            toast: true,
+            position: "top-end",
+            timer: 5000,
+            timerProgressBar: true,
+            customClass: {
+                title: "swal-title",
+                content: "swal-content",
+                confirmButton: "swal-confirm-button",
+                cancelButton: "swal-cancel-button"
+            }
+        });
+    </script>
+    {% endif %}
+{% endblock %}
