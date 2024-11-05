@@ -5,10 +5,16 @@ use Paw\Core\Router;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-$loader = new FilesystemLoader(__DIR__ . '/app/views');
+$loader = new FilesystemLoader(__DIR__ . '/App/views');
 $twig = new Environment($loader);
 
 // Instanciar el Router con Twig
+
+#var_dump(file_exists("Paw/core/Router"));
+
+#if ( ! class_exists('Paw/Core/Model')) 
+#    die('There is no hope!');
+
 $router = new Router($twig);
 
 $router->get('/','IndexController@index');
