@@ -17,6 +17,13 @@
     align-items: center;
     height: 65vh;
     min-width: 60vw;
+    padding: 2rem;
+    background-color: var(--primary);
+    background:
+    linear-gradient(var(--primary), transparent),
+    linear-gradient(to top left, var(--shadow), transparent);
+    background-blend-mode: screen;
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
 }
 
 .principal_carousell article picture{
@@ -37,6 +44,7 @@
     height: 50vh; */
     max-width: 100%;
     height: 100%;
+    filter: drop-shadow(0.35rem 0.35rem 0.4rem var(--dark-shadow));
 }
 
 @media (480px < width < 1080px){

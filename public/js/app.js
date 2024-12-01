@@ -1,5 +1,12 @@
 class App {
     constructor() {
+
+        fetch('/source/pictures/assembl-icon.svg')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.loader').innerHTML = data;
+            });
+
         const currentUrl = window.location.pathname;
         /*
         //Inicializar la funcionalidad Menu
