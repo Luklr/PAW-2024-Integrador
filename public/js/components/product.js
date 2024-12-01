@@ -20,6 +20,18 @@ class Product{
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error ' + response.status + ': ' + response.statusText);
+                } else {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Producto añadido correctamente!",
+                        timer: 5000,
+                        customClass: {
+                            title: "swal-title",
+                            content: "swal-content",
+                            confirmButton: "swal-confirm-button",
+                            cancelButton: "swal-cancel-button"
+                        }
+                    });
                 }
                 return response.json();
             })

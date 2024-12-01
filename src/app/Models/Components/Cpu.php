@@ -17,16 +17,21 @@ class Cpu extends SpecificComponent {
         "socket" => null
     ];
 
-    protected function compatibility(SpecificComponent $component){
+    public function compatibility(SpecificComponent $component): bool{
         $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSupply", "VideoCard"];
         $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "PowerSupply", "VideoCard"];
+        
+        $namespacePrefix = "Paw\\App\\Models\\Components\\";
+        foreach ($types as &$type) {
+            $type = $namespacePrefix . $type;
+        }
 
         $componentStr = get_class($component);
         if (in_array($componentStr, $types)) {
             return true;
         }
 
-        if ($componentStr == "Motherboard"){
+        if ($componentStr == "Paw\App\Models\Components\Motherboard"){
             $socket = $component->getSocket();
             if ($this->getSocket() === $socket){
                 return true;
@@ -37,7 +42,7 @@ class Cpu extends SpecificComponent {
     }
 
     public function setCore_count(int $core_count) {
-        if ($core_clock)
+        if ($core_count)
             $this->fields["core_count"] = $core_count;
     }
     public function getCore_count(): ?int

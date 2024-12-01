@@ -41,6 +41,23 @@ class CasePcSeeder extends AbstractSeed
             return $values[array_rand($values)];
         };
 
+        // Mapeo de tipos de gabinete a tipos de fuente de poder
+        $caseToPowerSupplyMap = [
+            "ATX Desktop" => "ATX",
+            "ATX Full Tower" => "ATX",
+            "ATX Mid Tower" => "ATX",
+            "ATX Mini Tower" => "ATX",
+            "ATX Test Bench" => "ATX",
+            "HTPC" => "ATX",
+            "MicroATX Desktop" => "ATX",
+            "MicroATX Mid Tower" => "ATX",
+            "MicroATX Mini Tower" => "ATX",
+            "MicroATX Slim" => "Flex ATX",
+            "Mini ITX Desktop" => "Mini ITX",
+            "Mini ITX Test Bench" => "Mini ITX",
+            "Mini ITX Tower" => "Mini ITX",
+        ];
+
         $id = 31656; // ID inicial
 
         foreach ($rows as $row) {
@@ -59,12 +76,20 @@ class CasePcSeeder extends AbstractSeed
                 $externalVolume = $randomVolume(); // Valor aleatorio entre 20, 40 y 60
             }
 
+            // Determinar el tipo de fuente de poder basado en el tipo de gabinete
+            $caseType = $row[2];
+            $powerSupplyType = $caseToPowerSupplyMap[$caseType] ?? null; // Validar mapeo
+
+            if ($powerSupplyType === null) {
+                throw new RuntimeException("No se encontró un mapeo para el tipo de gabinete: $caseType");
+            }
+
             // Datos para la tabla 'casePc'
             $casePcData[] = [
                 'component_id' => $id,
-                'type' => $row[2],
                 'side_panel' => $row[5],
                 'external_volume' => $externalVolume,
+                'type' => $powerSupplyType, // Se incluye el tipo de fuente de poder
             ];
 
             $id++;

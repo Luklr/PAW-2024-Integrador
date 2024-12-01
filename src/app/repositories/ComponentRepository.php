@@ -27,7 +27,7 @@ class ComponentRepository extends Repository
         
         $filter = "component_id = :component_id";
         $specificComponent = self::$queryBuilder->table("\"" . $type::$tableChild . "\"")->select($filter, [':component_id' => $id]);
-        
+
         //son arrays de arrays, por eso hay que especificar $component[0]
         if ($component && $specificComponent) {
             $specificComponentInstance = new $type($specificComponent[0]);
@@ -177,7 +177,7 @@ class ComponentRepository extends Repository
             $params[':query'] = '%' . strtolower($query) . '%';
         }
         if ($modules) {
-            $filters[] = "modules = :modules";
+            $filters[] = "modules >= :modules";
             $params[':modules'] = $modules;
         }
         $filterQuery = $filters ? implode(' AND ', $filters) : null;

@@ -16,16 +16,21 @@ class PowerSupply extends SpecificComponent {
         "modular" => null
     ];
 
-    protected function compatibility(SpecificComponent $component){
+    public function compatibility(SpecificComponent $component): bool{
         $allTypes = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSupply", "VideoCard"];
         $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "PowerSupply", "VideoCard"];
+
+        $namespacePrefix = "Paw\\App\\Models\\Components\\";
+        foreach ($types as &$type) {
+            $type = $namespacePrefix . $type;
+        }
 
         $componentStr = get_class($component);
         if (in_array($componentStr, $types)) {
             return true;
         }
 
-        if ($componentStr == "CasePc"){
+        if ($componentStr == "Paw\App\Models\Components\CasePc"){
             if ($this->getType() == $component->getType()){
                 return true;
             }

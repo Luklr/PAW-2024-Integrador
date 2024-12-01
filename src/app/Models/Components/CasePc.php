@@ -15,14 +15,20 @@ class CasePc extends SpecificComponent {
         "external_volume" => null
     ];
 
-    protected function compatibility(SpecificComponent $component){
+    public function compatibility(SpecificComponent $component): bool{
         $types = ["CasePc", "Cpu", "CpuFan", "InternalHardDrive", "Memory", "Monitor", "Motherboard", "VideoCard"];
+        
+        $namespacePrefix = "Paw\\App\\Models\\Components\\";
+        foreach ($types as &$type) {
+            $type = $namespacePrefix . $type;
+        }
+        
         $componentStr = get_class($component);
         if (in_array($componentStr, $types)) {
             return true;
         }
 
-        if ($componentStr == "PowerSupply"){
+        if ($componentStr == "Paw\App\Models\Components\PowerSupply"){
             if ($this->getType() == $component->getType()){
                 return true;
             }

@@ -24,7 +24,6 @@ class App {
         }
 
         if (currentUrl === "/create_product") {
-            //Cargar el script solo en la página de inicio
             tools.cargarScript("selectProductForm", "js/components/selectProductForm.js", () => {
                 let selectProductForm = new SelectProductForm("fieldset.new-product-fieldset");
             });
@@ -90,6 +89,25 @@ class App {
             document.addEventListener("DOMContentLoaded", () => {
                 tools.cargarScript("managementOrders", "js/components/managementOrders.js", () => {
                     let managementOrders = new ManagementOrders();
+                })
+            })
+        }
+
+        if (currentUrl === "/assemble_pc"){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("assembleYourPc", "js/components/assembleYourPc.js", () => {
+                    let assembleYourPc = new AssembleYourPc();
+                })
+            })
+        }
+
+        const validUrls = ["/assemble_pc_case", "/assemble_pc_cpu","/assemble_pc_gpu",
+            "/assemble_pc_ram", "/assemble_pc_motherboard", "/assemble_pc_internal_hard_drive",
+            "/assemble_pc_power_supply", "/assemble_pc_cpu_fan"];
+        if (validUrls.includes(currentUrl)){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("infiniteScrollAyPC", "js/components/infiniteScrollAyPC.js", () => {
+                    let infiniteScrollAyPC = new InfiniteScrollAyPC();
                 })
             })
         }

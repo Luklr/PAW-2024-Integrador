@@ -12,7 +12,7 @@ abstract class SpecificComponent extends Model {
     /*
      * Return true or false
      */
-    protected abstract function compatibility(SpecificComponent $component2);
+    public abstract function compatibility(SpecificComponent $component): bool;
 
     
 
