@@ -27,6 +27,11 @@ class Controller
             "role" => ["user","guest"]
         ],
         [
+            "href" => "/cart",
+            "name" => "Carrito",
+            "role" => ["user","guest"]
+        ],
+        [
             "href" => "/create_product",
             "name" => "Create product",
             "role" => "admin"

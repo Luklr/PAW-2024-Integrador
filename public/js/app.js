@@ -27,7 +27,7 @@ class App {
         if (esDispositivoMovil){
             document.addEventListener("DOMContentLoaded", () => {
                 tools.cargarScript("menuHam", "js/components/menuHam.js", () => {
-                    let menu = new menuHam(".header-nav-section");
+                    let menu = new menuHam("nav.nav-header");
                 });
             });
         }
