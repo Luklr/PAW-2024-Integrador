@@ -1,12 +1,13 @@
 {% include 'layout/head.view.twig' %}
 <body>
+    <div class="section-loader">
+        <div class="loader"></div>
+    </div>
 
     {% include 'layout/header.view.twig' %}
-
     <main class="{% block main_class %}default-class{% endblock %}">
-        {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
     </main>
-
     {% include 'layout/footer.view.twig' %}
 </body>
 </html>

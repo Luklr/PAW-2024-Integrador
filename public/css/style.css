@@ -37,7 +37,7 @@
 body {
     display: flex;
     flex-direction: column;
-    padding: 8rem 0 0 0;
+    padding: 3rem 0 0 0;
     background-color: var(--background);
     position: relative; /* Necesario para posicionar el pseudo-elemento */
     min-height: 100vh;
@@ -66,6 +66,10 @@ body::before {
     height: 80vw;
     background-repeat: no-repeat;
 } */
+
+main {
+    overflow: hidden;
+}
 
 header {
     background-color: var(--large) !important;
@@ -97,7 +101,15 @@ nav.nav-header {
     justify-content: flex-end;
 }
 
-nav.nav-header ul li {
+.nav-account {
+    height: 100% !important;
+    background-color: var(--large) !important;
+    display: flex !important;
+    /*height: auto !important;*/
+    width: 25rem;
+}
+
+nav.nav-header ul li, nav.nav-account ul li a {
     height: 100% !important;
 }
 
@@ -105,10 +117,11 @@ nav.nav-header ul li .selected {
     background-color: var(--primary) !important;
 }
 
-nav.nav-header ul li:hover {
+nav.nav-header ul li:hover, nav.nav-account > ul > li:hover{
     background-color: var(--primary) !important;
 }
 
+/*
 .nav-account {
     background-color: var(--primary) !important;
     width: 25rem;
@@ -129,6 +142,8 @@ nav.nav-account ul li a {
 nav.nav-account > ul > li:hover {
     background-color: var(--background) !important;
 }
+
+*/
 
 .logo {
     width: fit-content;
@@ -239,14 +254,35 @@ main {
 }
 
 .article-part-assemble{
-    border: 2px solid var(--secondary) !important;
+    border: 2px solid var(--shadow) !important;
     margin: 1rem;
-    border-radius: 0.3rem;
+    border-radius: 1rem;
     font-family: var(--font-main);
     display: flex !important;
     flex-direction: column;
+    justify-content: space-between; /* Espaciar regularmente los elementos */
+    align-items: center; /* Centrar horizontalmente los hijos */
     width: 30vw;
     align-items: center;
+    padding: 2rem;
+}
+
+button.boton-assemblePcPart {
+    margin: 1rem;
+
+    background-color: var(--primary);
+    color: var(--background);
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    transition: background-color 0.1s;
+    animation: hover-boton-out 0.2s ease-in-out forwards;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+button.boton-assemblePcPart:hover {
+    animation: hover-boton-in 0.2s ease-in-out forwards;
 }
 
 .assemble-title {
@@ -257,6 +293,11 @@ main {
 .assemble-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.assemble-section p.required {
+    color:#ff0000;
+    font-weight: 600;
 }
 
 h2 {
@@ -332,10 +373,31 @@ input[type="checkbox"] + label, [type="checkbox"]:checked+label:before {
     display: block;
 }
 
-[type="radio"]:checked+label:after {
-    border: 2px solid var(--primary);
-    background-color: var(--primary);
-}
+  
+/* Cuando el radio está seleccionado */
+[type="radio"]:checked + label:after {
+    animation: borderAndBackground 0.6s ease forwards; /* Aplica la animación */
+  }
+  
+  /* Animación con keyframes */
+  @keyframes borderAndBackground {
+    0% {
+      border-color: transparent; /* Color inicial */
+      background-color: transparent; /* Color inicial */
+    }
+    20% {
+      border-color: var(--dark-shadow); /* Color intermedio */
+      background-color: var(--dark-shadow); /* Color intermedio */
+    }
+    20% {
+        border-color: var(--shadow); /* Color intermedio */
+        background-color: var(--shadow); /* Color intermedio */
+      }
+    100% {
+      border-color: var(--primary); /* Color final */
+      background-color: var(--primary); /* Color final */
+    }
+  }
 
 small.trademark {
     color: gray !important;
@@ -356,10 +418,15 @@ main.products {
     align-items: center;
     border-radius: 1rem;
     background-color: rgba(54,51,51,0.3);
+    margin-bottom: 3rem;
 }
 
-.searchbar-form .searchbar-input {
+.searchbar-form .searchbar-input{
     width: 25vw;
+}
+
+.searchbar-submit {
+    margin: 0% !important;
 }
 
 .searchbar-form label {
@@ -380,6 +447,14 @@ main.products {
     transform: scale(1.1);
 }
 
+.search-fieldset {
+    border: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas de igual tamaño */
+    gap: 10px; /* Espacio entre elementos */
+    padding: 10px;
+}
+
 article.product {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     margin: 1rem;
@@ -398,10 +473,27 @@ article.product {
     border-radius: 3px;
     */
 
+
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    
+    background-color: transparent;
+    border: 2px solid; /* Define el grosor del borde */
+    color: var(--shadow);
+
+    background-blend-mode: screen;
+    /*box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;*/
 }
 
 article.product h3 {
     font-size: 1rem !important;
+    color: var(--secondary);
+}
+
+article.product picture {
+    transition: transform 0.3s;
 }
 
 /*
@@ -478,6 +570,11 @@ article.product h3 {
 
 .submit {
     padding:0.3rem;
+    margin:1rem;
+}
+
+textarea::placeholder {
+    color: var(--shadow);
 }
 
 .product-unit {
@@ -608,6 +705,38 @@ article.product h3 {
     color: var(--secondary) !important;
 }
 
+.section-loader {
+    position: fixed; /* Fijo en toda la ventana */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Ancho completo */
+    height: 100vh; /* Alto completo */
+    background-color: white; /* Fondo opaco */
+    z-index: 9999; /* Máximo z-index */
+    display: flex;
+    opacity: 1;
+    transition: opacity 0.1s ease;
+    animation: fadeIn 0.7s ease forwards;
+}
+
+.hide-loader {
+    animation: fadeOut 1s ease forwards;
+}
+
+.none-loader {
+    display: none !important;
+}
+
+@keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    30% {opaciy: 0;}
+    100% {opacity: 1;}
+}
 
 .loader {
     margin: auto;
@@ -680,3 +809,85 @@ article.product h3 {
     99% { transform: rotate(367deg); }
     100% { transform: rotate(360deg); }
   }
+
+
+
+
+
+/* MEDIA QUERYS ------------------------------------------------------------------------- */
+
+  @media (max-width: 480px) {
+    :root {
+        font-size: 12pt; 
+    }
+    h2 {
+        font-size: 2rem !important;
+    }
+    .logo-image {
+        width: 8rem !important;
+        height: auto !important;
+    }
+    body {
+        width: 100% !important;
+    }
+    .header-nav-section {
+        max-width: 100vw;
+        padding: 0 8rem 0 0;
+    }
+
+    footer {
+        display: none !important;
+    }
+    .searchbar-form{
+        width: 90vw !important;
+    }
+    .product {
+        width: 90vw !important;
+    }
+    main.products {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+    }
+    .principal_carousell article {
+        height: auto !important;
+    }
+
+}
+
+@media (480px < width < 1080px) {
+    :root {
+        font-size: 12pt !important; 
+    }
+    h2{
+        font-size: 3rem !important;
+    }
+    .header-nav-section {
+        padding: 0 9rem 0 0;
+        max-width: 100vw;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+    body {
+        width: 100% !important;
+    }
+    footer {
+        display: none !important;
+    }
+    .searchbar-form{
+        width: 90vw !important;
+    }
+    .product {
+        width: 90vw !important;
+    }
+    main.products {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+    }
+    .principal_carousell article {
+        height: auto !important;
+    }
+
+}

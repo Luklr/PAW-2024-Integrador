@@ -1,5 +1,5 @@
 .principal {
-    overflow: hidden;
+    /*overflow: hidden;*/
     max-width: 62vw;
 }
 
@@ -19,10 +19,12 @@
     min-width: 60vw;
     padding: 2rem;
     background-color: var(--primary);
+    color: transparent;
     background:
     linear-gradient(var(--primary), transparent),
     linear-gradient(to top left, var(--shadow), transparent);
     background-blend-mode: screen;
+    border: none;
     box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
 }
 

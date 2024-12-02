@@ -1,13 +1,43 @@
 class App {
     constructor() {
-
         fetch('/source/pictures/assembl-icon.svg')
             .then(response => response.text())
             .then(data => {
                 document.querySelector('.loader').innerHTML = data;
-            });
+        });
+
+        window.addEventListener("load", async () => {
+            const loader = document.querySelectorAll(".section-loader")[0];
+            const pageLoadTime = performance.now(); // Tiempo en milisegundos desde el inicio de la carga
+            
+            if (pageLoadTime < 1000) {
+                // Si la carga tomó menos de 1 segundo
+                loader.classList.add("none-loader");
+            } else {
+                // Si la carga tomó más de 1 segundo
+                loader.classList.add("hide-loader");
+                await delay(1000);
+                loader.classList.add("none-loader");
+            }
+        });
 
         const currentUrl = window.location.pathname;
+
+        var esDispositivoMovil = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (esDispositivoMovil){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("menuHam", "js/components/menuHam.js", () => {
+                    let menu = new menuHam(".header-nav-section");
+                });
+            });
+        }
+        
+        
+        // Función de delay
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
         /*
         //Inicializar la funcionalidad Menu
         var esDispositivoMovil = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

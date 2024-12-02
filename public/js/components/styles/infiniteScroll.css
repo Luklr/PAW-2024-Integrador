@@ -2,7 +2,6 @@
     display: flex !important;
     /* grid-template-columns: 1fr 1fr !important; */
     flex-wrap: wrap;
-    width: 35vw !important;
 }
 
 .searchbar-input{
