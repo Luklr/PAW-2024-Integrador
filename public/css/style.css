@@ -134,10 +134,6 @@ a[href="/cart"] {
 
 }
 
-nav.nav-header ul li, nav.nav-account ul li a {
-    height: 100% !important;
-}
-
 nav.nav-header ul li .selected {
     background-color: var(--primary) !important;
 }

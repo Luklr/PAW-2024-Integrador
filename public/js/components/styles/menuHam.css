@@ -33,7 +33,7 @@
     width: 2px;
     display: flex;
     flex-direction: column;
-    background-color: var(--gris-oscuro-marca);
+    background-color: var(--secondary);
     border-radius: 1rem;
     top: 100%; /* Esto posiciona ul justo debajo del header */
     right: 0; /* Puedes ajustar esto para que esté alineado con la izquierda del header */
@@ -42,8 +42,8 @@
 
 /* Independiente del estado del boton, se muestra con un tamanio minimo, y con el icono de menu*/
 button.menuHam-Abrir, button.menuHam-Cerrar, button.menuHam-Inicial {
-    min-height: 3rem;
-    width: 3rem;
+    min-height: 2rem;
+    width: 2rem;
     margin: 1rem;
     background-image: url("/images/Icon-menu-ham.png");
     background-color: transparent;
@@ -72,5 +72,23 @@ button.menuHam-Abrir:hover, button.menuHam-Cerrar:hover, button.menuHam-Inicial:
 /* Al abrirse, se muestran los elementos (lo que se controla con la animacion)*/
 .menuHam-Cerrar ul {
     animation: expandir 0.5s ease forwards;
-    position: absolute;
+    position:absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 100vw;
+    background-color: var(--secondary);
+}
+
+.menuHam-Cerrar ul li {
+    height: 3rem !important;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.menuHam-Cerrar ul li a {
+    width: 100%;
+    text-align: center;
 }
