@@ -3,16 +3,21 @@ class Carousell {
         // se inicializan variables
         this.principal = document.querySelector(".principal");
         this.principalCarousell = document.querySelector(".principal_carousell");
-        this.images = this.principalCarousell.querySelectorAll("article");
+        this.images = this.principalCarousell.querySelectorAll("a");
         console.log(this.images);
         var css = tools.nuevoElemento("link","",{rel: "stylesheet",href:"/js/components/styles/carousell.css"})
             document.head.appendChild(css);
         this.index = 1;
         this.prevButton = tools.nuevoElemento("button", "<", {class: "botonCarousell"});
-        this.principal.appendChild(this.prevButton);
 
         this.nextButton = tools.nuevoElemento("button", ">", {class: "botonCarousell"});
-        this.principal.appendChild(this.nextButton);
+
+        this.divButtons = tools.nuevoElemento("div","", {class: "contenedorBotonesCarousell"})
+
+        this.divButtons.appendChild(this.prevButton);
+        this.divButtons.appendChild(this.nextButton);
+
+        this.principal.appendChild(this.divButtons);
         this.transitionXCarousell(this.principal, this.principalCarousell, this.images, this.index, this.prevButton, this.nextButton);
     }
 
@@ -20,13 +25,13 @@ class Carousell {
         function medidaPantalla() {
             let anchoPantalla = window.innerWidth;
             if (anchoPantalla >= 1080) {
-                return 62
+                return 100
             } else if (anchoPantalla < 1080){
-                return 82
+                return 100
             }
         }
         prevButton.addEventListener("click", () => {
-            let vwDeTrancision = medidaPantalla();
+            let vwDeTrancision = 100;
             index--;
             if (index < 0){
                 index = images.length - 1; // Establecer el índice al último elemento
@@ -38,7 +43,7 @@ class Carousell {
         });
         
         nextButton.addEventListener("click", () => {
-            let vwDeTrancision = medidaPantalla();
+            let vwDeTrancision = 100;
             let percentage = index * -vwDeTrancision;
             index++;
             if (index > images.length){
@@ -51,7 +56,7 @@ class Carousell {
         let intervalo = null;
         
         intervalo = setInterval (() => {
-            let vwDeTrancision = medidaPantalla();
+            let vwDeTrancision = 100;
             let percentage = index * -vwDeTrancision;
             index++;
             if (index > images.length){

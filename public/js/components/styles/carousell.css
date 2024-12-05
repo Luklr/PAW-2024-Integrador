@@ -1,6 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 .principal {
     /*overflow: hidden;*/
-    max-width: 62vw;
+    width: 100vw;
+}
+
+.contenedorBotonesCarousell {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.contenedorBotonesCarousell button {
+    background-color: transparent;
+    border: none;
+
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 2rem;
+
+    color: var(--secondary);
+    transition: color 0.7s ease;
+}
+
+.contenedorBotonesCarousell button:active {
+    color: var(--primary);
+    transition: color 0.1s ease;
 }
 
 .principal_carousell {
@@ -10,6 +37,24 @@
     align-content: space-evenly;
     transition: transform 0.35s ease;
 }
+
+
+.principal_carousell a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw !important;
+}
+
+.principal_carousell a picture, .principal_carousell a picture img {
+    width: 100vw;
+}
+
+.index-products {
+    width: 100vw !important;
+}
+
 
 .principal_carousell article{   
     flex-grow: 1;
@@ -37,7 +82,8 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    height: 86%;
+    height: auto;
+    width: 100%;
 } 
 .principal_carousell article picture img {
     /* display: block; 
@@ -45,17 +91,44 @@
     max-width: 100% !important;
     height: 50vh; */
     max-width: 100%;
-    height: 100%;
+    height: auto;
     filter: drop-shadow(0.35rem 0.35rem 0.4rem var(--dark-shadow));
 }
 
 @media (480px < width < 1080px){
     .principal_carousell article picture{
-        width: 80vw;
+        width: 100vw;
     } 
 }
 
 .buttonCarousell {
     background-color: var(--beige-marca-light);
     border-radius: 300px;
+}
+
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.image-animate-in {
+    animation: slideIn 0.5s ease-out;
+}
+
+.image-animate-out {
+    animation: slideOut 0.5s ease-out;
 }
