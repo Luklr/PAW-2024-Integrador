@@ -210,6 +210,28 @@ nav.nav-account > ul > li:hover {
     animation: hover-boton-in 0.2s ease-in-out forwards;
 }
 
+.assemblePcButton {
+    background-color: var(--primary);
+    color: var(--background);
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.1s;
+    animation: hover-boton-out 0.2s ease-in-out forwards;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border: none;
+    margin-top: 1rem;
+}
+
+.assemblePcButton:hover{
+    animation: hover-boton-in 0.2s ease-in-out forwards;
+}
+
+.no_requerido {
+    color:#ff0000;
+    font-weight: bold;
+}
+
 @keyframes hover-boton-in {
     0% {
         background-position: right;
@@ -319,7 +341,7 @@ button.boton-assemblePcPart:hover {
     font-weight: 600;
 }
 
-h2 {
+h2, h1 {
     font-family: var(--font-titles);
     font-size: 3rem !important;
     text-align: center;
@@ -840,7 +862,7 @@ textarea::placeholder {
     :root {
         font-size: 12pt; 
     }
-    h2 {
+    h2, h1 {
         font-size: 2rem !important;
     }
     .logo-image {
@@ -880,7 +902,7 @@ textarea::placeholder {
     :root {
         font-size: 12pt !important; 
     }
-    h2{
+    h2, h1{
         font-size: 3rem !important;
     }
     .header-nav-section {
