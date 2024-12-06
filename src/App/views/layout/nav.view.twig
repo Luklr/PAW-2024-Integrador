@@ -23,15 +23,10 @@
         {% endfor %}
         {% if userLogged %}
             <li>
-                <a href="/account" class="{{ pathInfo == "/account" ? 'selected' : 'not-selected' }} account-anchor">
-                    <img class="account-image" alt="Account" src="./source/pictures/account.svg">
-                    <p class"account-name"> {{ username }} </p>
-                </a>
+                <a href="/account" class="{{ pathInfo == "/account" ? 'selected' : 'not-selected' }} account-anchor">{{ username }}</a>
             </li>
             <li class="notifications" id="notifications">
-                <a href="javascript:void(0);" class="notifications-anchor">
-                    <img id="notification-icon" alt="Notifications" src="./source/pictures/notification-none.svg">
-                </a>
+                <a href="javascript:void(0);" class="notifications-anchor">Notificaciones</a>
                 <div id="notification-dropdown" class="notification-dropdown hidden">
                     <ul id="notification-list">
                         {% for notification in notifications %}

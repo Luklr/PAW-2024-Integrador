@@ -121,31 +121,33 @@ nav.nav-header {
 }
 */
 
-li a[href="/cart"] {
+li a[href="/cart"], li a[href="/account"], li a[href="javascript:void(0);"] {
     width: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-a[href="/cart"] {
+a[href="/cart"], a[href="/account"], a[href="javascript:void(0);"]{
     height: min-content;
     width: min-content;
     display: inline-block; /* Para asegurarnos de que se comporta como un elemento en línea */
-    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="%23e8eaed"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg>');
     background-size: 2rem; /* Asegura que la imagen cubra todo el tamaño del anchor */
     background-repeat: no-repeat;
     background-position: center;
     font-size: 0;
-
 }
+
+a[href="/cart"] {background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="%23e8eaed"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg>');}
+a[href="/account"] {background-image: url('/source/pictures/account.svg');}
+a[href="javascript:void(0);"] {background-image: url("/source/pictures/notification-none.svg");}
 
 nav.nav-header ul li .selected {
     background-color: var(--primary) !important;
 }
 
 nav.nav-header ul li:hover, nav.nav-account > ul > li:hover{
-    background-color: var(--primary) !important;
+    background-color: #a24d26 !important;
 }
 
 /*
@@ -210,7 +212,7 @@ nav.nav-account > ul > li:hover {
     animation: hover-boton-in 0.2s ease-in-out forwards;
 }
 
-.assemblePcButton {
+.assemblePcButton, input[type="submit"]{
     background-color: var(--primary);
     color: var(--background);
     font-size: 1rem;
@@ -223,7 +225,7 @@ nav.nav-account > ul > li:hover {
     margin-top: 1rem;
 }
 
-.assemblePcButton:hover{
+.assemblePcButton:hover, input[type="submit"]:hover{
     animation: hover-boton-in 0.2s ease-in-out forwards;
 }
 
@@ -409,6 +411,16 @@ form .new-product-fieldset {
     margin: 2rem;
     font-weight:500 !important;
 }
+
+
+input[type="text"]:focus + label, input[type="text"] + label, label:has(+ input[type="text"]) {
+    color: var(--secondary) !important;
+}
+
+input[type="text"]::placeholder {
+    color: grey;
+}
+
 
 input[type="checkbox"] + label, [type="checkbox"]:checked+label:before {
     display: block;
