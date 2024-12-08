@@ -19,6 +19,7 @@ use Paw\App\Repositories\AddressRepository;
 use Paw\App\Repositories\BranchRepository;
 use Paw\App\Repositories\OrderRepository;
 use Paw\App\Repositories\NotificationRepository;
+use Paw\App\Repositories\GeminiChatRepository;
 
 require "routes.php";
 
@@ -54,6 +55,9 @@ $querybuilder4->setLogger($log);
 $querybuilder5 = QueryBuilder::getInstance($connection);
 $querybuilder5->setLogger($log);
 
+$querybuilder6 = QueryBuilder::getInstance($connection);
+$querybuilder6->setLogger($log);
+
 # Inicializar los Repository singleton:
 UserRepository::getInstance($querybuilder);
 ComponentRepository::getInstance($querybuilder1);
@@ -61,6 +65,7 @@ AddressRepository::getInstance($querybuilder2);
 BranchRepository::getInstance($querybuilder3);
 OrderRepository::getInstance($querybuilder4);
 NotificationRepository::getInstance($querybuilder5);
+GeminiChatRepository::getInstance($querybuilder6);
 
 $request = new Request;
 

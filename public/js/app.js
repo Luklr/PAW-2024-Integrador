@@ -1,11 +1,11 @@
 class App {
     constructor() {
 
-        fetch('/source/pictures/assembl-icon.svg')
-            .then(response => response.text())
-            .then(data => {
-                document.querySelector('.loader').innerHTML = data;
-            });
+        // fetch('/source/pictures/assembl-icon.svg')
+        //     .then(response => response.text())
+        //     .then(data => {
+        //         document.querySelector('.loader').innerHTML = data;
+        //     });
 
         const currentUrl = window.location.pathname;
         /*
@@ -48,6 +48,9 @@ class App {
             document.addEventListener("DOMContentLoaded", () => {
                 tools.cargarScript("infiniteScroll", "js/components/infiniteScroll.js", () => {
                     let infiniteScroll = new InfiniteScroll();
+                });
+                tools.cargarScript("geminiChat", "js/components/geminiChat.js", () => {
+                    let geminiChat = new GeminiChat();
                 });
             });
         }

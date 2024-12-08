@@ -40,18 +40,50 @@
 
             
         </form>
-        {# {% for item in products %}
-            <a href="{%%}">
-                <article class="product">
-                    <picture>
-                        <img src= "{{item.pathImg}}" >
-                    </picture>
-                    <h3>{{item.description}}</h3>
-                    <p> 
-                        {{item.stock}} - ${{item.price}}
-                    </p>
-                </article>
-            </a>
-        {% endfor %} #}
+        
+        <!-- Chat de Gemini -->
+
+        <div class="gemini-chat-container">
+            <div class="gemini-chat-header">
+                Chat de Gemini
+                <button class="toggle-chat">⮟</button>
+            </div>
+            <div class="gemini-chat-body">
+                <div class="gemini-chat-messages" id="chat-messages"></div>
+                {# Aquí colocamos el formulario y el contenido actual del chat #}
+                <div id="chat-options">
+                    <label for="template1">
+                        <input type="radio" name="template1" id="template1" value="1"> 
+                        Quiero un/a [componente] para un PC [tipo de PC]
+                    </label>
+                    <label for="template2">
+                        <input type="radio" name="template2" id="template2" value="2"> 
+                        Quiero una PC [tipo de PC], ¿qué configuración me recomiendas?
+                    </label>
+                </div>
+
+                <form id="chat-form">
+                <fieldset id="chat-template-1" class="chat-fieldset hidden">
+                    <legend>Selecciona el tipo de componente</legend>
+                    <input id="cpu_chat" name="component_type" type="radio" value="cpu">
+                    <label for="cpu_chat">CPU</label>
+                    <input id="gpu_chat" name="component_type" type="radio" value="gpu">
+                    <label for="gpu_chat">GPU</label>
+                </fieldset>
+
+                <fieldset id="chat-template-2" class="chat-fieldset hidden">
+                    <legend>Selecciona el tipo de PC:</legend>
+                    <input id="modesto_chat" name="pc_type" type="radio" value="modesto">
+                    <label for="modesto_chat">Modesto</label>
+                    <input id="gaming_chat" name="pc_type" type="radio" value="gaming">
+                    <label for="gaming_chat">Gaming</label>
+                    <input id="oficina_chat" name="pc_type" type="radio" value="oficina">
+                    <label for="oficina_chat">Oficina</label>
+                </fieldset>
+                <button id="send-chat-message" type="button" class="hidden">Enviar</button>
+                </form>
+            </div>
+        </div>
+
         <div class="loading" id="loading"> loading... </div>
 {% endblock %}
