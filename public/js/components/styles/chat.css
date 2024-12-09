@@ -35,15 +35,13 @@
     bottom: 0;
     right: 0;
     width: 300px;
-    background: rgba(255,255,255,0.24);
+    background: rgba(255,255,255,0.3);
     border: none;
     border-radius: 8px 8px 0 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     transition: height 0.3s ease;
-    box-shadow: -8px -6px 65px -9px rgba(255,255,255,0.47);
-    -webkit-box-shadow: -8px -6px 65px -9px rgba(255,255,255,0.47);
-    -moz-box-shadow: -8px -6px 65px -9px rgba(255,255,255,0.47);
+    box-shadow: -8px -6px 50px -9px rgba(255,255,255,0.6);
 }
 
 .gemini-chat-header {
