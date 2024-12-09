@@ -393,6 +393,7 @@ nav.nav-footer {
     padding: 0 3rem;
     display: flex;
     flex-direction: column;
+    min-width: 40%;
 }
 
 form.new-product-type-form {
@@ -635,6 +636,10 @@ article.product picture {
 .submit {
     padding:0.3rem;
     margin:1rem;
+}
+
+textarea {
+    margin: 1rem 0;
 }
 
 textarea::placeholder {
