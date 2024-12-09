@@ -89,4 +89,4 @@ $router->get("/not_found", "ErrorController@notFound");
 $router->get("/server_error", "ErrorController@internalServerError");
 
 $router->post("/send_message_gemini", "GeminiChatController@sendMessageGemini");
-// $router->get("/get_all_messages", "GeminiChatController@getAllMessages");
+$router->get("/get_all_messages", "GeminiChatController@getAllMessages");

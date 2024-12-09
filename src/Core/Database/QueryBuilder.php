@@ -84,8 +84,16 @@ class QueryBuilder {
 
         // Bind parameters to the prepared statement
         foreach ($data as $key => $value) {
-            
-            $sentencia->bindValue(":$key", $value);
+            $type = PDO::PARAM_STR;
+            if (is_bool($value)) {
+                $type = PDO::PARAM_BOOL;
+            } elseif (is_int($value)) {
+                $type = PDO::PARAM_INT;
+            } elseif (is_null($value)) {
+                $type = PDO::PARAM_NULL;
+            }
+
+            $sentencia->bindValue(":$key", $value, $type);
         }
 
         $sentencia->execute();

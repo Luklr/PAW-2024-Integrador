@@ -4,16 +4,18 @@ class GeminiChat {
     }
 
     init() {
-        var css = tools.nuevoElemento("link","",{rel: "stylesheet",href:"/js/components/styles/chat.css"})
-            document.head.appendChild(css);
-        
+        var css = tools.nuevoElemento("link", "", { rel: "stylesheet", href: "/js/components/styles/chat.css" });
+        document.head.appendChild(css);
+
         // Seleccionar contenedor y botón
         const chatContainer = document.querySelector(".gemini-chat-container");
         const toggleButton = document.querySelector(".toggle-chat");
+        const chatHeader = document.querySelector(".gemini-chat-header");
 
         // Alternar expansión del chat
         toggleButton.addEventListener("click", () => {
             chatContainer.classList.toggle("expanded");
+            chatHeader.classList.toggle("expanded");
         });
 
         // Manejar selección de plantilla
@@ -29,6 +31,33 @@ class GeminiChat {
                 this.sendMessage();
             });
         }
+
+        // Cargar mensajes previos desde el servidor
+        this.loadPreviousMessages();
+    }
+
+    loadPreviousMessages() {
+        fetch('/get_all_messages', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Error al cargar los mensajes previos');
+            })
+            .then(data => {
+                if (data && Array.isArray(data.messages)) {
+                    data.messages.forEach(message => {
+                        const sender = message.gemini_msj ? 'gemini' : 'user';
+                        this.addChatMessage(message.text, sender, message.timestamp);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     handleTemplateSelection(event) {
@@ -63,10 +92,11 @@ class GeminiChat {
             });
             return;
         }
-    
+
         const typeMsg = parseInt(selectedTemplate.value, 10);
         let messageParts = [];
-    
+        let userMessage = "";
+
         if (typeMsg === 1) {
             const component = document.querySelector('input[name="component_type"]:checked');
             const pcType = document.querySelector('input[name="pc_type"]:checked');
@@ -103,7 +133,7 @@ class GeminiChat {
             }
             messageParts = [pcType.value];
         }
-    
+
         // Enviar datos al servidor
         fetch('/send_message_gemini', {
             method: 'POST',
@@ -113,26 +143,54 @@ class GeminiChat {
                 message: messageParts
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Error al procesar la consulta');
+            })
             .then(data => {
                 if (data) {
-                    this.addChatMessage(data.gemini_text, 'gemini');
+                    // Agregar el mensaje del usuario y la respuesta del servidor al chat
+                    if (data.user_text) {
+                        this.addChatMessage(data.user_text, 'user');
+                    }
+                    if (data.gemini_text) {
+                        this.addChatMessage(data.gemini_text, 'gemini');
+                    }
                 }
+                this.resetSelections(); // Restablecer las opciones después de la respuesta exitosa
             })
             .catch(error => {
                 console.error(error);
             });
     }
 
-    addChatMessage(text, sender) {
+    resetSelections() {
+        // Desmarcar todas las plantillas y opciones
+        document.querySelectorAll('input[name="template1"], input[name="template2"]').forEach(input => input.checked = false);
+        document.querySelectorAll('input[name="component_type"], input[name="pc_type"]').forEach(input => input.checked = false);
+
+        // Ocultar todas las plantillas
+        const template1 = document.getElementById('chat-template-1');
+        const template2 = document.getElementById('chat-template-2');
+        if (template1) template1.classList.add('hidden');
+        if (template2) template2.classList.add('hidden');
+
+        // Ocultar el botón de enviar
+        const sendButton = document.getElementById('send-chat-message');
+        if (sendButton) sendButton.classList.add('hidden');
+    }
+
+    addChatMessage(text, sender, timestamp = null) {
         const chatContainer = document.getElementById('chat-messages');
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('chat-message', sender); // Clase 'chat-message gemini' o 'chat-message user'
-        messageDiv.textContent = text;
+
+        messageDiv.textContent = `${text}`;
 
         // Insertar mensaje al final del chat
         chatContainer.appendChild(messageDiv);
         chatContainer.scrollTop = chatContainer.scrollHeight; // Hacer scroll al final
     }
 }
-

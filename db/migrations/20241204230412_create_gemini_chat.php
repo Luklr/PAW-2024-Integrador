@@ -20,11 +20,11 @@ final class CreateGeminiChat extends AbstractMigration
     public function change(): void
     {
         $this->table('geminiChat')
-            ->addColumn('user', 'integer') 
+            ->addColumn('user_id', 'integer') 
             ->addColumn('timestamp', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('text', 'text')
             ->addColumn('gemini_msj', 'boolean', ['default' => false])
-            ->addForeignKey('user', 'user', 'id', [
+            ->addForeignKey('user_id', 'user', 'id', [
                 'delete' => 'CASCADE',
                 'update' => 'NO_ACTION'
             ])

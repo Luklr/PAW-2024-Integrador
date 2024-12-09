@@ -50,10 +50,10 @@ class GeminiChatController extends Controller
         $message= "";
 
         if ($data["type_msg"] === 1){
-            $message = "Quiero un/a" . $data["message"][0] . "para un PC" . $data["message"][1];
+            $message = "Quiero un/a " . $data["message"][0] . " para un PC " . $data["message"][1];
         }
         if ($data["type_msg"] === 2){
-            $message = "Quiero una PC" . $data["message"][0] . ", ¿qué configuración me recomiendas?";
+            $message = "Quiero una PC " . $data["message"][0] . ", ¿qué configuración me recomiendas?";
         } 
 
         # Extraigo del .env la clave de gemini
@@ -93,23 +93,52 @@ class GeminiChatController extends Controller
             exit;
         }
 
-        $text = $dataGemini['candidates'][0]['content']['parts'][0]['text'];
+        // Guardo el mensaje del usuario
+        $text = $message;
         $user = $request->user();
+        $gemini_msj = false;
+        $dataRepository = [
+            "text" => $text, 
+            "user" => $user, 
+            "gemini_msj" => $gemini_msj
+        ];
+        
+        $this->geminiChatRepository->create($dataRepository);
+
+        // Guardo el mensaje de gemini
+        $text = $dataGemini['candidates'][0]['content']['parts'][0]['text'];
         $gemini_msj = true;
         $dataRepository = [
             "text" => $text, 
             "user" => $user, 
             "gemini_msj" => $gemini_msj
         ];
-
         $this->geminiChatRepository->create($dataRepository);
 
         http_response_code(200);
-        echo json_encode(["success" => true, "gemini_text" => $text]);
+        echo json_encode(["success" => true, "gemini_text" => $text, "user_text" => $message]);
     }
 
     public function getAllMessages(Request $request){
-        $json = file_get_contents('php://input');
-        $data = json_decode($json, true);
+        if (!$request->user()) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Forbidden']);
+            exit;
+        }
+
+        $user = $request->user();
+
+        $geminiChat = $this->geminiChatRepository->getByUser($user);
+
+        $chatArrays = [];
+        foreach ($geminiChat as $message) {
+            $messageArray = $message->toArray();
+            // Elimina el objeto "user" por seguridad
+            unset($messageArray['user']);
+            $chatArrays[] = $messageArray;
+        }
+
+        http_response_code(200);
+        echo json_encode(["success" => true, "messages" => $chatArrays]);
     }
 }

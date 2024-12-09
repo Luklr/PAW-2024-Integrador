@@ -17,23 +17,27 @@ class GeminiChatRepository extends Repository
     public function getById($id){
         $filter = "id = :id";
         $result = self::$queryBuilder->table($this->table())->select($filter, [':id' => $id]);
-        if ($result) {
+        
+        if (!$result) {
             return null;
         }
+        
         $result[0]["timestamp"] = new \DateTime($result[0]["timestamp"]);
         $model = new $this->model($result[0]);
         $userRepository = UserRepository::getInstance();
         $user_id = $result[0]["user_id"];
         $user = $userRepository->getById($user_id);
         $model->setUser($user);
+        
         return $model;
     }
 
     public function getByUser(User $user)
     {
-        $id = $user->getId();
+        $user_id = $user->getId();
         $filter = "user_id = :user_id";
-        $results = self::$queryBuilder->table($this->table())->select($filter, [':user_id' => $id]);
+        $results = self::$queryBuilder->table($this->table())->select($filter, [':user_id' => $user_id]);
+        
         if (!$results) {
             return null;
         }
@@ -41,7 +45,10 @@ class GeminiChatRepository extends Repository
         $models = [];
         foreach($results as $result){
             $models[] = $this->getById($result["id"]);
+            
         }
+
+        
         return $models;
     }
 
@@ -49,7 +56,8 @@ class GeminiChatRepository extends Repository
     {
         $model = new $this->model($data);
         $modelArray = $model->toArray();
-        $modelArray["user"] = $modelArray["user"]->getId();
+        $modelArray["user_id"] = $modelArray["user"]->getId();
+        
         if (!isset($modelArray["timestamp"])){
             $timeNow = new \DateTime();
             $modelArray["timestamp"] = $timeNow;
@@ -57,6 +65,8 @@ class GeminiChatRepository extends Repository
         $modelArray["timestamp"] = $modelArray["timestamp"]->format('Y-m-d H:i:s');
         
         unset($modelArray["user"]);
+
+
         if ($model) {
             $id = self::$queryBuilder->table($this->table())->insert($modelArray);
         }
