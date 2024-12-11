@@ -7,6 +7,7 @@
     margin: 5px;
     border-radius: 8px;
     max-width: 80%;
+    display: inherit;
 }
 
 .chat-message.user {
@@ -44,7 +45,7 @@
     border-radius: 8px 8px 0 0;
     overflow: hidden;
     transition: height 0.3s ease;
-    box-shadow: -8px -6px 50px -9px #16151599;
+    box-shadow: -8px -6px 50px -4px #161515b9;
 }
 
 
