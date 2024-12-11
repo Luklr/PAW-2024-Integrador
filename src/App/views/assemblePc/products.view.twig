@@ -41,18 +41,63 @@
 
             
         </form>
-        {# {% for item in products %}
-            <a href="{%%}">
-                <article class="product">
-                    <picture>
-                        <img src= "{{item.pathImg}}" >
-                    </picture>
-                    <h3>{{item.description}}</h3>
-                    <p> 
-                        {{item.stock}} - ${{item.price}}
-                    </p>
-                </article>
-            </a>
-        {% endfor %} #}
+        
+        <!-- Chat de Gemini -->
+
+        <div class="gemini-chat-container">
+            <div class="gemini-chat-header">
+                Chat de Gemini
+                <button class="toggle-chat">⮟</button>
+            </div>
+            <div class="gemini-chat-body">
+                <div class="gemini-chat-messages" id="chat-messages"></div>
+                {# Aquí colocamos el formulario y el contenido actual del chat #}
+                <div id="chat-options">
+                    <label for="template1">
+                        <input type="radio" name="template1" id="template1" value="1"> 
+                        Quiero un/a [componente] para un PC [tipo de PC]
+                    </label>
+                    <br>
+                    <label for="template2">
+                        <input type="radio" name="template2" id="template2" value="2"> 
+                        Quiero una PC [tipo de PC], ¿qué configuración me recomiendas?
+                    </label>
+                </div>
+
+                <form id="chat-form">
+                <fieldset id="chat-template-1" class="chat-fieldset hidden">
+                    <legend>Selecciona el tipo de componente</legend>
+                    <input id="cpu_chat" name="component_type" type="radio" value="cpu">
+                    <label for="cpu_chat">CPU</label>
+                    <input id="gpu_chat" name="component_type" type="radio" value="gpu">
+                    <label for="gpu_chat">GPU</label>
+                    <input id="memory_chat" name="component_type" type="radio" value="memoria RAM">
+                    <label for="memory_chat">Memoria RAM</label>
+                    <input id="motherboard_chat" name="component_type" type="radio" value="motherboard">
+                    <label for="motherboard_chat">Motherboard</label>
+                    <input id="internal_hard_drive_chat" name="component_type" type="radio" value="disco duro">
+                    <label for="internal_hard_drive_chat">Disco duro</label>
+                </fieldset>
+
+                <fieldset id="chat-template-2" class="chat-fieldset hidden">
+                    <legend>Selecciona el tipo de PC:</legend>
+                    <input id="multimedia_chat" name="pc_type" type="radio" value="multimedia">
+                    <label for="multimedia_chat">multimedia (redes sociales y peliculas)</label>
+                    <input id="gaming1_chat" name="pc_type" type="radio" value="gaming (1080p, 30-60fps)">
+                    <label for="gaming1_chat">Gaming gama baja</label>
+                    <input id="gaming2_chat" name="pc_type" type="radio" value="gaming (2k, 75fps)">
+                    <label for="gaming2_chat">Gaming gama media</label>
+                    <input id="gaming3_chat" name="pc_type" type="radio" value="gaming (4k, 144fps)">
+                    <label for="gaming3_chat">Gaming gama alta</label>
+                    <input id="diseno_grafico_chat" name="pc_type" type="radio" value="diseño grafico">
+                    <label for="diseno_grafico_chat">diseño gráfico</label>
+                    <input id="oficina_chat" name="pc_type" type="radio" value="ofimatica">
+                    <label for="oficina_chat">Ofimática</label>
+                </fieldset>
+                <button id="send-chat-message" type="button" class="hidden">Enviar</button>
+                </form>
+            </div>
+        </div>
+
         <div class="loading" id="loading"> loading... </div>
 {% endblock %}

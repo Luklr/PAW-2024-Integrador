@@ -79,6 +79,9 @@ class App {
                 tools.cargarScript("infiniteScroll", "js/components/infiniteScroll.js", () => {
                     let infiniteScroll = new InfiniteScroll();
                 });
+                tools.cargarScript("geminiChat", "js/components/geminiChat.js", () => {
+                    let geminiChat = new GeminiChat();
+                });
             });
         }
 
