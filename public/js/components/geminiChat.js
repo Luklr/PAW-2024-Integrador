@@ -16,6 +16,7 @@ class GeminiChat {
         toggleButton.addEventListener("click", () => {
             chatContainer.classList.toggle("expanded");
             chatHeader.classList.toggle("expanded");
+            toggleButton.classList.toggle("expanded")
         });
 
         // Manejar selección de plantilla

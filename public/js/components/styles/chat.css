@@ -34,15 +34,46 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    width: 300px;
-    background: rgba(255,255,255,0.3);
+    width: 19rem;
+    background-color: var(--background);
     border: none;
     border-radius: 8px 8px 0 0;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     transition: height 0.3s ease;
-    box-shadow: -8px -6px 50px -9px rgba(255,255,255,0.6);
+    box-shadow: -8px -6px 50px -9px #16151599;
 }
+
+
+.gemini-chat-body {
+    --sb-track-color: transparent;
+    --sb-thumb-color: var(--shadow);
+    --sb-size: 15px;
+    padding: 2px;
+  }
+  .gemini-chat-body::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+  .gemini-chat-body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 8px;
+  }
+  .gemini-chat-body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 8px;
+    border: solid var(--background) 2px;
+  }
+  .gemini-chat-body::-webkit-scrollbar-thumb:hover {
+    background: #d15b5b;
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    .gemini-chat-body {
+      scrollbar-color: var(--sb-thumb-color)
+                       var(--sb-track-color);
+    }
+  }
+
+
+
 
 .gemini-chat-header {
     cursor: default !important;
@@ -58,6 +89,7 @@
     background: linear-gradient(315deg, var(--shadow) 0%, var(--primary) 100%);
 }
 
+
 .toggle-chat {
     padding: 0.2rem;
     background: none;
@@ -66,29 +98,42 @@
     cursor: pointer;
     transition: transform 0.2s ease;
 }
-
 .toggle-chat:hover {
     transform: scale(1.2);
     transform: rotate(180deg);
 }
+.toggle-chat.expanded {
+    transform: rotate(180deg);
+    transition: transform 0.2s ease;
+}
+.toggle-chat.expanded:hover {
+    transform: scale(1.2);
+    transform: rotate(0deg);
+}
+
 
 .gemini-chat-body {
+    max-height: 70vh;
     font-size: 1.5rem;
     display: none;
     animation: chat-apears 0.5s forwards;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-left: 15px;
 }
 
 @keyframes chat-apears {
     0% {
         height: 0;
-        opacity:0.0;
+        opacity:1.0;
         line-height: 0rem;
+        background-color: var(--background);
         overflow: hidden; /* Asegura que el contenido esté oculto cuando la altura es 0 */
     }
 
     60% {
         height: 1rem;
-        opacity: 0.0;
+        opacity: 1.0;
         line-height: 0rem;
         overflow: hidden; /* Asegura que el contenido esté oculto cuando la altura es 0 */
     }
@@ -97,7 +142,8 @@
         height: fit-content;
         opacity: 1.0;
         line-height: 1.2rem;
-        overflow: visible; /* Permite que el contenido sea visible a medida que se expande */
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
 }
 
