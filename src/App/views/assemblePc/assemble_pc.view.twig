@@ -18,9 +18,9 @@
                 {% endif %}
             </p>
             {% if components.cpu.description is null %}
-            <button data-url="/assemble_pc_cpu" class="assemblePcButton">Elegir</button>
+            <button data-url="/assemble_pc_cpu" class="cpu">Elegir</button>
             {% else %}
-            <button data-url="/assemble_pc_delete_product" class="assemblePcButton">Eliminar</button>
+            <button data-url="/assemble_pc_delete_product" class="cpu">Eliminar</button>
             {% endif %}
         </article>
         <article class="article-part-assemble">
@@ -38,9 +38,9 @@
                 {% endif %}
             </p>
             {% if components.motherboard.description is null %}
-            <button data-url="/assemble_pc_motherboard" class="assemblePcButton">Elegir</button>
+            <button data-url="/assemble_pc_motherboard" class="motherboard">Elegir</button>
             {% else %}
-            <button data-url="/assemble_pc_delete_product" class="assemblePcButton">Eliminar</button>
+            <button data-url="/assemble_pc_delete_product" class="motherboard">Eliminar</button>
             {% endif %}
         </article>
         <article class="article-part-assemble">
@@ -58,9 +58,9 @@
                 {% endif %}
             </p>
             {% if components.memory.description is null %}
-            <button data-url="/assemble_pc_ram" class="assemblePcButton">Elegir</button>
+            <button data-url="/assemble_pc_ram" class="memory">Elegir</button>
             {% else %}
-            <button data-url="/assemble_pc_delete_product" class="assemblePcButton">Eliminar</button>
+            <button data-url="/assemble_pc_delete_product" class="memory">Eliminar</button>
             {% endif %}
         </article>
         <article class="article-part-assemble">
@@ -70,17 +70,17 @@
                 <img src="{{components.videoCard.path_img}}">
             </picture>
             {% endif %}
-            <p class="no_requerido">
+            <p>
                 {% if components.videoCard.description is not null %}
                 {{components.videoCard.description}}
                 {% else %}
-                no requerido
+                No requerido
                 {% endif %}
             </p>
             {% if components.videoCard.description is null %}
-            <button data-url="/assemble_pc_gpu" class="assemblePcButton">Elegir</button>
+            <button data-url="/assemble_pc_gpu" class="videoCard">Elegir</button>
             {% else %}
-            <button data-url="/assemble_pc_delete_product" class="assemblePcButton">Eliminar</button>
+            <button data-url="/assemble_pc_delete_product" class="videoCard">Eliminar</button>
             {% endif %}
         </article>
         <article class="article-part-assemble">
@@ -98,9 +98,9 @@
                 {% endif %}
             </p>
             {% if components.internalHardDrive.description is null %}
-            <button data-url="/assemble_pc_internal_hard_drive" class="assemblePcButton">Elegir</button>
+            <button data-url="/assemble_pc_internal_hard_drive" class="internalHardDrive">Elegir</button>
             {% else %}
-            <button data-url="/assemble_pc_delete_product" class="assemblePcButton">Eliminar</button>
+            <button data-url="/assemble_pc_delete_product" class="internalHardDrive">Eliminar</button>
             {% endif %}
         </article>
         <article class="article-part-assemble">
@@ -110,17 +110,17 @@
                 <img src="{{components.cpuFan.path_img}}">
             </picture>
             {% endif %}
-            <p class="no_requerido">
+            <p>
                 {% if components.cpuFan.description is not null %}
                 {{components.cpuFan.description}}
                 {% else %}
-                no requerido
+                No requerido
                 {% endif %}
             </p>
             {% if components.cpuFan.description is null %}
-            <button data-url="/assemble_pc_cpu_fan" class="assemblePcButton">Elegir</button>
+            <button data-url="/assemble_pc_cpu_fan" class="cpuFan">Elegir</button>
             {% else %}
-            <button data-url="/assemble_pc_delete_product" class="assemblePcButton">Eliminar</button>
+            <button data-url="/assemble_pc_delete_product" class="cpuFan">Eliminar</button>
             {% endif %}
         </article>
         <article class="article-part-assemble">
@@ -138,9 +138,9 @@
                 {% endif %}
             </p>
             {% if components.powerSupply.description is null %}
-            <button data-url="/assemble_pc_power_supply" class="assemblePcButton">Elegir</button>
+            <button data-url="/assemble_pc_power_supply" class="powerSupply">Elegir</button>
             {% else %}
-            <button data-url="/assemble_pc_delete_product" class="assemblePcButton">Eliminar</button>
+            <button data-url="/assemble_pc_delete_product" class="powerSupply">Eliminar</button>
             {% endif %}
         </article>
         <article class="article-part-assemble">
@@ -158,9 +158,9 @@
                 {% endif %}
             </p>
             {% if components.casePc.description is null %}
-            <button data-url="/assemble_pc_case" class="assemblePcButton">Elegir</button>
+            <button data-url="/assemble_pc_case" class="casePc">Elegir</button>
             {% else %}
-            <button data-url="/assemble_pc_delete_product" class="assemblePcButton">Eliminar</button>
+            <button data-url="/assemble_pc_delete_product" class="casePc">Eliminar</button>
             {% endif %}
             
         </article>
