@@ -106,6 +106,8 @@ class Controller
                     $notification = $notificationObj->toArray();
                     unset($notification["user"]);
                     $notification["timestamp"] = $notification["timestamp"]->format('Y-m-d H:i:s');
+                    $notification["order_id"] = $notification["order"]->getId();
+                    unset($notification["order"]);
                     
                     $notifications[] = $notification;
                 }

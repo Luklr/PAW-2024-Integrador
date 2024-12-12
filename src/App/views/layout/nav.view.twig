@@ -34,7 +34,7 @@
                                 <article class="notification-art {% if notification.seen %} seen {% else %} notSeen {% endif %}" id="{{notification.id}}">
                                     <h4>{{notification.notification_type.name}}</h4>
                                     <p>
-                                    Order #{{notification.order.id}}: <br>
+                                    Order #{{notification.order_id}}: <br>
                                     {{notification.notification_type.description}}<br>
                                     <date>{{notification.timestamp}}</date>
                                     </p>

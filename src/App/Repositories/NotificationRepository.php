@@ -50,7 +50,7 @@ class NotificationRepository extends Repository
             $notification_type_id = $result[0]["notification_type_id"];
             $notification_type = self::$queryBuilder->table("notification_type")->select($filter, [':id' => $notification_type_id]);
             $user = $userRepository->getById($user_id);
-            $order = $orderRepository->getById($user_id);
+            $order = $orderRepository->getById($order_id);
             $model->setUser($user);
             $model->setOrder($order);
             $model->setNotification_type($notification_type[0]);

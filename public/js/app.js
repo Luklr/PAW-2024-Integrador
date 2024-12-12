@@ -143,6 +143,14 @@ class App {
             })
         }
 
+        if (currentUrl === "/management_order"){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("manageOrder", "js/components/manageOrder.js", () => {
+                    let manageOrder = new ManageOrder();
+                })
+            })
+        }
+
         const validUrls = ["/assemble_pc_case", "/assemble_pc_cpu","/assemble_pc_gpu",
             "/assemble_pc_ram", "/assemble_pc_motherboard", "/assemble_pc_internal_hard_drive",
             "/assemble_pc_power_supply", "/assemble_pc_cpu_fan"];

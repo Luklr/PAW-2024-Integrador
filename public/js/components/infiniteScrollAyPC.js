@@ -65,6 +65,7 @@ class InfiniteScrollAyPC {
                 a2.target = "_blank";
 
                 button.textContent = "Seleccionar";
+                button.className = "assemblePcButton";
                 button.addEventListener('click', () => {
                     this.selectProduct(item["id"]);
                 });

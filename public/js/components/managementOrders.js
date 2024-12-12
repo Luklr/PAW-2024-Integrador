@@ -79,7 +79,7 @@ class ManagementOrders {
                     Swal.fire({
                         icon: "error",
                         title: "Error!",
-                        text: 'Validacion fallida: ' + error,
+                        text: 'Validacion fallida',
                         customClass: {
                             title: "swal-title",
                             content: "swal-content",
@@ -94,7 +94,6 @@ class ManagementOrders {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: error,
                     customClass: {
                         title: "swal-title",
                         content: "swal-content",
@@ -141,10 +140,10 @@ class ManagementOrders {
                         article.draggable = true;
                         article.innerHTML = `
                             <p><strong>ID:</strong> ${order.id}</p>
-                            <p><strong>Date:</strong> ${new Date(order.order_date.date).toLocaleString()}</p>
-                            <p><strong>User ID:</strong> ${order.user_id}</p>
-                            <p><strong>Branch:</strong> ${order.branch ? order.branch.name : 'N/A'}</p>
-                            <p><strong>Address:</strong> ${order.address ? `${order.address.street} ${order.address.number}` : 'N/A'}</p>
+                            <p><strong>Fecha:</strong> ${new Date(order.order_date.date).toLocaleString()}</p>
+                            <p><strong>ID usuario:</strong> ${order.user_id}</p>
+                            ${order.branch ? "<p><strong>RETIRA EN:</strong> " + order.branch.name + "</p>"
+                            : "<p><strong>ENVÍO A:</strong> " + `${order.address.street} ${order.address.number}` + "</p>" }
                             <a href="/management_order?order_id=${order.id}"><p class="link">Detalles...</p></a>
                         `;
                         article.addEventListener('dragstart', (event) => this.drag(event, article));
