@@ -83,8 +83,8 @@ class ManagementOrders {
                         customClass: {
                             title: "swal-title",
                             content: "swal-content",
-                            confirmButton: "swal-confirm-button",
-                            cancelButton: "swal-cancel-button"
+                            confirmButton: "assemblePcButton",
+                            cancelButton: "assemblePcButton"
                         }
                     });
                     console.error('Error: Validation failed. The order has been returned to the original section.');
@@ -98,8 +98,8 @@ class ManagementOrders {
                     customClass: {
                         title: "swal-title",
                         content: "swal-content",
-                        confirmButton: "swal-confirm-button",
-                        cancelButton: "swal-cancel-button"
+                        confirmButton: "assemblePcButton",
+                        cancelButton: "assemblePcButton"
                     }
                 });
             }

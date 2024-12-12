@@ -28,8 +28,8 @@ class Product{
                         customClass: {
                             title: "swal-title",
                             content: "swal-content",
-                            confirmButton: "swal-confirm-button",
-                            cancelButton: "swal-cancel-button"
+                            confirmButton: "assemblePcButton",
+                            cancelButton: "assemblePcButton"
                         }
                     });
                 }

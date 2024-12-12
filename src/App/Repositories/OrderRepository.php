@@ -172,7 +172,7 @@ class OrderRepository extends Repository
             else
                 $modelArray["address_id"] = null;
             unset($modelArray["address"]);
-
+            
             $id = self::$queryBuilder->table($this->table())->insert($modelArray);
         }
         if ($id) {

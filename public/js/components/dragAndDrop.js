@@ -88,8 +88,8 @@ class dragAndDrop {
                     customClass: {
                         title: "swal-title",
                         content: "swal-content",
-                        confirmButton: "swal-confirm-button",
-                        cancelButton: "swal-cancel-button"
+                        confirmButton: "assemblePcButton",
+                        cancelButton: "assemblePcButton"
                     }
                 });
             }
@@ -109,8 +109,8 @@ class dragAndDrop {
                     customClass: {
                         title: "swal-title",
                         content: "swal-content",
-                        confirmButton: "swal-confirm-button",
-                        cancelButton: "swal-cancel-button"
+                        confirmButton: "assemblePcButton",
+                        cancelButton: "assemblePcButton"
                     }
                 });
                 return; // Salir de la función para no procesar más archivos
@@ -146,8 +146,8 @@ class dragAndDrop {
                     customClass: {
                         title: "swal-title",
                         content: "swal-content",
-                        confirmButton: "swal-confirm-button",
-                        cancelButton: "swal-cancel-button"
+                        confirmButton: "assemblePcButton",
+                        cancelButton: "assemblePcButton"
                     }
                 });
             }
