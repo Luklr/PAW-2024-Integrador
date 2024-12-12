@@ -2,40 +2,65 @@ class Notifications {
     constructor() {
         var css = tools.nuevoElemento("link", "", {rel: "stylesheet", href:"/js/components/styles/notifications.css"});
         document.head.appendChild(css);
-        
-        const notificationIcon = document.getElementById('notification-icon');
+
+        const notificationLink = document.querySelector('.notifications-anchor'); // Enlace de notificaciones
         const notificationDropdown = document.getElementById('notification-dropdown');
         const notificationList = document.getElementById('notification-list');
 
-        // Set the default icon
-        notificationIcon.src = './source/pictures/notification-none.svg';
-        
-        // Check for unread notifications in the DOM
+        // Establecer el icono predeterminado
+        this.updateNotificationIcon();
+
+        // Verificar las notificaciones no leídas en el DOM
         this.checkUnreadNotifications();
 
-        notificationIcon.addEventListener('click', () => {
-            // Toggle visibility of the dropdown
+        notificationLink.addEventListener('click', () => {
+            // Alternar visibilidad del dropdown
             notificationDropdown.classList.toggle('hidden');
-
-            // Mark notifications as read when dropdown is shown
+            // this.adjustDropdownPosition();
+            // Marcar las notificaciones como leídas cuando el dropdown se muestra
             if (!notificationDropdown.classList.contains('hidden')) {
                 this.markNotificationsAsSeen();
             }
         });
 
-        // Add event listeners to delete buttons
+        // Añadir escuchadores de eventos a los botones de eliminar
         this.addDeleteListeners();
+        // this.adjustDropdownPosition();
     }
 
-    checkUnreadNotifications() {
+    // adjustDropdownPosition() {
+    //     const notificationDropdown = document.getElementById('notification-dropdown');
+    //     const rect = notificationDropdown.getBoundingClientRect();
+    //     const windowHeight = window.innerHeight;
+
+    //     // Si la ventana de notificaciones se sale de la pantalla, ajustarla hacia arriba
+    //     if (rect.bottom > windowHeight) {
+    //         notificationDropdown.style.top = `-${rect.height}px`; // Ajusta hacia arriba
+    //     }
+    // }
+
+    // Función para actualizar el icono de notificaciones
+    updateNotificationIcon() {
+        const notificationLink = document.querySelector('.notifications-anchor');
         const hasUnread = document.querySelector('.notSeen');
         if (hasUnread) {
-            document.getElementById('notification-icon').src = './source/pictures/notification-unread.svg';
+            notificationLink.style.backgroundImage = "url('/source/pictures/notification-unread.svg')";
         } else {
-            document.getElementById('notification-icon').src = './source/pictures/notification-none.svg';
+            notificationLink.style.backgroundImage = "url('/source/pictures/notification-none.svg')";
         }
     }
 
+    // Comprobar si hay notificaciones no leídas
+    checkUnreadNotifications() {
+        const hasUnread = document.querySelector('.notSeen');
+        if (hasUnread) {
+            this.updateNotificationIcon(); // Cambiar icono si hay notificaciones no leídas
+        } else {
+            this.updateNotificationIcon(); // Icono predeterminado
+        }
+    }
+
+    // Marcar las notificaciones como leídas
     markNotificationsAsSeen() {
         fetch('/set_notifications_seen', {
             method: 'POST',
@@ -45,7 +70,7 @@ class Notifications {
         })
         .then(response => {
             if (response.ok) {
-                document.getElementById('notification-icon').src = './source/pictures/notification-none.svg';
+                this.updateNotificationIcon(); // Restablecer icono cuando se marcan como leídas
             } else {
                 console.error('Error marking notifications as seen:', response.statusText);
             }
@@ -55,6 +80,7 @@ class Notifications {
         });
     }
 
+    // Añadir escuchadores de eventos a los botones de eliminar
     addDeleteListeners() {
         const deleteButtons = document.querySelectorAll('.notification-art button');
         deleteButtons.forEach(button => {
@@ -67,6 +93,7 @@ class Notifications {
         });
     }
 
+    // Eliminar una notificación
     deleteNotification(notificationId, notificationElement) {
         fetch(`/delete_notification?id=${notificationId}`, {
             method: 'GET',
@@ -77,6 +104,7 @@ class Notifications {
         .then(response => {
             if (response.ok) {
                 notificationElement.remove();
+                this.checkUnreadNotifications(); // Actualizar icono después de eliminar
             } else {
                 console.error('Error deleting notification:', response.statusText);
             }
@@ -86,7 +114,3 @@ class Notifications {
         });
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    new Notifications();
-});

@@ -136,8 +136,6 @@ class IntranetController extends Controller
             exit;
         }
 
-        var_dump($data);
-
         $order = $this->orderRepository->getById($data["order_id"]);
         $statusNow = $order->getStatus();
         $statusNew = $data["status"];

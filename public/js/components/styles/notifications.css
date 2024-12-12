@@ -1,8 +1,9 @@
-.notifications {
-    position: relative;
+.notification-dropdown{
+    right:10px !important;
+    left:auto !important;
 }
 
-.notification-dropdown {
+/* .notification-dropdown {
     position: absolute;
     top: 100%;
     left: auto;
@@ -10,12 +11,13 @@
     width: 20vw;
     max-height: 400px;
     overflow-y: auto;
+    overflow-x: auto;
     background-color: #363333;
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     z-index: 1000;
-}
+} */
 
 .notification-dropdown.hidden {
     display: none;
@@ -26,11 +28,11 @@
     width:100%;
 }
 
-.notification-dropdown li {
+/* .notification-dropdown li {
     padding: 5px;
     width:100%;
     border-bottom: 1px solid #eee;
-}
+} */
 
 .notification-dropdown li:last-child {
     border-bottom: none;
@@ -60,4 +62,39 @@
 
 .notification-art .fa-times{
     color: #363333
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;  /* Centra el dropdown */
+    width: auto;
+    max-width: 30vw; /* Limita el tamaño máximo al 90% del ancho de la ventana */
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #363333;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+/* Evitar que el contenido se desborde horizontalmente */
+.notification-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.notification-dropdown li {
+    padding: 5px;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-dropdown li:last-child {
+    border-bottom: none;
 }

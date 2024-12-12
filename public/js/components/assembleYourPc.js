@@ -162,6 +162,7 @@ class AssembleYourPc {
         newButton.innerText = "Elegir";
         newButton.setAttribute("data-url", `/assemble_pc_${this.camelToSnake(type)}`);
         newButton.classList.add(type);
+        newButton.classList.add("assemblePcButton");
         newButton.addEventListener("click", () => this.handleChoose(newButton));
 
         article.appendChild(newButton);
