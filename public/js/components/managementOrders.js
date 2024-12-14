@@ -123,90 +123,22 @@ class ManagementOrders {
         .catch(error => console.error('Auto Fetch Error:', error));
     }
 
-    sendSetPriceFetch(){
-        const cost = parseFloat(input.value);
-        if (!isNaN(cost)) {
-            const url = `/set_delivery_price?order_id=${order.id}`;
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ delivery_cost: cost })
-            })
-            .then(response => {
-                if (response.ok){
-                    Swal.fire({
-                        icon: "success",
-                        title: "Dirección elegida correctamente!",
-                        timer: 5000,
-                        customClass: {
-                            title: "swal-title",
-                            content: "swal-content",
-                            confirmButton: "assemblePcButton",
-                            cancelButton: "assemblePcButton"
-                        }
-                    })
-                }
-            })
-            .then(data => {
-                // Si el fetch es exitoso, agregar el apartado de costo de envío
-                const costParagraph = document.createElement('p');
-                costParagraph.innerHTML = `<strong>Costo de envío:</strong> $${cost.toFixed(2)}`;
-                deliveryDiv.appendChild(costParagraph);
-
-                // Deshabilitar el input y el botón
-                input.disabled = true;
-                button.disabled = true;
-                button.textContent = 'Enviado';
-            })
-            .catch(error => {
-                console.error('Error al enviar el costo de envío:', error);
-                Swal.fire({
-                    icon: "error",
-                    title: "Error!",
-                    text: "No se pudo enviar el costo de envío.",
-                    customClass: {
-                        title: "swal-title",
-                        content: "swal-content",
-                        confirmButton: "assemblePcButton",
-                        cancelButton: "assemblePcButton"
-                    }
-                });
-            });
-        } else {
-            Swal.fire({
-                icon: "error",
-                title: "Error!",
-                text: "Por favor, ingresa un número válido para el costo de envío.",
-                customClass: {
-                    title: "swal-title",
-                    content: "swal-content",
-                    confirmButton: "assemblePcButton",
-                    cancelButton: "assemblePcButton"
-                }
-            });
-        }
-    }
-
     updateOrders(orders) {
         for (const [status, ordersList] of Object.entries(orders)) {
             const section = document.querySelector(`section.${status}`);
     
             if (section && ordersList.length > 0) {
-                // Ordenar la lista de órdenes por fecha
+                // Ordenar las órdenes por fecha
                 ordersList.sort((a, b) => new Date(a.order_date.date) - new Date(b.order_date.date));
     
                 ordersList.forEach(order => {
-                    // Verifico si ya existe
-                    const orderExist = document.querySelector(`#order-${order.id}`);
-                    if (!orderExist) {
+                    // Verificar si la orden ya existe
+                    if (!section.querySelector(`#order-${order.id}`)) {
                         const article = document.createElement('article');
                         article.id = `order-${order.id}`;
                         article.draggable = true;
-                        
-                        // Crear el contenido del artículo
+    
+                        // Crear contenido del artículo
                         article.innerHTML = `
                             <p><strong>ID:</strong> ${order.id}</p>
                             <p><strong>Fecha:</strong> ${new Date(order.order_date.date).toLocaleString()}</p>
@@ -215,23 +147,12 @@ class ManagementOrders {
                                 ? `<p><strong>RETIRA EN:</strong> ${order.branch.name}</p>`
                                 : `<p><strong>ENVÍO A:</strong> ${order.address.street} ${order.address.number}</p>`}
                             <div class="details-container">
-                                <a href="/management_order?order_id=${order.id}"><p class="link">Detalles...</p></a>
-                                ${order.address ? `
-                                    <div class="delivery-cost">
-                                        <input type="number" placeholder="Costo de envío" class="delivery-input">
-                                        <button class="delivery-button">Enviar</button>
-                                    </div>` : ''}
+                                ${order.address ? this.createDeliveryCostInput(order.id) : ''}
+                                <a href="/management_order?order_id=${order.id}">
+                                    <p class="link">Detalles...</p>
+                                </a>
                             </div>
                         `;
-    
-                        // Agregar funcionalidad al botón de costo de envío
-                        if (order.address) {
-                            const deliveryDiv = article.querySelector('.delivery-cost');
-                            const input = deliveryDiv.querySelector('.delivery-input');
-                            const button = deliveryDiv.querySelector('.delivery-button');
-    
-                            button.addEventListener('click', this.sendSetPriceFetch());
-                        }
     
                         // Agregar funcionalidad de arrastre
                         article.addEventListener('dragstart', (event) => this.drag(event, article));
@@ -241,5 +162,73 @@ class ManagementOrders {
             }
         }
     }
+    
+    createDeliveryCostInput(orderId) {
+        return `
+            <div class="delivery-cost">
+                <input type="number" placeholder="Costo de envío" class="delivery-input">
+                <button class="delivery-button">Enviar</button>
+            </div>`;
+    }
+    
+    setupDeliveryButton(article, orderId) {
+        const deliveryDiv = article.querySelector('.delivery-cost');
+        const input = deliveryDiv.querySelector('.delivery-input');
+        const button = deliveryDiv.querySelector('.delivery-button');
+    
+        button.addEventListener('click', () => {
+            const cost = parseFloat(input.value);
+            if (!isNaN(cost) && cost > 0) {
+                button.textContent = "Enviando...";
+                button.disabled = true;
+    
+                fetch(`/set_delivery_price?order_id=${orderId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ delivery_cost: cost })
+                })
+                .then(response => {
+                    if (!response.ok) throw response;
+                    return response.json();
+                })
+                .then(() => {
+                    const costParagraph = document.createElement('p');
+                    costParagraph.innerHTML = `<strong>Costo de envío:</strong> $${cost.toFixed(2)}`;
+                    deliveryDiv.appendChild(costParagraph);
+                    deliveryDiv.removeChild(input);
+                    deliveryDiv.removeChild(button);
+                })
+                .catch(error => {
+                    console.error('Error al enviar el costo de envío:', error);
+                    button.textContent = "Enviar";
+                    button.disabled = false;
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: "No se pudo enviar el costo de envío.",
+                        customClass: {
+                            title: "swal-title",
+                            content: "swal-content",
+                            confirmButton: "assemblePcButton",
+                            cancelButton: "assemblePcButton"
+                        }
+                    });
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Por favor, ingresa un número válido para el costo de envío.",
+                    customClass: {
+                        title: "swal-title",
+                        content: "swal-content",
+                        confirmButton: "assemblePcButton",
+                        cancelButton: "assemblePcButton"
+                    }
+                });
+            }
+        });
+    }
+    
     
 }
