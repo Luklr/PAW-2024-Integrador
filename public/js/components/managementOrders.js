@@ -147,7 +147,7 @@ class ManagementOrders {
                                 ? `<p><strong>RETIRA EN:</strong> ${order.branch.name}</p>`
                                 : `<p><strong>ENVÍO A:</strong> ${order.address.street} ${order.address.number}</p>`}
                             <div class="details-container">
-                                ${order.address ? this.createDeliveryCostInput(order.id) : ''}
+                                ${order.address ? this.createDeliveryCostInput(order.id, order.delivery_price) : ''}
                                 <a href="/management_order?order_id=${order.id}">
                                     <p class="link">Detalles...</p>
                                 </a>
@@ -155,6 +155,8 @@ class ManagementOrders {
                         `;
     
                         // Agregar funcionalidad de arrastre
+                        if (order.address)
+                            this.setupDeliveryButton(article, order.id);
                         article.addEventListener('dragstart', (event) => this.drag(event, article));
                         section.appendChild(article);
                     }
@@ -163,9 +165,12 @@ class ManagementOrders {
         }
     }
     
-    createDeliveryCostInput(orderId) {
+    createDeliveryCostInput(orderId, delivery_price) {
         return `
             <div class="delivery-cost">
+            ${delivery_price !== null 
+                ? `<p><strong>Costo de envío:</strong> $${parseFloat(delivery_price).toFixed(2)}</p>` 
+                : ""}
                 <input type="number" placeholder="Costo de envío" class="delivery-input">
                 <button class="delivery-button">Enviar</button>
             </div>`;
@@ -175,6 +180,7 @@ class ManagementOrders {
         const deliveryDiv = article.querySelector('.delivery-cost');
         const input = deliveryDiv.querySelector('.delivery-input');
         const button = deliveryDiv.querySelector('.delivery-button');
+        let costParagraph = deliveryDiv.querySelector('p'); // Buscar el párrafo existente
     
         button.addEventListener('click', () => {
             const cost = parseFloat(input.value);
@@ -182,21 +188,37 @@ class ManagementOrders {
                 button.textContent = "Enviando...";
                 button.disabled = true;
     
-                fetch(`/set_delivery_price?order_id=${orderId}`, {
+                fetch(`/set_delivery_price`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ delivery_cost: cost })
+                    body: JSON.stringify({ order_id: orderId, delivery_price: cost })
                 })
                 .then(response => {
-                    if (!response.ok) throw response;
-                    return response.json();
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Costo de envío actualizado correctamente!",
+                            timer: 5000,
+                            customClass: {
+                                title: "swal-title",
+                                content: "swal-content",
+                                confirmButton: "assemblePcButton",
+                                cancelButton: "assemblePcButton"
+                            }
+                        });
+                    }
                 })
                 .then(() => {
-                    const costParagraph = document.createElement('p');
-                    costParagraph.innerHTML = `<strong>Costo de envío:</strong> $${cost.toFixed(2)}`;
-                    deliveryDiv.appendChild(costParagraph);
-                    deliveryDiv.removeChild(input);
-                    deliveryDiv.removeChild(button);
+                    // Actualizar el texto del párrafo existente o crear uno nuevo
+                    if (costParagraph) {
+                        costParagraph.innerHTML = `<strong>Costo de envío:</strong> $${cost.toFixed(2)}`;
+                    } else {
+                        costParagraph = document.createElement('p');
+                        costParagraph.innerHTML = `<strong>Costo de envío:</strong> $${cost.toFixed(2)}`;
+                        deliveryDiv.insertBefore(costParagraph, deliveryDiv.firstChild);
+                    }
+                    button.textContent = "Enviar";
+                    button.disabled = false;
                 })
                 .catch(error => {
                     console.error('Error al enviar el costo de envío:', error);
@@ -229,6 +251,4 @@ class ManagementOrders {
             }
         });
     }
-    
-    
 }

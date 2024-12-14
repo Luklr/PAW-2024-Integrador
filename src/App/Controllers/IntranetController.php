@@ -65,6 +65,7 @@ class IntranetController extends Controller
             $ordersPreparingArray[] = [
                 "id" => $order->getId(),
                 "order_date" => $order->getOrderdate(),
+                "delivery_price" => $order->getDeliveryprice(),
                 "user_id" => $order->getUser()->getId(),
                 "branch" => $order->getBranch() ? $order->getBranch()->toArray() : null,
                 "address" => $order->getAddress() ? $order->getAddress()->toArray() : null,
@@ -112,13 +113,13 @@ class IntranetController extends Controller
             echo json_encode(['error' => "Bad Request: Missing order_id param"]);
             exit;
         }
-        if (!$data["deliveryprice"]){
+        if (!$data["delivery_price"]){
             http_response_code(400);
-            echo json_encode(['error' => "Bad Request: Missing deliveryprice param"]);
+            echo json_encode(['error' => "Bad Request: Missing delivery_price param"]);
             exit;
         }
         $orderId = $data["order_id"];
-        $orderDeliveryPrice = floatval($data["deliveryprice"]);
+        $orderDeliveryPrice = floatval($data["delivery_price"]);
         $this->orderRepository->setDeliveryPrice($orderId,$orderDeliveryPrice);
         $message = "Delivery price setted";
         http_response_code(200);
