@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Definir el nombre del contenedor
-CONTAINER_NAME=php-app-paw
+# Definir variable con el nombre del contenedor
+CONTAINER_NAME=$(docker compose ps -q app)
 
 # Ejecutar composer install dentro del contenedor
 echo "Ejecutando composer install..."
