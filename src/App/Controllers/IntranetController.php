@@ -100,23 +100,29 @@ class IntranetController extends Controller
 
     public function setDeliveryPrice(Request $request) {
         $this->access($request, $request->url(), "admin");
-        if(!$request->get("order_id")){
-            $this->render('error/bad_request.view.twig', "Management Order", $request);
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+        if(!$data){
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Invalid JSON']);
             exit;
         }
-        if (!$request->post("deliveryprice")){
-            $orderId = $request->get("order_id");
-            $order = $this->orderRepository->getById($orderId);
-            $message = "Form incomplete, missing delivery price parameter";
-            $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => $message, "error" => true]);
+        if(!$data["order_id"]){
+            http_response_code(400);
+            echo json_encode(['error' => "Bad Request: Missing order_id param"]);
             exit;
         }
-        $orderId = $request->get("order_id");
-        $orderDeliveryPrice = floatval($request->post("deliveryprice"));
+        if (!$data["deliveryprice"]){
+            http_response_code(400);
+            echo json_encode(['error' => "Bad Request: Missing deliveryprice param"]);
+            exit;
+        }
+        $orderId = $data["order_id"];
+        $orderDeliveryPrice = floatval($data["deliveryprice"]);
         $this->orderRepository->setDeliveryPrice($orderId,$orderDeliveryPrice);
         $message = "Delivery price setted";
-        $order = $this->orderRepository->getById($orderId);
-        $this->render('intranet/management_order.view.twig', "Management Order", $request, ["order" => $order, "message" => $message, "error" => false]);
+        http_response_code(200);
+        echo json_encode(['success' => true]);
     }
 
     public function setOrderStatus(Request $request) {
@@ -181,21 +187,6 @@ class IntranetController extends Controller
         $this->notificationRepository->create($notificationArray);
         http_response_code(200);
         echo json_encode(['success' => true]);
-    }
-
-    public function aguante(Request $request){
-        $notificationArray = [
-            'user' => $this->userRepository->getById(1),
-            'seen' => true,  // Asegúrate de usar el valor booleano
-            'notification_type' => ["id" => 2],
-            'order' => $this->orderRepository->getById(1),
-            'timestamp' => new \DateTime()
-        ];
-        // echo("<pre>");
-        // var_dump($notificationArray);
-        // die;
-        $not = $this->notificationRepository->create($notificationArray);
-        var_dump($not);
     }
 
     public function createProduct(Request $request, $mensaje="") {

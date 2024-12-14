@@ -760,12 +760,18 @@ textarea::placeholder {
 .management_orders {
     display: grid !important;
     grid-template-areas: "preparing dispatched readyForPickUp delivered";
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    padding: 0 !important; 
+    padding: 2rem !important; 
     margin-top: 0 !important;
 }
 
 .management_orders section {
+    background-color: transparent;
+    border-left: solid gray 1px;
+    border-right: solid gray 1px;
+    min-width: 100% !important;
+    max-width: 100%;
     padding: 15px;
     display: flex; /* Utiliza flexbox para alinear el contenido */
     flex-direction: column; /* Organiza el contenido en columnas */
@@ -773,29 +779,56 @@ textarea::placeholder {
     height: 100%; /* Asegura que cada sección ocupe todo el espacio vertical disponible */
 }
 
-.management_orders .preparing{
+.management_orders section h3 {
+    max-width: 100% !important;
+    font-size: 1rem !important;
+    text-align: center;
+    font-size: 1.5rem !important;
+}
+
+
+.management_orders .PREPARING{
     grid-area: preparing;
 }
 
-.management_orders .dispatched{
+.management_orders .DISPATCHED{
     grid-area: dispatched;
 }
 
-.management_orders .readyForPickUp{
+.management_orders .READY_FOR_PICKUP{
     grid-area: readyForPickUp;
 }
 
-.management_orders .delivered {
+.management_orders .DELIVERED {
     grid-area: delivered;
 }
 
 .management_orders article {
-    background-color: var(--large);
+    background-color: var(--primary);
+    background: linear-gradient(45deg, var(--shadow) 0%, var(--primary) 100%);
     margin-bottom: 10px;
     padding: 10px;
-    border-radius: 2px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: var(--background);
+    border-radius: 1rem;
+    max-width: 100%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    color: var(--secondary);
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.management_orders article .link {
+    color: var(--secondary);
+    background-color: var(--background);
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 0.7rem;
+    transition: transform 0.3s;
+}
+
+.management_orders article .link:hover{
+    transform: scale(1.05);
 }
 
 .error_message{
@@ -928,6 +961,7 @@ img {
     border: solid #b1acac 1px;
     border-radius: 1rem;
 }
+
 
 
 
