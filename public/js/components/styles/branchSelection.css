@@ -1,11 +1,23 @@
 .form-submit {
     margin-top: 4rem !important;
+    padding: 1rem;
+    font-size: 1rem;
+    width: 10rem;
 }
 
-.branch-item{
+article.branch-item{
     padding: 1rem !important;
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+article.branch-item:hover {
+    transform: scale(1.05)
+}
+
 
 .article-selected {
-    border: 1px solid #E16428 !important;
+    border: 1px solid var(--primary) !important;
+    box-shadow: 2px -1px 41px 0px var(--primary) !important;
 }
