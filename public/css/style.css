@@ -154,6 +154,11 @@ nav.nav-header > ul > li:hover, nav.nav-account > ul > li:hover{
     background-color: #a24d26 !important;
 }
 
+textarea {
+    resize: none;
+    min-height: fit-content;
+  }
+
 /*
 .nav-account {
     background-color: var(--primary) !important;
@@ -701,14 +706,7 @@ textarea::placeholder {
     display: flex !important;
     flex-direction: row-reverse;
     justify-content: space-around;
-    /*
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    */
 }
-
 
 .product-unit .form{
     display: flex;
@@ -760,12 +758,21 @@ textarea::placeholder {
 .product-unit section p{
     font-size: 1.4rem;
     margin-bottom: 2rem;
+    color: var(--dark-shadow);
 }
 
 .product-unit .form .input-group {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.product-unit ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.3rem;
+    color: var(--dark-shadow);
 }
 
 .management_orders {
