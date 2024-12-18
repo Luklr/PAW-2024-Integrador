@@ -29,6 +29,7 @@ class PaymentController extends Controller
 
     public function branchSelection(Request $request) {
         $this->redirectIfNotLogged($request, "/");
+        $session = $request->session();
         if(!$session->get("order_id")){
             $this->redirect("/cart");
         }
@@ -40,12 +41,11 @@ class PaymentController extends Controller
 
     public function enterAddress(Request $request) {
         $this->redirectIfNotLogged($request, "/");
+        $session = $request->session();
         if(!$session->get("order_id")){
             $this->redirect("/cart");
         }
         $addresses = $this->addressRepository->getByUser($request->user()->getId());
-        // echo "<pre>";
-        // var_dump($addresses);die;
         echo $this->render('payment/enter_address.view.twig', "Enter address", $request, ["addresses" => $addresses]);
     }
 
