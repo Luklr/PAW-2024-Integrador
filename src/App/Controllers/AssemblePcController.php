@@ -268,13 +268,16 @@ class AssemblePcController extends Controller
             1 => "cpu",
             2 => "motherboard",
             3 => "memory",
-            4 => "internalHardDrive",
-            5 => "powerSupply",
-            6 => "casePc"
+            4 => "videoCard",
+            5 => "internalHardDrive",
+            6 => "cpuFan",
+            7 => "powerSupply",
+            8 => "casePc"
         ];
         
         foreach($allComponents as $component){
-            if (!$request->session()->get("AyPC_" . $component)) {
+            if (!$request->session()->get("AyPC_" . $component) 
+            && $component<>"videoCard" && $component<>"cpuFan") {
                 http_response_code(400);
                 echo json_encode(["error" => "Bad Request: You must select all components"]);
                 exit;
