@@ -150,7 +150,7 @@ nav.nav-header ul li .selected {
     background-color: var(--primary) !important;
 }
 
-nav.nav-header ul li:hover, nav.nav-account > ul > li:hover{
+nav.nav-header > ul > li:hover, nav.nav-account > ul > li:hover{
     background-color: #a24d26 !important;
 }
 
@@ -216,7 +216,7 @@ nav.nav-account > ul > li:hover {
     animation: hover-boton-in 0.2s ease-in-out forwards;
 }
 
-.assemblePcButton, input[type="submit"]:not(.searchbar-form input[type="submit"]){
+.assemblePcButton, input[type="submit"]:not(.searchbar-form input[type="submit"]), .form-submit{
     background-color: var(--primary);
     color: var(--background);
     font-size: 1rem;
@@ -229,7 +229,7 @@ nav.nav-account > ul > li:hover {
     margin-top: 1rem;
 }
 
-.assemblePcButton:hover, input[type="submit"]:not(.searchbar-form input[type="submit"]):hover{
+.assemblePcButton:hover, input[type="submit"]:not(.searchbar-form input[type="submit"]):hover, .form-submit:hover{
     animation: hover-boton-in 0.2s ease-in-out forwards;
 }
 
@@ -982,24 +982,82 @@ img {
     width: fit-content;
 }
 
+.payment {
+    min-height: 100%;
+}
+
 .select-retiro {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     width: 70%;
+    height: 70%;
 }
 
 .payment .retiro-anchor {
     padding: 3rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
     font-size: 2rem;
     margin: 2rem;
+    border-radius: 1rem;
+    width: 40%;
+    background-color: var(--secondary);
+    color: var(--background);
+    transition: background-size 0.5s ease, box-shadow 0.5s ease;
+    background-repeat: no-repeat;
+    box-shadow: none;
+}
+
+.payment .retiro-anchor.domicilio {
+    background: 
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), /* Color semitransparente */
+    url(/images/recall/domicilio.jpg);; /* Imagen de fondo */
+    background-size: 100%;
+    background-position: center;
+}
+
+.payment .retiro-anchor.sucursal {
+    background: 
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), /* Color semitransparente */
+    url(/images/recall/sucursal.jpg);; /* Imagen de fondo */
+    background-size: 100%;
+    background-position: center;
+}
+
+.payment .retiro-anchor:hover {
+    background-size: 107%;
+    box-shadow: 
+    rgba(0, 0, 0, 0.4) 0px 7px 10px,
+    rgba(0, 0, 0, 0.5) 0px 15px 30px -10px,
+    rgba(0, 0, 0, 0.4) 0px -5px 0px inset;
+}
+
+.payment ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.payment ul li {
+    width: 100%;
+}
+
+.user-profile{
     background-color: var(--background);
     border: solid #b1acac 1px;
     border-radius: 1rem;
+    margin-top: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
-
-
+.user-profile p {
+    margin-bottom: 0.5rem;
+}
 
 div.loading {
 

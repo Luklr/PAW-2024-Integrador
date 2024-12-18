@@ -1,5 +1,19 @@
 services:
-  paw-2024:
+  app:
+    image: grupo4sdypp2024/app-paw-integrador:1.0.0
+    container_name: app-paw-integrador
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - .:/var/www/
+    environment:
+      API_KEY_GEMINI: ${API_KEY_GEMINI}
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  db:
     image: postgres:15.3
     container_name: postgres-TPI
     restart: always
@@ -10,7 +24,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - ${DB_PORT}:5432
+      - "${DB_FORWARDED_PORT}:${DB_PORT}"
+    env_file:
+      - .env
 
 volumes:
   postgres_data:

@@ -12,14 +12,17 @@ Enlaces adicionales:
 
 
 ## Instalación y Ejecución (local)
+### Requisitos
+Tener Docker instalado.
 
-* ```git clone <url-repo>```
-* ```cd project-name```
-* ```composer install```
-* ```cp .env.example .env``` # Editar el ```.env``` con los valores deseados
-* ```docker compose up -d```
-* ```./db/scripts/init_db.sh```
-* Ejecutar: ```php -S localhost:8888 -t public/```
+### Pasos
+```bash
+git clone https://github.com/Luklr/PAW-2024-Integrador.git
+cd PAW-2024-Integrador
+cp .env.example .env    # Editar el ```.env``` con los valores deseados (API key requerida para Gemini)
+docker compose up -d
+bash deploy.sh
+```
 
 ## Usuarios de prueba
 

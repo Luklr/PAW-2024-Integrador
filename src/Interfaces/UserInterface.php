@@ -1,6 +1,6 @@
 <?php
 
-namespace Paw\App\Interfaces;
+namespace Paw\Interfaces;
 
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
