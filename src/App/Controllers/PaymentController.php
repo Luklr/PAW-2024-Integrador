@@ -15,6 +15,7 @@ use Twig\Environment;
 
 use MercadoPago\MercadoPagoConfig;
 use MercadoPago\Client\Preference\PreferenceClient;
+use MercadoPago\Exceptions\MPApiException;
 
 
 class PaymentController extends Controller
@@ -239,54 +240,89 @@ class PaymentController extends Controller
         }
     }
 
-    # /create_preference
-    public function createPreference(Request $request)
+    protected function authenticateMP()
     {
-        # source: https://github.com/mercadopago/checkout-payment-sample/blob/master/server/php/server.php
+        // Getting the access token from .env file (create your own function)
+        $mpAccessToken = getenv('MP_ACCESS_TOKEN');
+        // Set the token the SDK's config
+        MercadoPagoConfig::setAccessToken($mpAccessToken);
+        // (Optional) Set the runtime enviroment to LOCAL if you want to test on localhost
+        // Default value is set to SERVER
+        MercadoPagoConfig::setRuntimeEnviroment(MercadoPagoConfig::LOCAL);
+    }
 
-        // $json = file_get_contents("php://input");
-        // $data = json_decode($json);
-
-        // Agrega credenciales
-        MercadoPagoConfig::setAccessToken("PROD_ACCESS_TOKEN");
-
-        // Crear una preferencia
-        $client = new PreferenceClient();
-        $preference = $client->create([
-        "items"=> array(
-            array(
-            "title" => "Mi producto",
-            "quantity" => 1,
-            "unit_price" => 2000
-            )
-        )
-        ]);
-
-        // O sino, para agregar items:
-        // $item = new MercadoPago\Item();
-        // $item->title = $data->description;
-        // $item->quantity = $data->quantity;
-        // $item->unit_price = $data->price;
-
+    // Function that will return a request object to be sent to Mercado Pago API
+    function createPreferenceRequest($items, $payer): array
+    {
+        $paymentMethods = [
+            "excluded_payment_methods" => [],
+            "installments" => 12,
+            "default_installments" => 1
+        ];
+        
         $back_domain = getenv('NGROK_URL');
-        $preference->back_urls = array(
+        $backUrls = array(
             "success" => "https://www.tu-sitio.com/success",
             "failure" => "https://www.tu-sitio.com/failure",
             "pending" => "https://www.tu-sitio.com/pending"
         );
 
-        $preference->auto_return = "approved"; 
+        $request = [
+            "items" => $items,
+            "payer" => $payer,
+            "payment_methods" => $paymentMethods,
+            "back_urls" => $backUrls,
+            "statement_descriptor" => "NAME_DISPLAYED_IN_USER_BILLING",
+            "external_reference" => "1234567890",
+            "expires" => false,
+            "auto_return" => 'approved',
+        ];
 
-        // Guardar y obtener la URL de pago
-        $preference->save();
+        return $request;
+    }
 
-        $response = array(
-            'id' => $preference->id,
-        );
-        echo json_encode($response);
+    # /create_preference
+    public function createPreference(Request $request)
+    {
+        # source: https://github.com/mercadopago/checkout-payment-sample/blob/master/server/php/server.php
+        $json = $request->getBody();
+        $data = json_decode($json);
+        $this->authenticateMP();
 
-        // Redirigir al usuario a la URL de pago
-        // header("Location: " . $preference->init_point);
-        // exit;
+        // Crear una preferencia
+        $items = [];
+        foreach ($data as $product) {
+            $items[] = [
+            "title" => $product->description,
+            "quantity" => $product->quantity,
+            "unit_price" => $product->price
+            ];
+        }
+        $user = $request->user();
+        $payer = [
+            "name" => $user->getName(),
+            "surname" => $user->getLastname(),
+            "email" => $user->getEmail(),
+        ];
+
+        $request = $this->createPreferenceRequest($items, $payer);
+        $client = new PreferenceClient();
+
+        try {
+            // Send the request that will create the new preference for user's checkout flow
+            $preference = $client->create($request);
+
+            // Useful props you could use from this object is 'init_point' (URL to Checkout Pro) or the 'id'
+            // echo json_encode($preference);
+
+            // Redirigir al usuario a la URL de pago
+            // header("Location: " . $preference->init_point);
+            // exit;
+            echo json_encode($preference);
+        } catch (MPApiException $error) {
+            // Here you might return whatever your app needs.
+            // We are returning null here as an example.
+            echo json_encode(["error" => $error->getMessage()]);
+        }
     }
 }
