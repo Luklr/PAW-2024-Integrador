@@ -10,8 +10,17 @@ class InfiniteScrollAyPC {
         this.container = document.getElementsByClassName('products')[0];
         const form = document.getElementById('search-form');
         this.type = form.getAttribute('data-type');
+        this.addLoadingIcon();
         this.initSearch();
         this.initObserver();
+    }
+
+    addLoadingIcon() {
+        fetch('/source/pictures/assembl-icon.svg')
+        .then(response => response.text())
+        .then(data => {
+            this.loading.innerHTML = data;
+    });
     }
 
     initSearch() {
