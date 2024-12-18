@@ -8,6 +8,8 @@ services:
       - .:/var/www/
     environment:
       API_KEY_GEMINI: ${API_KEY_GEMINI}
+      MP_ACCESS_TOKEN: ${MP_ACCESS_TOKEN}
+      MP_PUBLIC_KEY: ${MP_PUBLIC_KEY}
     depends_on:
       - db
     env_file:

@@ -123,6 +123,9 @@ class App {
             document.addEventListener("DOMContentLoaded", () => {
                 tools.cargarScript("confirmOrder", "js/components/confirmOrder.js", () => {
                     let confirmOrder = new ConfirmOrder();
+                });
+                tools.cargarScript("mercadoPago", "js/components/mercadoPago.js", () => {
+                    let mercadoPago = new MercadoPago();
                 })
             })
         }

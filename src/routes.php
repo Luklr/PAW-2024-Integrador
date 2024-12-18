@@ -62,7 +62,8 @@ $router->get("/order_pickup", "PaymentController@orderPickUp");
 $router->get("/delete_item_cart", "PaymentController@deleteItemCart");
 $router->get("/set_branch_order", "PaymentController@setBranchOrder");
 $router->get("/set_address_order", "PaymentController@setAddressOrder");
-
+# MercadoPago
+$router->post("/create_preference", "PaymentController@createPreference");
 
 $router->get("/create_product", "IntranetController@createProduct");
 $router->post("/create_product", "IntranetController@createProductPost");

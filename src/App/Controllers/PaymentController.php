@@ -1,6 +1,7 @@
 <?php
 
 namespace Paw\App\Controllers;
+
 use Paw\Core\Request;
 use Paw\App\Models\Cart;
 use Paw\App\Models\Order;
@@ -11,6 +12,10 @@ use Paw\App\Repositories\OrderRepository;
 use Paw\App\Repositories\BranchRepository;
 use Paw\App\Repositories\AddressRepository;
 use Twig\Environment;
+
+use MercadoPago\MercadoPagoConfig;
+use MercadoPago\Client\Preference\PreferenceClient;
+
 
 class PaymentController extends Controller
 {
@@ -231,5 +236,56 @@ class PaymentController extends Controller
             http_response_code(200);
             echo json_encode(['success' => true, 'id' => $id, 'quantity' => $quantity]);
         }
+    }
+
+    # /create_preference
+    public function createPreference(Request $request)
+    {
+        # source: https://github.com/mercadopago/checkout-payment-sample/blob/master/server/php/server.php
+
+        // $json = file_get_contents("php://input");
+        // $data = json_decode($json);
+
+        // Agrega credenciales
+        MercadoPagoConfig::setAccessToken("PROD_ACCESS_TOKEN");
+
+        // Crear una preferencia
+        $client = new PreferenceClient();
+        $preference = $client->create([
+        "items"=> array(
+            array(
+            "title" => "Mi producto",
+            "quantity" => 1,
+            "unit_price" => 2000
+            )
+        )
+        ]);
+
+        // O sino, para agregar items:
+        // $item = new MercadoPago\Item();
+        // $item->title = $data->description;
+        // $item->quantity = $data->quantity;
+        // $item->unit_price = $data->price;
+
+        $back_domain = getenv('NGROK_URL');
+        $preference->back_urls = array(
+            "success" => "https://www.tu-sitio.com/success",
+            "failure" => "https://www.tu-sitio.com/failure",
+            "pending" => "https://www.tu-sitio.com/pending"
+        );
+
+        $preference->auto_return = "approved"; 
+
+        // Guardar y obtener la URL de pago
+        $preference->save();
+
+        $response = array(
+            'id' => $preference->id,
+        );
+        echo json_encode($response);
+
+        // Redirigir al usuario a la URL de pago
+        // header("Location: " . $preference->init_point);
+        // exit;
     }
 }
