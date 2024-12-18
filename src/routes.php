@@ -49,6 +49,7 @@ $router->get("/about_us", "OrgInformationController@aboutUs");
 $router->get("/branches", "OrgInformationController@branches");
 $router->get("/consumer_defense", "OrgInformationController@consumerDefense");
 $router->get("/contacts", "OrgInformationController@contacts");
+$router->post("/contacts", "OrgInformationController@contactsForm");
 
 $router->post("/add_to_cart", "PaymentController@addComponentToCart");
 $router->get("/branch_selection", "PaymentController@branchSelection");

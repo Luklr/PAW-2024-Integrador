@@ -1,13 +1,10 @@
 {% extends 'view.twig' %}
 
 {% block content %}
-<!--    <section class="informacion"> --!>
+    <section class="informacion">
         <h2>
             Contactanos
         </h2>
-        {% if procesado %}
-            <p>Su petición fue procesada con éxito</p>
-        {% endif %}
         <form id="form" method="POST" action="/contacts">
             <label for="nombres">Nombres: </label>
             <input type="text" id="nombres" placeholder="Nombres" required>
@@ -21,5 +18,19 @@
             <textarea id="mensaje" placeholder="Detalle su consulta o problema" rows="6"></textarea>
             <input type="submit" value="Enviar" class="submit">
         </form>
-<!--    </section> --!>
+        {% if msg %}
+            <script>
+                Swal.fire({
+                    icon: "success",
+                    title: "Mensaje de contacto enviado!",
+                    //toast: true,
+                    customClass: {
+                        title: "swal-title",
+                        content: "swal-content",
+                        confirmButton: "assemblePcButton",
+                    }
+                });
+            </script>
+        {% endif %}
+    </section>
 {% endblock %}
