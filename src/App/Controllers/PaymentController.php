@@ -199,6 +199,7 @@ class PaymentController extends Controller
     }
 
     public function orderPickUp(Request $request) {
+        $this->redirectIfNotLogged($request, "/registered_order");
         echo $this->render('payment/order_pickup.view.twig', "Order pick up", $request);
     }
 

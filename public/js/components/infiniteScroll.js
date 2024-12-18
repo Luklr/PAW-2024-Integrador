@@ -9,8 +9,17 @@ class InfiniteScroll {
         this.loading = document.getElementById('loading');
         this.container = document.getElementsByClassName('products')[0];
 
+        this.addLoadingIcon();
         this.initSearch();
         this.initObserver();
+    }
+
+    addLoadingIcon() {
+        fetch('/source/pictures/assembl-icon.svg')
+        .then(response => response.text())
+        .then(data => {
+            this.loading.innerHTML = data;
+    });
     }
 
     initSearch() {
