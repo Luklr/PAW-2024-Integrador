@@ -23,8 +23,8 @@ class InfiniteScrollAyPC {
             this.type = form.getAttribute('data-type');  // Obtener el valor del atributo `data-type`
             
             // Borra solo los productos y no el formulario o el div de loading
-            const products = document.querySelectorAll('.products .product');
-            products.forEach(product => product.remove());
+            const productAnchors = document.querySelectorAll('.products a');
+            productAnchors.forEach(anchor => anchor.remove());
     
             this.chargeMoreProducts();
         });

@@ -28,11 +28,7 @@ class PaymentController extends Controller
     }
 
     public function branchSelection(Request $request) {
-        $session = $request->session();
-        if(!$request->session()->isLogged()) {
-            $request->session()->set("loopback", $originPath);
-            $this->redirect("/login");
-        }
+        $this->redirectIfNotLogged($request, "/");
         if(!$session->get("order_id")){
             $this->redirect("/cart");
         }
@@ -43,11 +39,7 @@ class PaymentController extends Controller
     }
 
     public function enterAddress(Request $request) {
-        $session = $request->session();
-        if(!$request->session()->isLogged()) {
-            $request->session()->set("loopback", $originPath);
-            $this->redirect("/login");
-        }
+        $this->redirectIfNotLogged($request, "/");
         if(!$session->get("order_id")){
             $this->redirect("/cart");
         }
@@ -94,6 +86,7 @@ class PaymentController extends Controller
     }
 
     public function cart(Request $request) {
+        $this->redirectIfNotLogged($request, "/cart");
         $cart = null;
         $session = $request->session();
         $components = [];
@@ -174,11 +167,8 @@ class PaymentController extends Controller
     }
 
     public function confirmOrder(Request $request) {
+        $this->redirectIfNotLogged($request, "/");
         $session = $request->session();
-        if(!$request->session()->isLogged()) {
-            $request->session()->set("loopback", $originPath);
-            $this->redirect("/login");
-        }
         if(!$session->get("order_id")){
             $this->redirect("/cart");
         }
@@ -188,11 +178,8 @@ class PaymentController extends Controller
     }
 
     public function confirmOrderPost(Request $request) {
+        $this->redirectIfNotLogged($request, "/");
         $session = $request->session();
-        if(!$request->session()->isLogged()) {
-            $request->session()->set("loopback", $originPath);
-            $this->redirect("/login");
-        }
         if(!$session->get("order_id")){
             $this->redirect("/cart");
         }

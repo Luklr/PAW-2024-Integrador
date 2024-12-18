@@ -268,11 +268,9 @@ class AssemblePcController extends Controller
             1 => "cpu",
             2 => "motherboard",
             3 => "memory",
-            4 => "videoCard",
-            5 => "internalHardDrive",
-            6 => "cpuFan",
-            7 => "powerSupply",
-            8 => "casePc"
+            4 => "internalHardDrive",
+            5 => "powerSupply",
+            6 => "casePc"
         ];
         
         foreach($allComponents as $component){

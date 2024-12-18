@@ -22,8 +22,8 @@ class InfiniteScroll {
             this.type = document.querySelector('input[name="type"]:checked')?.value || '';
             
             // Borra solo los productos y no el formulario o el div de loading
-            const products = document.querySelectorAll('.products .product');
-            products.forEach(product => product.remove());
+            const productAnchors = document.querySelectorAll('.products a');
+            productAnchors.forEach(anchor => anchor.remove());
     
             this.chargeMoreProducts();
         });

@@ -148,6 +148,19 @@ class GeminiChat {
                 if (response.ok) {
                     return response.json();
                 }
+                if (response.status === 403) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: "Debe estar logueado para poder realizar consultas!",
+                        customClass: {
+                            title: "swal-title",
+                            content: "swal-content",
+                            confirmButton: "assemblePcButton",
+                            cancelButton: "assemblePcButton"
+                        }
+                    });
+                }
                 throw new Error('Error al procesar la consulta');
             })
             .then(data => {

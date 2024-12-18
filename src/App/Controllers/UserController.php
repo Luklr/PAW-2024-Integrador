@@ -141,14 +141,11 @@ class UserController extends Controller
         } else {
             $mensaje = "No se encontraron los parámetros necesarios";
         }
-        $this->register($request, $mensaje);
+        $this->signin($request, $mensaje);
     }
 
     public function account(Request $request) {
-        if (!$request->session()->isLogged()) {
-            $request->session()->set("loopback", $originPath);
-            $this->redirect("/login");
-        } 
+        $this->redirectIfNotLogged($request, "/");
         echo $this->render('user/account.view.twig', "Account", $request, ["user" => $request->user()]);
     }
 
@@ -187,18 +184,12 @@ class UserController extends Controller
     }
 
     public function setAddress(Request $request) {
-        if (!$request->session()->isLogged()){
-            $request->session()->set("loopback", $originPath);
-            $this->redirect("/login");
-        }
+        $this->redirectIfNotLogged($request, "/set_address");
         echo $this->render('user/set_address.view.twig', "Set address", $request, ["user" => $request->user()]);
     }
 
     public function setAddressForm(Request $request) {
-        if (!$request->session()->isLogged()){
-            $request->session()->set("loopback", $originPath);
-            $this->redirect("/login");
-        }
+        $this->redirectIfNotLogged($request, "/set_address");
         if (!$request->hasBodyParams(["street", "number" ,"postalcode", "province", "locality"])){
             http_response_code(400);
             echo json_encode(['message' => 'Bad Request: Missing parameters']);
