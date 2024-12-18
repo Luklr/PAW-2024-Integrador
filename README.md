@@ -20,3 +20,12 @@ Enlaces adicionales:
 * ```docker compose up -d```
 * ```./db/scripts/init_db.sh```
 * Ejecutar: ```php -S localhost:8888 -t public/```
+
+## Usuarios de prueba
+
+* Usuario común: 
+    * Email: user@example.com
+    * Contraseña: 12345678
+* Usuario administrador:
+    * Email: admin@example.com
+    * Contraseña: 12345678
