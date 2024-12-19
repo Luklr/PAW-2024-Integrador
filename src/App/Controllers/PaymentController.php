@@ -341,14 +341,7 @@ class PaymentController extends Controller
 
                 if ($order) {
                     $payStatus = $payment->status;
-                    if ($payStatus == 'approved') {
-                        $order->pay();
-                    } elseif ($payStatus == 'pending') {
-                        $order->pending();
-                    } else {
-                        $order->reject();
-                    }
-
+                    $order->setPaymentStatus($payStatus);
                     $this->orderRepository->update($order);
                 }
             }

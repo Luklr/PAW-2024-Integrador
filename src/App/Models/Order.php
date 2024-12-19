@@ -24,6 +24,7 @@ class Order extends Model {
         "branch" => null,
         "address" => null,
         "status" => null,
+        "payment_status" => null,
         "components" => []
     ];
     
@@ -115,11 +116,18 @@ class Order extends Model {
     }
 
     public function setPaymentStatus(string $payment_status) {
-        // $payment_status = {status=in_process, status=approved, status=rejected}
-        if ($payment_status === '') {
-            $this->fields["payment_status"] = $payment_status;
-            $this->fields["status"] = Status::PENDING_PAYMENT;
+        if ($payment_status == 'approved') {
+            $this->pay($payment_status);
+        } elseif ($payment_status === 'in_process') {
+            $this->pending($payment_status);
+        } elseif ($payment_status === 'rejected') {
+            $this->reject($payment_status);
         }
+
+        # Si cambió de estado (en realidad no es necesario esto)
+        // if ($this->fields["payment_status"] === 'in_process' && $payment_status === 'approved') {
+        //     $this->pay($payment_status);
+        // }
     }
 
     public function getPaymentStatus(): ?string
@@ -136,17 +144,20 @@ class Order extends Model {
         return $this->fields["components"];
     }
 
-    public function pending() {
+    public function pending($payment_status) {
+        $this->fields["payment_status"] = $payment_status;
         $this->fields["status"]= Status::PENDING_PAYMENT;
         $this->fields["deliverydate"]= null;
     }
 
-    public function pay() {
+    public function pay($payment_status) {
+        $this->fields["payment_status"] = $payment_status;
         $this->fields["status"]= Status::PREPARING;
         $this->fields["deliverydate"]= null;
     }
 
-    public function reject() {
+    public function reject($payment_status) {
+        $this->fields["payment_status"] = $payment_status;
         $this->fields["status"]= Status::REJECTED;
     }
 
