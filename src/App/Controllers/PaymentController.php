@@ -328,18 +328,20 @@ class PaymentController extends Controller
     {
         $json = $request->getBody();
         $notificacion = json_decode($json);
-        $this->logger->info("Notificación recibida de MP: ". $notificacion);
+        $this->logger->info("Notificación recibida de MP: ". json_encode($notificacion, JSON_PRETTY_PRINT));
         if ($notificacion->action == 'payment.created') {
             $paymentId = $notificacion->data->id;
             $client = new PaymentClient;
             $payment = $client->get($paymentId);
-            $this->logger->info("Payment: ". $payment);
+            $this->logger->info("Payment: ". json_encode($payment, JSON_PRETTY_PRINT));
 
             if ($payment) {
                 $orderId = $payment->external_reference;
                 $order = $this->orderRepository->getById($orderId);
 
-                if ($order) {
+                // Validar que el secret del hook sea igual al de la app
+                $secret = getenv('MP_WEBHOOK_SECRET');
+                if ($order && $secret == $notificacion->meta->secret) {
                     $payStatus = $payment->status;
                     $order->setPaymentStatus($payStatus);
                     $this->orderRepository->update($order);
