@@ -6,55 +6,52 @@
     <h2>
         Confirmar pedido
     </h2>
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="5">Producto</th>
-                    <th colspan="2">Precio</th>
-                    <th colspan="3">Cantidad</th>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="5">Producto</th>
+                <th colspan="2">Precio</th>
+                <th colspan="3">Cantidad</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th colspan="5">Total</th>
+                <td colspan="2" id="totalPrice">0$</td>
+                <td colspan="3"></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for item in order.components %}
+                <tr id="col-{{ item.component.id }}" class="component">
+                    <td colspan="5">{{ item.component.description }}</td>
+                    <td colspan="2" class="price" data-price="{{ item.component.price }}">{{ item.component.price }}$</td>
+                    <td colspan="3" class="quantity" data-quantity="{{ item.quantity }}">{{ item.quantity }}</td>
                 </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th colspan="5">Total</th>
-                    <td colspan="2" id="totalPrice">0$</td>
-                    <td colspan="3"></td>
-                </tr>
-            </tfoot>
-            <tbody>
-                {% for item in order.components %}
-                    <tr id="col-{{ item.component.id }}" class="component">
-                        <td colspan="5">{{ item.component.description }}</td>
-                        <td colspan="2" class="price" data-price="{{ item.component.price }}">{{ item.component.price }}$</td>
-                        <td colspan="3" class="quantity" data-quantity="{{ item.quantity }}">{{ item.quantity }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% if order.branch %}
-            <article id="{{order.branch.id}}">
-                <h3>{{order.branch.name}}</h3>
-                <p>{{order.branch.street}} {{order.branch.number}}, {{order.branch.locality}}</p>
-            </article>
-        {% endif %}
-        {% if order.address %}
-            <article id="{{order.address.id}}">
-                <h3>{{order.address.street}} {{order.address.number}}, {{order.address.locality}}, {{order.address.province}}</h3>
-                <ul>
-                    <li>Código postal {{order.address.postalcode}}</li>
-                    {% if order.address.floor %}
-                        <li>Piso {{order.address.floor}}</li>
-                    {% endif %}
-                    {% if order.address.apartment %}
-                        <li>Apartamento {{order.address.apartment}}</li>
-                    {% endif %}
-                </ul>
-            </article>
-        {% endif %}
-    <form name="confirmOrderForm" action="/confirm_order" method="POST">
-    </form>
-    <input type="submit" value="Confirmar" class="submit form-submit">
-
-    <!-- SDK MercadoPago.js -->
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if order.branch %}
+        <article id="{{order.branch.id}}">
+            <h3>{{order.branch.name}}</h3>
+            <p>{{order.branch.street}} {{order.branch.number}}, {{order.branch.locality}}</p>
+        </article>
+    {% endif %}
+    {% if order.address %}
+        <article id="{{order.address.id}}">
+            <h3>{{order.address.street}} {{order.address.number}}, {{order.address.locality}}, {{order.address.province}}</h3>
+            <ul>
+                <li>Código postal {{order.address.postalcode}}</li>
+                {% if order.address.floor %}
+                    <li>Piso {{order.address.floor}}</li>
+                {% endif %}
+                {% if order.address.apartment %}
+                    <li>Apartamento {{order.address.apartment}}</li>
+                {% endif %}
+            </ul>
+        </article>
+    {% endif %}
+    <div id="payment">
+        <input type="submit" value="Generar link mercadopago" class="submit form-submit">
+    </div>
 {% endblock %}

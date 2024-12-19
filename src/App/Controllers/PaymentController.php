@@ -183,7 +183,7 @@ class PaymentController extends Controller
         echo $this->render('payment/confirm_order.view.twig', "Confirm order", $request, ["order" => $order]);
     }
 
-    public function confirmOrderPost(Request $request) {
+    public function confirmOrderMp(Request $request) {
         $this->redirectIfNotLogged($request, "/");
         $session = $request->session();
         if(!$session->get("order_id")){
@@ -260,11 +260,12 @@ class PaymentController extends Controller
             "default_installments" => 1
         ];
         
-        $back_domain = getenv('NGROK_URL');
+        // $back_domain = getenv('NGROK_URL');
+        $back_domain = getenv('APP_URL');
         $backUrls = array(
-            "success" => "https://www.tu-sitio.com/success",
-            "failure" => "https://www.tu-sitio.com/failure",
-            "pending" => "https://www.tu-sitio.com/pending"
+            "success" => $back_domain . "/confirm_order_mp",
+            "failure" => $back_domain . "/confirm_order",
+            "pending" => $back_domain . "/confirm_order_mp"
         );
 
         $request = [
@@ -306,7 +307,7 @@ class PaymentController extends Controller
         ];
 
         $request = $this->createPreferenceRequest($items, $payer);
-        $client = new PreferenceClient();
+        $client = new PreferenceClient;
 
         try {
             // Send the request that will create the new preference for user's checkout flow

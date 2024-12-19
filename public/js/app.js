@@ -124,9 +124,10 @@ class App {
                 tools.cargarScript("confirmOrder", "js/components/confirmOrder.js", () => {
                     let confirmOrder = new ConfirmOrder();
                 });
-                tools.cargarScript("mercadoPago", "js/components/mercadoPago.js", () => {
-                    let mercadoPago = new MercadoPago();
-                })
+                tools.cargarScript("mercadoPago", "https://sdk.mercadopago.com/js/v2");
+                tools.cargarScript("mercadoPagoComponent", "js/components/mercadoPagoComponent.js", () => {
+                    let mercadoPagoComponent = new MercadoPagoComponent();
+                });
             })
         }
 

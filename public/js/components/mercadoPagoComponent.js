@@ -1,5 +1,5 @@
 // Source: https://github.com/mercadopago/checkout-payment-sample/blob/master/client/html-js/js/index.js
-class MercadoPago {
+class MercadoPagoComponent {
   constructor() {
     this.createPreference = this.createPreference.bind(this);
     this.init();
@@ -9,18 +9,18 @@ class MercadoPago {
     var mpContainer = tools.nuevoElemento("div", "", {
       id: "wallet_container",
     });
-    const form = document.querySelector("form[name=confirmOrderForm]");
-    form.appendChild(mpContainer);
-    console.log(form);
-    form.addEventListener("click", this.createPreference);
-  }
+    const submitButton = document.querySelector(".submit.form-submit");
+    submitButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      const paymentDiv = document.getElementById("payment");
+      paymentDiv.appendChild(mpContainer);
+      this.createPreference();
+      submitButton.style.display = "none";
+    });
+    }
 
-  createPreference() {
+    createPreference() {
     console.log("Ejecutando createPreference()");
-
-    let submit = document.querySelector(".submit.form-submit");
-    submit.disabled = true;
-
     let orderData = this.extractOrderData();
     console.log(orderData);
     fetch("http://localhost:8888/create_preference", {
@@ -30,25 +30,21 @@ class MercadoPago {
       },
       body: JSON.stringify(orderData),
     })
-      .then(function (response) {
+      .then((response) => {
         return response.json();
       })
-      .then(function (preference) {
-        createCheckoutButton(preference.id);
+      .then((preference) => {
+        this.createCheckoutButton(preference.id);
       })
-      .catch(function () {
+      .catch(() => {
         alert("Error al generar el link de pago");
-        submit.disabled = false;
       });
   }
 
   createCheckoutButton(preferenceId) {
-    const mp = new MercadoPago("TEST-82a70b33-6a9a-45b2-9d73-a1434246b4ad");
-    // const mercadopago = new MercadoPago("YOUR_PUBLIC_KEY", {
-    //   locale: "es-AR", // The most common are: 'pt-BR', 'es-AR' and 'en-US'
-    // });
+    const mp = new MercadoPago("APP_USR-4dc29a05-5685-475c-8d2a-dca4454e7b23"); // Public key
     const bricksBuilder = mp.bricks();
-
+    console.log(`Ejecutando createCheckoutButton(${preferenceId})`);
     bricksBuilder.create("wallet", "wallet_container", {
       initialization: {
         preferenceId: preferenceId,
@@ -59,6 +55,8 @@ class MercadoPago {
         },
       },
     });
+    // const submitButton = document.querySelector(".submit.form-submit");
+    // submitButton.style.display = "none";
   }
 
   // Función para extraer los datos de la tabla y crear la lista de orderData
