@@ -137,7 +137,7 @@ class OrderRepository extends Repository
     public function confirmOrder($orderId, $mp_status){
         $componentRepository = ComponentRepository::getInstance();
         $order = $this->getById($orderId);
-        $order->setPaymentStatus($mp_status);   # CONSIDERAR SI ES CORRECTO ESTO EN TÉRMINOS DE SEGURIDAD (el status viene del front, no del back de MP en forma de notificacion/webhook) -> sino, simplemente poner como pendiente y esperar a que MP notifique
+        $order->setPayment_status($mp_status);   # CONSIDERAR SI ES CORRECTO ESTO EN TÉRMINOS DE SEGURIDAD (el status viene del front, no del back de MP en forma de notificacion/webhook) -> sino, simplemente poner como pendiente y esperar a que MP notifique
         $this->setStatus($order);
         $components = $order->getComponents();
         foreach($components as $component){

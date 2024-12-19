@@ -343,7 +343,7 @@ class PaymentController extends Controller
                 $secret = getenv('MP_WEBHOOK_SECRET');
                 if ($order && $secret == $notificacion->meta->secret) {
                     $payStatus = $payment->status;
-                    $order->setPaymentStatus($payStatus);
+                    $order->setPayment_status($payStatus);
                     $this->orderRepository->update($order);
                 }
             }

@@ -115,7 +115,7 @@ class Order extends Model {
         return ($this->fields["status"])->label();
     }
 
-    public function setPaymentStatus(string $payment_status) {
+    public function setPayment_status(string $payment_status) {
         if ($payment_status == 'approved') {
             $this->pay($payment_status);
         } elseif ($payment_status === 'in_process') {
@@ -130,9 +130,9 @@ class Order extends Model {
         // }
     }
 
-    public function getPaymentStatus(): ?string
+    public function getPayment_status(): ?string
     {
-        return ($this->fields["payment_status"])->label();
+        return $this->fields["payment_status"]?->label();
     }
 
     public function setComponents(array $components) {
