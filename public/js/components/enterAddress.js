@@ -27,23 +27,11 @@ class EnterAddress
                     localStorage.setItem('selectedAddressId', selectedAddressId);
                     console.log(data.address_id);
                     console.log(data.success);
-                    Swal.fire({
-                        icon: "success",
-                        title: "Dirección elegida correctamente!",
-                        timer: 5000,
-                        customClass: {
-                            title: "swal-title",
-                            content: "swal-content",
-                            confirmButton: "assemblePcButton",
-                            cancelButton: "assemblePcButton"
-                        }
-                    });
                 } else {
                     selectedAddressId = null;
                     localStorage.setItem('selectedAddressId', selectedAddressId);
                     console.log(data.message);
                 }
-                
             });
         });
 

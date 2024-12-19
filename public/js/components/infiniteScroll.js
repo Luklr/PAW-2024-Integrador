@@ -26,14 +26,18 @@ class InfiniteScroll {
         const form = document.getElementById('search-form');
         form.addEventListener('submit', (event) => {
             event.preventDefault();
+
             this.page = 0;
             this.query = document.getElementById('searchbar-templates').value;
-            this.type = document.querySelector('input[name="type"]:checked')?.value || '';
-            
+
+            // Verifica si el filtro seleccionado es "all"
+            const selectedType = document.querySelector('input[name="type"]:checked')?.value || 'all';
+            this.type = (selectedType === 'all') ? '' : selectedType;
+
             // Borra solo los productos y no el formulario o el div de loading
             const productAnchors = document.querySelectorAll('.products a');
             productAnchors.forEach(anchor => anchor.remove());
-    
+
             this.chargeMoreProducts();
         });
     }
