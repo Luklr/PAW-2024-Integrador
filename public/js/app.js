@@ -123,7 +123,11 @@ class App {
             document.addEventListener("DOMContentLoaded", () => {
                 tools.cargarScript("confirmOrder", "js/components/confirmOrder.js", () => {
                     let confirmOrder = new ConfirmOrder();
-                })
+                });
+                tools.cargarScript("mercadoPago", "https://sdk.mercadopago.com/js/v2");
+                tools.cargarScript("mercadoPagoComponent", "js/components/mercadoPagoComponent.js", () => {
+                    let mercadoPagoComponent = new MercadoPagoComponent();
+                });
             })
         }
 

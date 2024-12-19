@@ -22,6 +22,7 @@ cd PAW-2024-Integrador
 cp .env.example .env    # Editar el ```.env``` con los valores deseados (API key requerida para Gemini)
 docker compose up -d
 bash deploy.sh
+docker compose logs -f # Para ver los logs
 ```
 
 ## Usuarios de prueba

@@ -56,14 +56,15 @@ $router->get("/branch_selection", "PaymentController@branchSelection");
 $router->get("/cart", "PaymentController@cart");
 $router->post("/cart", "PaymentController@cartToOrder");
 $router->get("/confirm_order", "PaymentController@confirmOrder");
-$router->post("/confirm_order", "PaymentController@confirmOrderPost");
+$router->get("/confirm_order_mp", "PaymentController@confirmOrderMp");
 $router->get("/registered_order", "PaymentController@registeredOrder");
 $router->get("/enter_address", "PaymentController@enterAddress");
 $router->get("/order_pickup", "PaymentController@orderPickUp");
 $router->get("/delete_item_cart", "PaymentController@deleteItemCart");
 $router->get("/set_branch_order", "PaymentController@setBranchOrder");
 $router->get("/set_address_order", "PaymentController@setAddressOrder");
-
+# MercadoPago
+$router->post("/create_preference", "PaymentController@createPreference");
 
 $router->get("/create_product", "IntranetController@createProduct");
 $router->post("/create_product", "IntranetController@createProductPost");

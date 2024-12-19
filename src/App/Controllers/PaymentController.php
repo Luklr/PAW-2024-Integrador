@@ -1,6 +1,7 @@
 <?php
 
 namespace Paw\App\Controllers;
+
 use Paw\Core\Request;
 use Paw\App\Models\Cart;
 use Paw\App\Models\Order;
@@ -11,6 +12,11 @@ use Paw\App\Repositories\OrderRepository;
 use Paw\App\Repositories\BranchRepository;
 use Paw\App\Repositories\AddressRepository;
 use Twig\Environment;
+
+use MercadoPago\MercadoPagoConfig;
+use MercadoPago\Client\Preference\PreferenceClient;
+use MercadoPago\Exceptions\MPApiException;
+
 
 class PaymentController extends Controller
 {
@@ -177,7 +183,7 @@ class PaymentController extends Controller
         echo $this->render('payment/confirm_order.view.twig', "Confirm order", $request, ["order" => $order]);
     }
 
-    public function confirmOrderPost(Request $request) {
+    public function confirmOrderMp(Request $request) {
         $this->redirectIfNotLogged($request, "/");
         $session = $request->session();
         if(!$session->get("order_id")){
@@ -231,6 +237,93 @@ class PaymentController extends Controller
             // Aquí puedes añadir lógica para agregar el producto al carrito
             http_response_code(200);
             echo json_encode(['success' => true, 'id' => $id, 'quantity' => $quantity]);
+        }
+    }
+
+    protected function authenticateMP()
+    {
+        // Getting the access token from .env file (create your own function)
+        $mpAccessToken = getenv('MP_ACCESS_TOKEN');
+        // Set the token the SDK's config
+        MercadoPagoConfig::setAccessToken($mpAccessToken);
+        // (Optional) Set the runtime enviroment to LOCAL if you want to test on localhost
+        // Default value is set to SERVER
+        MercadoPagoConfig::setRuntimeEnviroment(MercadoPagoConfig::LOCAL);
+    }
+
+    // Function that will return a request object to be sent to Mercado Pago API
+    function createPreferenceRequest($items, $payer): array
+    {
+        $paymentMethods = [
+            "excluded_payment_methods" => [],
+            "installments" => 12,
+            "default_installments" => 1
+        ];
+        
+        // $back_domain = getenv('NGROK_URL');
+        $back_domain = getenv('APP_URL');
+        $backUrls = array(
+            "success" => $back_domain . "/confirm_order_mp",
+            "failure" => $back_domain . "/confirm_order",
+            "pending" => $back_domain . "/confirm_order_mp"
+        );
+
+        $request = [
+            "items" => $items,
+            "payer" => $payer,
+            "payment_methods" => $paymentMethods,
+            "back_urls" => $backUrls,
+            "statement_descriptor" => "NAME_DISPLAYED_IN_USER_BILLING",
+            "external_reference" => "1234567890",
+            "expires" => false,
+            "auto_return" => 'approved',
+        ];
+
+        return $request;
+    }
+
+    # /create_preference
+    public function createPreference(Request $request)
+    {
+        # source: https://github.com/mercadopago/checkout-payment-sample/blob/master/server/php/server.php
+        $json = $request->getBody();
+        $data = json_decode($json);
+        $this->authenticateMP();
+
+        // Crear una preferencia
+        $items = [];
+        foreach ($data as $product) {
+            $items[] = [
+            "title" => $product->description,
+            "quantity" => $product->quantity,
+            "unit_price" => $product->price
+            ];
+        }
+        $user = $request->user();
+        $payer = [
+            "name" => $user->getName(),
+            "surname" => $user->getLastname(),
+            "email" => $user->getEmail(),
+        ];
+
+        $request = $this->createPreferenceRequest($items, $payer);
+        $client = new PreferenceClient;
+
+        try {
+            // Send the request that will create the new preference for user's checkout flow
+            $preference = $client->create($request);
+
+            // Useful props you could use from this object is 'init_point' (URL to Checkout Pro) or the 'id'
+            // echo json_encode($preference);
+
+            // Redirigir al usuario a la URL de pago
+            // header("Location: " . $preference->init_point);
+            // exit;
+            echo json_encode($preference);
+        } catch (MPApiException $error) {
+            // Here you might return whatever your app needs.
+            // We are returning null here as an example.
+            echo json_encode(["error" => $error->getMessage()]);
         }
     }
 }
