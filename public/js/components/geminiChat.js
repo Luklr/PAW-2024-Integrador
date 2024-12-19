@@ -45,6 +45,8 @@ class GeminiChat {
             .then(response => {
                 if (response.ok) {
                     return response.json();
+                } else if (response.status === 403){
+                    console.error("No se pueden acceder a mensajes previos, ya que no se encuentra logueado");
                 }
                 throw new Error('Error al cargar los mensajes previos');
             })

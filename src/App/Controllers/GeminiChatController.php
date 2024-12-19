@@ -130,6 +130,11 @@ class GeminiChatController extends Controller
 
         $geminiChat = $this->geminiChatRepository->getByUser($user);
 
+        if (!$geminiChat){
+            http_response_code(200);
+            echo json_encode(["success" => true, "messages" => null]);
+        }
+
         $chatArrays = [];
         foreach ($geminiChat as $message) {
             $messageArray = $message->toArray();

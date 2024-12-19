@@ -104,7 +104,6 @@ class AssembleYourPc {
                     icon: "success",
                     title: "Componente eliminado correctamente!",
                     //toast: true,
-                    position: "top-end",
                     timer: 3000,
                     timerProgressBar: true,
                     customClass: {
