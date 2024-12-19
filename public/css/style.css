@@ -159,6 +159,20 @@ textarea {
     min-height: fit-content;
   }
 
+form {
+    align-items: center;
+}
+
+main > table {
+    max-width: 80%;
+}
+
+fieldset {
+    width: 100%;
+    border: transparent;
+    background-color: transparent;
+}
+
 input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), 
 input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), 
 input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), 
