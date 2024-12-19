@@ -22,8 +22,10 @@ class MercadoPagoComponent {
     createPreference() {
     console.log("Ejecutando createPreference()");
     let orderData = this.extractOrderData();
-    console.log(orderData);
-    fetch("http://localhost:8888/mercado-pago/create_preference", {
+      console.log(orderData);
+      let host = "https://sharp-slightly-cardinal.ngrok-free.app"
+      let host2 = "http://localhost:8888"
+      fetch(`${host}/mercado-pago/create_preference`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
