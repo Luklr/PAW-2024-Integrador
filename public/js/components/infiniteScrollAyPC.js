@@ -75,6 +75,7 @@ class InfiniteScrollAyPC {
 
                 button.textContent = "Seleccionar";
                 button.className = "assemblePcButton";
+                button.title = "Agregar componente a la PC";
                 button.addEventListener('click', () => {
                     this.selectProduct(item["id"]);
                 });
