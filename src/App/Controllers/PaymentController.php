@@ -2,6 +2,7 @@
 
 namespace Paw\App\Controllers;
 
+use MercadoPago\Client\Payment\PaymentClient;
 use Paw\Core\Request;
 use Paw\App\Models\Cart;
 use Paw\App\Models\Order;
@@ -190,7 +191,7 @@ class PaymentController extends Controller
             $this->redirect("/cart");
         }
         $orderId = $session->get("order_id");
-        $this->orderRepository->confirmOrder($orderId);
+        $this->orderRepository->confirmOrder($orderId, $request->get("status"));
         $session->unset("order_id");
         $this->redirect("/registered_order");
     }
@@ -252,7 +253,7 @@ class PaymentController extends Controller
     }
 
     // Function that will return a request object to be sent to Mercado Pago API
-    function createPreferenceRequest($items, $payer): array
+    function createPreferenceRequest($items, $payer, $orderId): array
     {
         $paymentMethods = [
             "excluded_payment_methods" => [],
@@ -260,7 +261,6 @@ class PaymentController extends Controller
             "default_installments" => 1
         ];
         
-        // $back_domain = getenv('NGROK_URL');
         $back_domain = getenv('APP_URL');
         $backUrls = array(
             "success" => $back_domain . "/confirm_order_mp",
@@ -274,7 +274,7 @@ class PaymentController extends Controller
             "payment_methods" => $paymentMethods,
             "back_urls" => $backUrls,
             "statement_descriptor" => "NAME_DISPLAYED_IN_USER_BILLING",
-            "external_reference" => "1234567890",
+            "external_reference" => $orderId,
             "expires" => false,
             "auto_return" => 'approved',
         ];
@@ -282,8 +282,8 @@ class PaymentController extends Controller
         return $request;
     }
 
-    # /create_preference
-    public function createPreference(Request $request)
+    # /mercado-pago/create_preference
+    public function createPreferenceMp(Request $request)
     {
         # source: https://github.com/mercadopago/checkout-payment-sample/blob/master/server/php/server.php
         $json = $request->getBody();
@@ -306,24 +306,55 @@ class PaymentController extends Controller
             "email" => $user->getEmail(),
         ];
 
-        $request = $this->createPreferenceRequest($items, $payer);
+        $session = $request->session();
+        $orderId = $session->get("order_id");
+
+        $request = $this->createPreferenceRequest($items, $payer, $orderId);
+        $this->logger->info("Preference Request to send: " . json_encode($request, JSON_PRETTY_PRINT));
         $client = new PreferenceClient;
 
         try {
             // Send the request that will create the new preference for user's checkout flow
             $preference = $client->create($request);
-
-            // Useful props you could use from this object is 'init_point' (URL to Checkout Pro) or the 'id'
-            // echo json_encode($preference);
-
-            // Redirigir al usuario a la URL de pago
-            // header("Location: " . $preference->init_point);
-            // exit;
+            $this->logger->info("Preference created: ". json_encode($preference, JSON_PRETTY_PRINT));
             echo json_encode($preference);
         } catch (MPApiException $error) {
-            // Here you might return whatever your app needs.
-            // We are returning null here as an example.
             echo json_encode(["error" => $error->getMessage()]);
         }
+    }
+
+    # /mercado-pago/webhook
+    public function webhookMp(Request $request)
+    {
+        $json = $request->getBody();
+        $notificacion = json_decode($json);
+        $this->logger->info("Notificación recibida de MP: ". $notificacion);
+        if ($notificacion->action == 'payment.created') {
+            $paymentId = $notificacion->data->id;
+            $client = new PaymentClient;
+            $payment = $client->get($paymentId);
+            $this->logger->info("Payment: ". $payment);
+
+            if ($payment) {
+                $orderId = $payment->external_reference;
+                $order = $this->orderRepository->getById($orderId);
+
+                if ($order) {
+                    $payStatus = $payment->status;
+                    if ($payStatus == 'approved') {
+                        $order->pay();
+                    } elseif ($payStatus == 'pending') {
+                        $order->pending();
+                    } else {
+                        $order->reject();
+                    }
+
+                    $this->orderRepository->update($order);
+                }
+            }
+        }
+
+        http_response_code(201);
+        echo 'NOTIFICACIÓN RECIBIDA OK';
     }
 }

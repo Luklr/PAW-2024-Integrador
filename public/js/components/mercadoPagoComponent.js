@@ -23,7 +23,7 @@ class MercadoPagoComponent {
     console.log("Ejecutando createPreference()");
     let orderData = this.extractOrderData();
     console.log(orderData);
-    fetch("http://localhost:8888/create_preference", {
+    fetch("http://localhost:8888/mercado-pago/create_preference", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

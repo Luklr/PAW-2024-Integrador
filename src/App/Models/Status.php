@@ -6,6 +6,7 @@ use Paw\Core\Model;
 use Paw\Core\Exceptions\InvalidValueFormatException;
 
 enum Status: string {
+    case REJECTED = "REJECTED";
     case PENDING_PAYMENT = "PENDING_PAYMENT";
     case PREPARING = "PREPARING";
     case DISPATCHED = "DISPATCHED";
@@ -14,6 +15,7 @@ enum Status: string {
 
     public function label(): string {
         return match($this) {
+            Status::REJECTED => "REJECTED",
             Status::PENDING_PAYMENT => "PENDING_PAYMENT",
             Status::PREPARING => "PREPARING",
             Status::DISPATCHED => "DISPATCHED",
@@ -24,6 +26,7 @@ enum Status: string {
 
     public static function fromString(string $status): Status {
         return match($status) {
+            "REJECTED" => Status::REJECTED,
             "PENDING_PAYMENT" => Status::PENDING_PAYMENT,
             "PREPARING" => Status::PREPARING,
             "DISPATCHED" => Status::DISPATCHED,

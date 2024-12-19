@@ -134,10 +134,14 @@ class OrderRepository extends Repository
         $order = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $idOrder]);
     }
 
-    public function confirmOrder($orderId){
+    public function confirmOrder($orderId, $mp_status){
         $componentRepository = ComponentRepository::getInstance();
         $order = $this->getById($orderId);
-        $order->pay();
+        if ($mp_status === "approved"){
+            $order->pay();
+        } else {
+            $order->pending();
+        }
         $this->setStatus($order);
         $components = $order->getComponents();
         foreach($components as $component){

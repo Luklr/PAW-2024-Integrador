@@ -1,6 +1,8 @@
 <?php
 
 namespace Paw\App\Controllers;
+
+use Paw\Core\LoggerFactory;
 use Paw\Core\Request;
 use Twig\Environment;
 use Paw\App\Models\Notification;
@@ -9,6 +11,7 @@ use Paw\App\Repositories\NotificationRepository;
 class Controller
 {  
     private $twig;
+    public $logger;
     public string $imagesDir = __DIR__ . "/../../../public/images/";
     public array $nav = [
         [
@@ -78,6 +81,7 @@ class Controller
     
     public function __construct(Environment $twig) {
         $this->twig = $twig;
+        $this->logger = LoggerFactory::getLogger();
     }
     
     public function render($url, $title, $request, $values = null) {

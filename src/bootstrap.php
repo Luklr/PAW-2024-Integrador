@@ -20,6 +20,7 @@ use Paw\App\Repositories\BranchRepository;
 use Paw\App\Repositories\OrderRepository;
 use Paw\App\Repositories\NotificationRepository;
 use Paw\App\Repositories\GeminiChatRepository;
+use Paw\Core\LoggerFactory;
 
 require "routes.php";
 
@@ -27,11 +28,7 @@ $dotenv = Dotenv::createUnsafeImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 $config = new Config;
-
-$log = new Logger('mvc-app');
-$handler = new StreamHandler($config->get("LOG_PATH"));
-$handler->setLevel($config->get("LOG_LEVEL"));
-$log->pushHandler($handler);
+$log = LoggerFactory::getLogger($config);
 
 $connectionBuilder = new ConnectionBuilder;
 $connectionBuilder->setLogger($log);

@@ -114,6 +114,19 @@ class Order extends Model {
         return ($this->fields["status"])->label();
     }
 
+    public function setPaymentStatus(string $payment_status) {
+        // $payment_status = {status=in_process, status=approved, status=rejected}
+        if ($payment_status === '') {
+            $this->fields["payment_status"] = $payment_status;
+            $this->fields["status"] = Status::PENDING_PAYMENT;
+        }
+    }
+
+    public function getPaymentStatus(): ?string
+    {
+        return ($this->fields["payment_status"])->label();
+    }
+
     public function setComponents(array $components) {
         $this->fields["components"] = $components;
     }
@@ -123,9 +136,18 @@ class Order extends Model {
         return $this->fields["components"];
     }
 
+    public function pending() {
+        $this->fields["status"]= Status::PENDING_PAYMENT;
+        $this->fields["deliverydate"]= null;
+    }
+
     public function pay() {
         $this->fields["status"]= Status::PREPARING;
         $this->fields["deliverydate"]= null;
+    }
+
+    public function reject() {
+        $this->fields["status"]= Status::REJECTED;
     }
 
     public function dispatch(){
