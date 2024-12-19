@@ -331,24 +331,28 @@ class PaymentController extends Controller
         $this->logger->info("Notificación recibida de MP: ". json_encode($notificacion, JSON_PRETTY_PRINT));
         if ($notificacion->action == 'payment.created') {
             $paymentId = $notificacion->data->id;
-            $client = new PaymentClient;
-            $payment = $client->get($paymentId);
-            $this->logger->info("Payment: ". json_encode($payment, JSON_PRETTY_PRINT));
+            $client = new PaymentClient;    # Acá rompe, lo de arriba se ejecuto bien
+            try {
+                $payment = $client->get($paymentId);
+                $this->logger->info("Payment: " . json_encode($payment, JSON_PRETTY_PRINT));
 
-            if ($payment) {
-                $orderId = $payment->external_reference;
-                $order = $this->orderRepository->getById($orderId);
+                if ($payment) {
+                    $orderId = $payment->external_reference;
+                    $order = $this->orderRepository->getById($orderId);
 
-                // Validar que el secret del hook sea igual al de la app
-                $secret = getenv('MP_WEBHOOK_SECRET');
-                if ($order && $secret == $notificacion->meta->secret) {
-                    $payStatus = $payment->status;
-                    $order->setPayment_status($payStatus);
-                    $this->orderRepository->update($order);
+                    // Validar que el secret del hook sea igual al de la app
+                    $secret = getenv('MP_WEBHOOK_SECRET');
+                    if ($order && $secret == $notificacion->meta->secret) {
+                        $payStatus = $payment->status;
+                        $order->setPayment_status($payStatus);
+                        $this->orderRepository->update($order);
+                    }
                 }
+            } catch (MPApiException $error) {
+                $this->logger->error("Error al obtener el pago: " . $error->getMessage());
+                echo json_encode(["error" => $error->getMessage()]);
             }
         }
-
         http_response_code(201);
         echo 'NOTIFICACIÓN RECIBIDA OK';
     }
