@@ -7,16 +7,16 @@
         </h2>
         <form id="form" method="POST" action="/contacts">
             <label for="nombres">Nombres: </label>
-            <input type="text" id="nombres" placeholder="Nombres" required>
+            <input type="text" id="nombres" name="nombres" placeholder="Nombres" required>
             <label for="apellidos">Apellidos: </label>
-            <input type="text" id="apellidos" placeholder="Apellidos" required>
+            <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required>
             <label for="email">Correo electrónico: </label>
-            <input type="text" id="email" placeholder="Correo electrónico" required>
+            <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
             <label for="asunto">Asunto: </label>
-            <input type="text" id="asunto" placeholder="Asunto" required>
+            <input type="text" id="asunto" name="asunto" placeholder="Asunto" required>
             <label for="mensaje">Detalles de la consulta:</label>
-            <textarea id="mensaje" placeholder="Detalle su consulta o problema" rows="6"></textarea>
-            <input type="submit" value="Enviar" class="submit">
+            <textarea id="mensaje" name="mensaje" placeholder="Detalle su consulta o problema" rows="6"></textarea>
+            <input type="submit" name="submit" value="Enviar" class="submit">
         </form>
         {% if msg %}
             <script>
