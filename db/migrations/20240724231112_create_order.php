@@ -27,6 +27,7 @@ final class CreateOrder extends AbstractMigration
               ->addColumn('user_id', 'integer')
               ->addColumn('branch_id', 'integer', ['null' => true])
               ->addColumn('status', 'string', ['limit' => 100])
+              ->addColumn('payment_status', 'string', ['limit' => 100])
               ->addColumn("address_id", "integer", ["null" => true])
               ->addForeignKey('user_id', 'user', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION'])
               ->addForeignKey('branch_id', 'branch', 'id', ['delete'=> 'SET_NULL', 'update'=> 'NO_ACTION'])
