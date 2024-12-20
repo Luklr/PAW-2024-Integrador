@@ -49,11 +49,16 @@ class App {
             });
         }
         */
+    
+
+        
         document.addEventListener("DOMContentLoaded", () => {
             tools.cargarScript("notifications", "js/components/notifications.js", () => {
                 let notifications = new Notifications();
             });
         });
+        
+    
 
         if (currentUrl === "/") {
             //Cargar el script solo en la página de inicio
