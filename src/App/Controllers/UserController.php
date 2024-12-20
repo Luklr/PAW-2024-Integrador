@@ -184,10 +184,11 @@ class UserController extends Controller
     }
 
     public function addresses(Request $request) {
-        $this->redirectIfNotLogged($request, "/account/addresses");
+        $this->redirectIfNotLogged($request, "/addresses");
         $session = $request->session();
         $addresses = $this->addressRepository->getByUser($request->user()->getId());
 
+        $request->session()->set("loopback", "/addresses");
         echo $this->render('user/addresses.view.twig', "Addresses", $request, ["addresses" => $addresses]);
     }
 
@@ -223,6 +224,14 @@ class UserController extends Controller
 
         $this->addressRepository->create($data);
 
-        echo $this->render('user/confirm_address.view.twig', "Confirm address", $request, ["user" => $request->user()]);
+        // Verifico si tenía que redirigir, sino al home
+        $originPath = $request->session()->get("loopback");
+        if ($originPath) {
+            $request->session()->delete("loopback");
+            $this->redirect($originPath);
+        } 
+        else {
+            $this->redirect("/account");
+        }
     }
 }

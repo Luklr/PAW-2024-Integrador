@@ -28,11 +28,9 @@
     width:99%;
 }
 
-/* .notification-dropdown li {
-    padding: 5px;
-    width:100%;
-    border-bottom: 1px solid #eee;
-} */
+.notification-dropdown ul li:hover {
+    background-color: var(--large);
+} 
 
 .notification-dropdown li:last-child {
     border-bottom: none;
