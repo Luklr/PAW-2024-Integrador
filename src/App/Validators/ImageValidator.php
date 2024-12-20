@@ -14,7 +14,7 @@ class ImageValidator
         }
 
         // Validar que la extension del archivo sea una imagen
-        $allowedFormats = ['image/png', 'image/jpeg', 'image/jpg'];        
+        $allowedFormats = ['image/png', 'image/jpeg'];        
         $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($fileInfo, $file['tmp_name']);
         finfo_close($fileInfo);

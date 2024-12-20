@@ -90,7 +90,7 @@ class ComponentRepository extends Repository
                 $arraySpecificComponent = $specificComponent->toArray();
                 $arraySpecificComponent["component_id"] = $id;
 
-                $idSpecificComponent = self::$queryBuilder->table($type::$tableChild)->insert($arraySpecificComponent);
+                $idSpecificComponent = self::$queryBuilder->table("\"" . $type::$tableChild . "\"")->insert($arraySpecificComponent);
             }
             if ($idSpecificComponent && $id) {
                 $model = $this->getByIdAndType($id, $type);

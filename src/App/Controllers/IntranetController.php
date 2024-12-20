@@ -224,15 +224,15 @@ class IntranetController extends Controller
             RequestCreateProduct::validate($request, $componentKeys);
             $values = $request->post();
             unset($values["componentType"]);       # REPENSAR ESTO
-            $values['path_img'] = $this->imageHandler->saveImage($request->file("imagen"), 'productos');
+            $values['path_img'] = $this->imageHandler->saveImage($request->file("imagen"), 'images/components');
             $component = $this->componentRepository->create($values, $type);
             $mensaje = "El producto fue procesado y subido con éxito";
         } catch (InvalidValueFormatException $e) {
             $mensaje = $e->getMessage();
-            // dd($e->getMessage());
+            dd($e->getMessage());
         } catch (Exception $e) {
             $mensaje = "Ocurrió un error al procesar su solicitud. " . $e->getMessage();
-            // dd($e->getMessage());
+            dd($e->getMessage());
         }
         
         $this->createProduct($request, $mensaje);
