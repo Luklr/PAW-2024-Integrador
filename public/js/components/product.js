@@ -1,6 +1,6 @@
 class Product{
     constructor(){
-        document.getElementById('addToCartForm').addEventListener('submit', function(event) {
+        document.querySelector('.addToCartForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Evita el envío tradicional del formulario
         
             const form = event.target;

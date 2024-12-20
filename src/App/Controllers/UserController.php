@@ -183,6 +183,14 @@ class UserController extends Controller
         echo json_encode(['success' => true]);
     }
 
+    public function addresses(Request $request) {
+        $this->redirectIfNotLogged($request, "/account/addresses");
+        $session = $request->session();
+        $addresses = $this->addressRepository->getByUser($request->user()->getId());
+
+        echo $this->render('user/addresses.view.twig', "Addresses", $request, ["addresses" => $addresses]);
+    }
+
     public function setAddress(Request $request) {
         $this->redirectIfNotLogged($request, "/set_address");
         echo $this->render('user/set_address.view.twig', "Set address", $request, ["user" => $request->user()]);

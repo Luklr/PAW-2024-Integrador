@@ -153,6 +153,7 @@ class ManagementOrders {
                                 </a>
                             </div>
                         `;
+                        article.classList.add(`${order.address ? "delivery" : "branch"}`);
     
                         // Agregar funcionalidad de arrastre
                         if (order.address)

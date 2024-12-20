@@ -85,16 +85,29 @@ class CartPage {
     }
 
     async handleDelete(event) {
-        // Find the closest table row and remove it
+        // Encuentra la fila más cercana al botón y obtén el ID del producto
         const row = event.target.closest('tr');
         const id = row.getAttribute("id").replace('col-', '');
-
-
+    
+        // Realiza el fetch para eliminar el producto del carrito
         const response = await fetch(`/delete_item_cart?id=${id}`);
-
-        if (row) {
-            row.remove();
-            this.updateTotal();  // Update the total after removing an item
+    
+        if (response.ok && row) {
+            row.remove(); // Elimina la fila de la tabla
+            this.updateTotal(); // Actualiza el total después de eliminar un elemento
+    
+            // Comprueba si todavía hay elementos en el carrito
+            this.toggleSubmitButton();
         }
+    }
+    
+    // Lógica para habilitar o deshabilitar el botón de compra
+    toggleSubmitButton() {
+        const submitButton = document.querySelector('.submit');
+        const hasItems = document.querySelectorAll('tbody tr').length > 0;
+    
+        // Habilita o deshabilita el botón basado en la cantidad de elementos
+        submitButton.disabled = !hasItems;
+        location.reload();
     }
 }
