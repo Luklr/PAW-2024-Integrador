@@ -26,9 +26,8 @@
             {% endfor %}
         </ul>
         <input type="button" value="continuar" class="submit form-submit">
-        <p><a href="/set_address" target="_blank">Añade una nueva dirección aquí</a></p>
     {% else %}
         <h2>No tienes direcciones guardadas</h2>
-        <p><a href="/set_address" target="_blank">Añade una aquí</a></p>
     {% endif %}
+    <a href="/set_address" class="boton-anchor address-add">Añade una nueva dirección aquí</a>
 {% endblock %}

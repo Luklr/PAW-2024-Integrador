@@ -362,7 +362,15 @@ nav.nav-account > ul > li:hover {
     align-items: center;
 }
 
+.address-add {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
 
+.adresses-anchor {
+    font-size: 1rem;
+    margin: 1rem;
+}
 
 .branches-section {
     display: grid;
@@ -1204,17 +1212,19 @@ img {
 
 .user-profile{
     background-color: var(--background);
-    border: solid #b1acac 1px;
+    border: solid var(--dark-shadow) 1px;
     border-radius: 1rem;
     margin-top: 2rem;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .user-profile p {
     margin-bottom: 0.5rem;
+    color: var(--dark-shadow)
 }
 
 div.loading {

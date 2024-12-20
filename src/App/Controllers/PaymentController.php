@@ -52,6 +52,8 @@ class PaymentController extends Controller
             $this->redirect("/cart");
         }
         $addresses = $this->addressRepository->getByUser($request->user()->getId());
+        
+        $request->session()->set("loopback", "/enter_address");
         echo $this->render('payment/enter_address.view.twig', "Enter address", $request, ["addresses" => $addresses]);
     }
 
