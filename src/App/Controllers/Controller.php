@@ -33,12 +33,17 @@ class Controller
         ],
         [
             "href" => "/create_product",
-            "name" => "Create product",
+            "name" => "Crear producto",
             "role" => "admin"
         ],
         [
             "href" => "/management_orders",
-            "name" => "Management Orders",
+            "name" => "Administración de Ordenes",
+            "role" => "admin"
+        ],
+        [ 
+            "href" => "/products_ABM",
+            "name" => "Productos",
             "role" => "admin"
         ]
     ];

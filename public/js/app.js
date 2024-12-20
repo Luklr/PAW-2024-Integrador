@@ -79,10 +79,18 @@ class App {
         if (currentUrl === "/products") {
             document.addEventListener("DOMContentLoaded", () => {
                 tools.cargarScript("infiniteScroll", "js/components/infiniteScroll.js", () => {
-                    let infiniteScroll = new InfiniteScroll();
+                    let infiniteScroll = new InfiniteScroll(true);
                 });
                 tools.cargarScript("geminiChat", "js/components/geminiChat.js", () => {
                     let geminiChat = new GeminiChat();
+                });
+            });
+        }
+
+        if(currentUrl === "/products_ABM"){
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("infiniteScroll", "js/components/infiniteScroll.js", () => {
+                    let infiniteScroll = new InfiniteScroll(false);
                 });
             });
         }
@@ -91,6 +99,14 @@ class App {
             document.addEventListener("DOMContentLoaded", () => {
                 tools.cargarScript("product", "js/components/product.js", () => {
                     let product = new Product();
+                })
+            })
+        }
+
+        if (currentUrl === "/product_ABM") {
+            document.addEventListener("DOMContentLoaded", () => {
+                tools.cargarScript("productABM", "js/components/productABM.js", () => {
+                    let productABM = new ProductABM();
                 })
             })
         }

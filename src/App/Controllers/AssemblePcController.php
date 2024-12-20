@@ -17,12 +17,13 @@ class AssemblePcController extends Controller
     }
 
     public function products(Request $request) {
-        $page = 0;
-        $itemsPerPage = 10;
-        $products = $this->componentRepository->getPage($itemsPerPage, $page); 
+        // $page = 0;
+        // $itemsPerPage = 10;
+        // $products = $this->componentRepository->getPage($itemsPerPage, $page); 
 
         
-        $this->render('assemblePc/products.view.twig', "Products", $request, ["products" => $products]);
+        // $this->render('assemblePc/products.view.twig', "Products", $request, ["products" => $products]);
+        $this->render('assemblePc/products.view.twig', "Products", $request);
     }
 
     public function product(Request $request) {

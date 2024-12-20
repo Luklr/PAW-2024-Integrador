@@ -212,14 +212,14 @@ class IntranetController extends Controller
         if (!$tipo) {
             $tipo = "";
         }
-        
+
         # REPENSAR ESTA LÓGICA, AUNQUE ESTÁ BIEN
         $type = ucfirst($tipo);
         $class = "Paw\\App\\Models\\Components\\$type";
         $specificComponent = new $class([]);
         $component = new Component([]);
         $componentKeys = array_merge($specificComponent->getKeys(), $component->getKeys());
-        
+
         try {
             RequestCreateProduct::validate($request, $componentKeys);
             $values = $request->post();
@@ -229,13 +229,115 @@ class IntranetController extends Controller
             $mensaje = "El producto fue procesado y subido con éxito";
         } catch (InvalidValueFormatException $e) {
             $mensaje = $e->getMessage();
-            //dd($e->getMessage());
+            // dd($e->getMessage());
         } catch (Exception $e) {
             $mensaje = "Ocurrió un error al procesar su solicitud. " . $e->getMessage();
-            //dd($e->getMessage());
+            // dd($e->getMessage());
         }
         
         $this->createProduct($request, $mensaje);
     }
 
+    public function products(Request $request){
+        $this->access($request, $request->url(), "admin");
+        $this->render('intranet/products.view.twig', "Products", $request);
+    }
+
+    public function product(Request $request) {
+        $this->access($request, $request->url(), "admin");
+        $id = $request->get("id");
+        $component = $this->componentRepository->getByIdAndType($id);
+
+        $specificComponent = $component->getSpecificComponent();
+        $specificComponent = $specificComponent->toArray();
+        
+        $this->render('intranet/product.view.twig', $component->getDescription(), $request, ["product" => $component, "productSpecific" => $specificComponent]);
+    }
+
+    function productsPage(Request $request) {
+        $this->access($request, $request->url(), "admin");
+        $get = $request->get();
+        $page = isset($get['page']) ? (int)$get['page'] : 0;
+        $query = isset($_GET['query']) ? $_GET['query'] : null;
+        $type = isset($_GET['type']) ? $_GET['type'] : null;
+        $itemsPerPage = 30;
+        $products = $this->componentRepository->getPage($itemsPerPage, $page, $query, $type);
+
+        header('Content-Type: application/json');
+        echo json_encode($products);
+    }
+
+    public function addComponentStock(Request $request){
+        $this->access($request, $request->url(), "admin");
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        if ($data === null) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Invalid JSON']);
+        } elseif (!isset($data['component_id']) || !isset($data['quantity'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Missing id or quantity']);
+        } else {
+            // Procesar los datos recibidos
+            $id = $data['component_id'];
+            $quantity = $data['quantity'];
+            
+            
+            $this->componentRepository->addStockById($id,$quantity);
+
+            // Aquí puedes añadir lógica para agregar el producto al carrito
+            http_response_code(200);
+            echo json_encode(['success' => true, 'id' => $id, 'quantity' => $quantity]);
+        }
+    }
+
+    public function reduceComponentStock(Request $request){
+        $this->access($request, $request->url(), "admin");
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        if ($data === null) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Invalid JSON']);
+        } elseif (!isset($data['component_id']) || !isset($data['quantity'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Missing id or quantity']);
+        } else {
+            // Procesar los datos recibidos
+            $id = $data['component_id'];
+            $quantity = $data['quantity'];
+            
+            
+            $this->componentRepository->reduceStockById($id,$quantity);
+
+            // Aquí puedes añadir lógica para agregar el producto al carrito
+            http_response_code(200);
+            echo json_encode(['success' => true, 'id' => $id, 'quantity' => $quantity]);
+        }
+    }
+
+    public function deleteComponent(Request $request){
+        $this->access($request, $request->url(), "admin");
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        if ($data === null) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Invalid JSON']);
+        } elseif (!isset($data['component_id'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad Request: Missing id']);
+        } else {
+            // Procesar los datos recibidos
+            $id = $data['component_id'];
+            
+            
+            $this->componentRepository->deleteById($id);
+
+            // Aquí puedes añadir lógica para agregar el producto al carrito
+            http_response_code(200);
+            echo json_encode(['success' => true, 'id' => $id]);
+        }
+    }
 }

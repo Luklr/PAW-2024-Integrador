@@ -1,0 +1,46 @@
+{% extends 'view.twig' %}
+
+{% block main_class %}products{% endblock %}
+
+{% block content %}
+        <h2>Productos</h2>
+        <form id="search-form" class="searchbar-form">
+            <label for="searchbar-templates">Buscar</label>
+            <input type="text" id="searchbar-templates" name="searchbar-templates" class="searchbar-input" tabindex="1" autocomplete="on" autofocus>
+
+            <input type="submit" value="Buscar" class="submit searchbar-submit">
+
+            <fieldset class="search-fieldset">
+                <input id="all" name="type" type="radio" value="all" checked>
+                <label for="all">Todos</label>
+
+                <input id="cpu" name="type" type="radio" value="cpu">
+                <label for="cpu">CPU</label>
+
+                <input id="videoCard" name="type" type="radio" value="videoCard">
+                <label for="videoCard">GPU</label>
+
+                <input id="motherboard" name="type" type="radio" value="motherboard">
+                <label for="motherboard">Motherboard</label>
+
+                <input id="memory" name="type" type="radio" value="memory">
+                <label for="memory">RAM</label>
+
+                <input id="internalHardDrive" name="type" type="radio" value="internalHardDrive">
+                <label for="internalHardDrive">Hard Drive</label>
+
+                <input id="cpuFan" name="type" type="radio" value="cpuFan">
+                <label for="cpuFan">Cpu Fan</label>
+
+                <input id="casePc" name="type" type="radio" value="casePc">
+                <label for="casePc">Case</label>
+
+                <input id="powerSupply" name="type" type="radio" value="powerSupply">
+                <label for="powerSupply">Power Supply</label>
+            </fieldset>
+
+            
+        </form>
+
+        <div class="loading" id="loading"> loading... </div>
+{% endblock %}

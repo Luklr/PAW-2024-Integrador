@@ -1,11 +1,11 @@
 class InfiniteScroll {
-    constructor() {
+    constructor(normal) {
         var css = tools.nuevoElemento("link","",{rel: "stylesheet",href:"/js/components/styles/infiniteScroll.css"})
             document.head.appendChild(css);
         this.page = 0;
         this.query = '';
         this.type = '';
-
+        this.normal = normal;
         this.loading = document.getElementById('loading');
         this.container = document.getElementsByClassName('products')[0];
 
@@ -58,7 +58,7 @@ class InfiniteScroll {
 
     async chargeMoreProducts() {
         try {
-            const response = await fetch(`${window.location.origin}/products_page?page=${this.page}&query=${this.query}&type=${this.type}`);
+            const response = await fetch(`${window.location.origin}/products${this.normal ? "" : "_ABM"}_page?page=${this.page}&query=${this.query}&type=${this.type}`);
             const data = await response.json();
 
             data.forEach(item => {
@@ -69,7 +69,7 @@ class InfiniteScroll {
                 const h3 = document.createElement("h3");
                 const p =  document.createElement("p");
 
-                a.href = `${window.location.origin}/product?id=${item["id"]}`;
+                a.href = `${window.location.origin}/product${this.normal ? "" : "_ABM"}?id=${item["id"]}`;
                 art.className = 'product';
                 img.src = item["path_img"];
                 img.className = "products-list";
