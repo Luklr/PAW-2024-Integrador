@@ -116,23 +116,12 @@ class Order extends Model {
     }
 
     public function setPayment_status(string $payment_status) {
-        if ($payment_status == 'approved') {
-            $this->pay($payment_status);
-        } elseif ($payment_status === 'in_process') {
-            $this->pending($payment_status);
-        } elseif ($payment_status === 'rejected') {
-            $this->reject($payment_status);
-        }
-
-        # Si cambió de estado (en realidad no es necesario esto)
-        // if ($this->fields["payment_status"] === 'in_process' && $payment_status === 'approved') {
-        //     $this->pay($payment_status);
-        // }
+        $this->fields["payment_status"] = $payment_status;
     }
 
     public function getPayment_status(): ?string
     {
-        return $this->fields["payment_status"]?->label();
+        return $this->fields["payment_status"];
     }
 
     public function setComponents(array $components) {
@@ -142,6 +131,16 @@ class Order extends Model {
     public function getComponents(): ?array
     {
         return $this->fields["components"];
+    }
+
+    public function actualizarPaymentStatus($payment_status){
+        if ($payment_status == 'approved') {
+            $this->pay($payment_status);
+        } elseif ($payment_status === 'in_process' && is_null($this->fields["payment_status"])) {
+            $this->pending($payment_status);
+        } elseif ($payment_status === 'rejected') {
+            $this->reject($payment_status);
+        }
     }
 
     public function pending($payment_status) {
@@ -161,6 +160,12 @@ class Order extends Model {
         $this->fields["status"]= Status::REJECTED;
     }
 
+    public function prepare(){
+        if ($this->fields["status"] === Status::PENDING_PAYMENT) 
+            throw new InvalidStatusException("The order must have the status PAYED before being prepared");
+        $this->fields["status"]= Status::PREPARING;
+    }
+
     public function dispatch(){
         if (!$this->fields["address"]) 
             throw new InvalidStatusException("The order must be picked up at the branch");
@@ -178,7 +183,7 @@ class Order extends Model {
 
     public function delivered(){
         if ($this->fields["status"] === Status::PREPARING || $this->fields["status"] === Status::PENDING_PAYMENT) 
-            throw new InvalidStatusException("The order must have the status DISPATCHED or PENDING_PAYMENT before being delivered");
+            throw new InvalidStatusException("The order must have the status DISPATCHED or READY_FOR_PICKUP before being delivered");
         
         $this->fields["status"]= Status::DELIVERED;
     }

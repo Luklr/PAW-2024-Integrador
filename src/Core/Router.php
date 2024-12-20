@@ -60,6 +60,7 @@ class Router
     {
         $controller_name = "Paw\\App\\Controllers\\" . $controller;
         $objController = new $controller_name($this->twig);
+        $objController->setLogger($this->logger);
         $objController->$method($request);
     }
 

@@ -8,11 +8,11 @@ abstract class Model {
     use Loggeable;
     
     static public string $table;
-    
     protected array $fields = [];
     
     public function __construct(array $values) {
         $this->set($values);
+        $this->setLogger();
     }
     
     /**

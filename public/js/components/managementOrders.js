@@ -143,7 +143,6 @@ class ManagementOrders {
                             <p><strong>ID:</strong> ${order.id}</p>
                             <p><strong>Fecha:</strong> ${new Date(order.order_date.date).toLocaleString()}</p>
                             <p><strong>ID usuario:</strong> ${order.user_id}</p>
-                            <p><strong>Estado del pago:</strong> ${order.payment_status}</p>
                             ${order.branch 
                                 ? `<p><strong>RETIRA EN:</strong> ${order.branch.name}</p>`
                                 : `<p><strong>ENVÍO A:</strong> ${order.address.street} ${order.address.number}</p>`}

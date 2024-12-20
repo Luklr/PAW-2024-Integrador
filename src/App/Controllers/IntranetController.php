@@ -152,7 +152,7 @@ class IntranetController extends Controller
         try{
             switch($statusNew){
                 case Status::PREPARING->label():
-                    $order->pay();
+                    $order->prepare();
                     $notificationType = $this->notificationRepository->getNotificationTypeByName(Status::PREPARING->label());
                     break;
                 case Status::DISPATCHED->label():

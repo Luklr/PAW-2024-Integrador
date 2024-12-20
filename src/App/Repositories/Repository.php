@@ -3,9 +3,11 @@
 namespace Paw\App\Repositories;
 
 use Paw\Core\Database\QueryBuilder;
+use Paw\Core\Traits\Loggeable;
 
 abstract class Repository
 {
+    use Loggeable;
     protected $model;
     protected static $instances = [];
     protected static $queryBuilder;
@@ -14,6 +16,7 @@ abstract class Repository
     {
         self::$queryBuilder = $queryBuilder;
         $this->setModel();
+        $this->setLogger();
     }
 
     public static function getInstance(QueryBuilder $queryBuilder = null)

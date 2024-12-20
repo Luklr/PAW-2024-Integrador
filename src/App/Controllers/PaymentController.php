@@ -191,7 +191,7 @@ class PaymentController extends Controller
             $this->redirect("/cart");
         }
         $orderId = $session->get("order_id");
-        $this->orderRepository->confirmOrder($orderId, $request->get("status"));
+        $this->orderRepository->confirmOrder($orderId, 'in_process');   # Lo pongo en in_process, espero a que MP me notifique (es más seguro)
         $session->unset("order_id");
         $this->redirect("/registered_order");
     }
@@ -286,9 +286,9 @@ class PaymentController extends Controller
     public function createPreferenceMp(Request $request)
     {
         # source: https://github.com/mercadopago/checkout-payment-sample/blob/master/server/php/server.php
+        $this->authenticateMP();
         $json = $request->getBody();
         $data = json_decode($json);
-        $this->authenticateMP();
 
         // Crear una preferencia
         $items = [];
@@ -326,15 +326,17 @@ class PaymentController extends Controller
     # /mercado-pago/webhook
     public function webhookMp(Request $request)
     {
+        $this->authenticateMP();
         $json = $request->getBody();
         $notificacion = json_decode($json);
         $this->logger->info("Notificación recibida de MP: ". json_encode($notificacion, JSON_PRETTY_PRINT));
         if ($notificacion->action == 'payment.created') {
             $paymentId = $notificacion->data->id;
-            $client = new PaymentClient;    # Acá rompe, lo de arriba se ejecuto bien
+            $client = new PaymentClient;
+
             try {
                 $payment = $client->get($paymentId);
-                $this->logger->info("Payment: " . json_encode($payment, JSON_PRETTY_PRINT));
+                $this->logger->info("Payment recibido: " . json_encode($payment, JSON_PRETTY_PRINT));
 
                 if ($payment) {
                     $orderId = $payment->external_reference;
@@ -344,13 +346,16 @@ class PaymentController extends Controller
                     $secret = getenv('MP_WEBHOOK_SECRET');
                     if ($order && $secret == $notificacion->meta->secret) {
                         $payStatus = $payment->status;
-                        $order->setPayment_status($payStatus);
-                        $this->orderRepository->update($order);
+                        $this->orderRepository->confirmOrder($orderId, $payStatus);
+                        $order = $this->orderRepository->getById($orderId);
+                        $order_payment_status = $order->getPayment_status();
+                        $this->logger->info("Order $orderId updated status to $payStatus");
                     }
                 }
             } catch (MPApiException $error) {
                 $this->logger->error("Error al obtener el pago: " . $error->getMessage());
                 echo json_encode(["error" => $error->getMessage()]);
+                $this->logger->error("Error al obtener el pago: " . json_encode($error));
             }
         }
         http_response_code(201);

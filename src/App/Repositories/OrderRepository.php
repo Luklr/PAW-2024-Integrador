@@ -23,7 +23,15 @@ class OrderRepository extends Repository
         return Order::class; 
     }
 
-    public function getById($id)
+    /**
+     * @return OrderRepository
+     */
+    public static function getInstance(QueryBuilder $queryBuilder = null): ?OrderRepository
+    {
+        return parent::getInstance($queryBuilder);
+    }
+
+    public function getById($id): ?Order
     {
         # obtengo el pedido
         $filter = "id = :id";
@@ -111,7 +119,7 @@ class OrderRepository extends Repository
 
     public function setStatus(Order $order){
         
-        $data = ["status" => $order->getStatus()];
+        $data = ["status" => $order->getStatus(), "payment_status" => $order->getPayment_status()];
         $idOrder = $order->getId();
         $filter = "id = :id";
         if ($order->getStatus() === Status::DISPATCHED->label()){
@@ -137,11 +145,14 @@ class OrderRepository extends Repository
     public function confirmOrder($orderId, $mp_status){
         $componentRepository = ComponentRepository::getInstance();
         $order = $this->getById($orderId);
-        $order->setPayment_status($mp_status);   # CONSIDERAR SI ES CORRECTO ESTO EN TÉRMINOS DE SEGURIDAD (el status viene del front, no del back de MP en forma de notificacion/webhook) -> sino, simplemente poner como pendiente y esperar a que MP notifique
+        $order->actualizarPaymentStatus($mp_status);   # CONSIDERAR SI ES CORRECTO ESTO EN TÉRMINOS DE SEGURIDAD (el status viene del front, no del back de MP en forma de notificacion/webhook) -> sino, simplemente poner como pendiente y esperar a que MP notifique
+        
         $this->setStatus($order);
         $components = $order->getComponents();
-        foreach($components as $component){
-            $componentRepository->reduceStockById($component["component"]->getId(), $component["quantity"]);
+        if ($mp_status === 'approved'){
+            foreach($components as $component){
+                $componentRepository->reduceStockById($component["component"]->getId(), $component["quantity"]);
+            }
         }
     }
 
