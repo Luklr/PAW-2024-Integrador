@@ -351,7 +351,7 @@ nav.nav-account > ul > li:hover {
     }
   }
 
-.article-producto, .article-branch{
+.article-producto{
     border: 2px solid var(--secondary) !important;
     margin: 1rem;
     border-radius: 0.3rem;
@@ -361,6 +361,47 @@ nav.nav-account > ul > li:hover {
     width: 80vw;
     align-items: center;
 }
+
+
+
+.branches-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+    gap: 3rem;
+}
+.article-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    align-self: center;
+    border-radius: 1rem;
+    border: 2px solid var(--shadow) !important;
+    font-family: var(--font-main);
+    padding: 1rem;
+    background-color: var(--background);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+.article-branch h3 {
+    color: var(--dark-shadow)
+}
+.article-branch picture {
+    height: auto;
+    max-width: 100% !important;
+}
+.article-branch picture img {   
+    height: auto !important;
+    max-width: 100%;
+    border-radius: 1rem;
+    border: 2px solid var(--shadow) !important;
+}
+.article-branch .boton-anchor {
+    margin: 1rem;
+    font-size: 1rem;
+}
+
 
 .article-part-assemble{
     border: 2px solid var(--shadow) !important;
@@ -468,7 +509,7 @@ nav.nav-footer {
     padding: 2rem 2rem;
     display: flex;
     flex-direction: column;
-    min-width: 40%;
+    min-width: 20%;
 }
 
 form.new-product-type-form {
@@ -538,6 +579,14 @@ input[type="checkbox"] + label, [type="checkbox"]:checked+label:before {
       background-color: var(--primary); /* Color final */
     }
   }
+
+.invalid-pass-message {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: red;
+    font-weight: bold;
+
+}
 
 small.trademark {
     color: gray !important;
@@ -839,6 +888,7 @@ form.addToCartForm {
 }
 
 .management_orders section h3 {
+    position: relative;
     max-width: 100% !important;
     font-size: 1rem !important;
     text-align: center;
@@ -863,6 +913,7 @@ form.addToCartForm {
 }
 
 .management_orders article {
+    position: relative;
     background-color: var(--primary);
     background: linear-gradient(45deg, var(--shadow) 0%, var(--primary) 100%);
     margin-bottom: 10px;
@@ -877,6 +928,50 @@ form.addToCartForm {
     justify-content: space-around;
     transition: transform 0.3s;
     cursor: pointer;
+}
+
+.management_orders article::after {
+    margin: 2px;
+    content: ""; /* Necesario para generar el pseudo-elemento */
+    position: absolute;
+    top: 5px; /* Ajusta la posición desde la parte superior */
+    right: 5px; /* Ajusta la posición desde la derecha */
+    width: 10px; /* Ancho del punto */
+    height: 10px; /* Altura del punto */
+    border-radius: 50%; /* Hace que el punto sea redondo */
+    z-index: 100; /* Asegura que el punto esté sobre el contenido del artículo */
+    filter: drop-shadow(0px 0px 1px black);
+}
+.management_orders article.branch::after {
+    background-color: rgb(220, 11, 108); /* Color del punto */
+}
+.management_orders article::after {
+    background-color: rgb(238, 215, 10); /* Color del punto */
+}
+
+
+.management_orders section h3.branch::after, .management_orders section h3.delivery::after {
+    margin: 2px;
+    content: ""; /* Necesario para generar el pseudo-elemento */
+    position: absolute;
+    top: -1rem; /* Ajusta la posición desde la parte superior */
+
+    right: 50%;
+    left: 50%; /* Posición horizontal al 50% del contenedor */
+
+    transform: translate(-50%, -50%); /* Centra el pseudo-elemento */
+    
+    width: 6rem; /* Ancho del punto */
+    height: 6px; /* Altura del punto */
+    border-radius: 0.5rem; /* Hace que el punto sea redondo */
+    z-index: 100; /* Asegura que el punto esté sobre el contenido del artículo */
+    filter: drop-shadow(0px 0px 1px black);
+}
+.management_orders section h3.branch::after {
+    background-color: rgb(220, 11, 108); /* Color del punto */
+}
+.management_orders section h3.delivery::after {
+    background-color: rgb(238, 215, 10); /* Color del punto */
 }
 
 .management_orders article:hover {
@@ -1318,6 +1413,11 @@ body {
     .select-retiro .retiro-anchor {
         width: auto;
     }
+    .branches-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 @media (480px < width < 1080px) {
@@ -1386,7 +1486,14 @@ body {
     .principal_carousell article {
         height: auto !important;
     }
-
+    .branches-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .branches-section .article-branch h3 {
+        margin: 0.5rem;
+    }
 }
 
 

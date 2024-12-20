@@ -55,6 +55,7 @@ class IntranetController extends Controller
         $ordersDispatched = $this->orderRepository->getOrdersForManagement(Status::DISPATCHED->label());
         $ordersReadyForPickUp = $this->orderRepository->getOrdersForManagement(Status::READY_FOR_PICKUP->label());
 
+        
 
         $ordersPreparingArray = [];
         $ordersDispatchedArray = [];

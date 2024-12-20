@@ -80,6 +80,7 @@ $router->get("/signin", "UserController@signin");
 $router->post("/signin", "UserController@signinPost");
 $router->get("/account", "UserController@account");
 $router->get("/account/logout", "UserController@logout");
+$router->get("/account/addresses", "UserController@addresses");
 $router->get("/set_address", "UserController@setAddress");
 $router->post("/set_address", "UserController@setAddressForm");
 // $router->get("/get_notifications", "UserController@getNotifications");

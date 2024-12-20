@@ -1,0 +1,14 @@
+{% extends 'view.twig' %}
+
+{% block content %}
+    {% for address in addresses %}
+        <article>
+            <h2>{{ address.name }}</h2>
+            <p><strong>Calle:</strong> {{ address.street }}</p>
+            <p><strong>Ciudad:</strong> {{ address.city }}</p>
+            <p><strong>País:</strong> {{ address.country }}</p>
+        </article>
+    {% else %}
+        <p>No hay direcciones disponibles.</p>
+    {% endfor %}
+{% endblock %}

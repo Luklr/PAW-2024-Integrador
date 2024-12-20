@@ -2,6 +2,9 @@
 
 {% block content %}
         <h1>Registrarse</h1>
+        {% if mensaje %}
+            <p class="invalid-pass-message">{{mensaje}}</p>
+        {% endif %}
         <form name="form_register" action="/signin" method="POST" class="form-account">
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" tabindex="1" required autofocus>
@@ -19,6 +22,18 @@
             <a href="/login" tabindex="8">¿Ya tenés cuenta? Ingresá aca</a>
         </form>
         {% if mensaje %}
-            <h3>{{mensaje}}</h3>
+            <script>
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "{{mensaje}}",
+                customClass: {
+                    title: "swal-title",
+                    content: "swal-content",
+                    confirmButton: "assemblePcButton",
+                    cancelButton: "assemblePcButton"
+                }
+            });
+            </script>
         {% endif %}
 {% endblock %}

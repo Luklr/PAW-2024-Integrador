@@ -1,3 +1,2 @@
 # TODO
-- Middleware de autenticación
-- create_product.view.twig - Cambiar <form> por <menu>
+- EL DEPLOYS.SH NO FUNCIONA SI NO CAMBIAS VALORES EN EL .env
