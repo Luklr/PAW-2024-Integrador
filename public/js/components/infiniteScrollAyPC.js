@@ -32,7 +32,7 @@ class InfiniteScrollAyPC {
             this.type = form.getAttribute('data-type');  // Obtener el valor del atributo `data-type`
             
             // Borra solo los productos y no el formulario o el div de loading
-            const productAnchors = document.querySelectorAll('.products a');
+            const productAnchors = document.querySelectorAll('.product');
             productAnchors.forEach(anchor => anchor.remove());
     
             this.chargeMoreProducts();
@@ -58,6 +58,12 @@ class InfiniteScrollAyPC {
             const response = await fetch(`${window.location.origin}/assemble_pc_${this.type}_page?page=${this.page}&query=${this.query}`);
             const data = await response.json();
 
+            if (!data || data.length === 0) {
+                // Si no hay datos, ocultar el elemento de loading
+                this.loading.style.display = 'none';
+                return;
+            }
+
             data.forEach(item => {
                 const a1 = document.createElement("a");
                 const a2 = document.createElement("a");
@@ -75,6 +81,7 @@ class InfiniteScrollAyPC {
 
                 button.textContent = "Seleccionar";
                 button.className = "assemblePcButton";
+                button.title = "Agregar componente a la PC";
                 button.addEventListener('click', () => {
                     this.selectProduct(item["id"]);
                 });

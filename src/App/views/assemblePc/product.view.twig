@@ -19,15 +19,15 @@
                 <li>{{key}}: {{value}}</li>
             {% endfor %}
         </ul>
-        <form id="addToCartForm" class="form">
-            <div class="input-group">
-                <label for="quantity">Cantidad</label>
-                <input type="number" id="quantity" name="quantity" 
-                       class="searchbar-input" tabindex="1" autocomplete="on" autofocus required 
+        <form class="addToCartForm">
+            <!--<div class="input-group"> -->
+            <label for="quantity">Cantidad</label>
+            <input type="number" id="quantity" name="quantity" 
+                    class="searchbar-input" tabindex="1" autocomplete="on" autofocus required 
                        min="1" max="{{ product.stock }}">
-            </div>
+            <!-- </div> -->
             <input type="hidden" name="product_id" value="{{ product.id }}">
-            <input type="submit" value="Agregar al carrito" class="submit form-submit">
+            <input type="submit" value="Agregar al carrito" class="submit form-submit" title="Presiona para agregar al carrito">
         </form>
     </section>
 {% endblock %}

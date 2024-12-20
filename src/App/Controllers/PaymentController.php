@@ -139,7 +139,12 @@ class PaymentController extends Controller
         # creo el array para crear el order
         $data = [];
         $data["components"] = $components;
-        $data["user"] = $cart->getUser();
+        if ($cart->getUser()){
+            $data["user"] = $cart->getUser();
+        } else {
+            $data["user"] = $request->user();
+        }
+        
         $data["orderdate"] = new \DateTime();
         $price = 0;
         foreach ($components as $component) {
@@ -147,7 +152,6 @@ class PaymentController extends Controller
         }
         $data["orderprice"] = $price;
         $data["status"] = Status::PENDING_PAYMENT;
-
         # creo la instancia en la bd
         $order = $this->orderRepository->create($data);
         $session->set("order_id", $order->getId());

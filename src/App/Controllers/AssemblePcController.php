@@ -244,7 +244,7 @@ class AssemblePcController extends Controller
         $currentIndex = array_search($currentType, $componentsOrder);
 
         // Si no encuentra el tipo, retorna un error (400)
-        if ($currentIndex === false) {
+        if ($currentIndex === false && $type<>"videoCard" && $type<>"cpuFan") {
             http_response_code(400);
             echo json_encode(["error" => "Bad Request: invalid type"]);
             return false;
