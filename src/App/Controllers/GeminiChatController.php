@@ -133,6 +133,7 @@ class GeminiChatController extends Controller
         if (!$geminiChat){
             http_response_code(200);
             echo json_encode(["success" => true, "messages" => null]);
+            exit;
         }
 
         $chatArrays = [];
@@ -145,5 +146,6 @@ class GeminiChatController extends Controller
 
         http_response_code(200);
         echo json_encode(["success" => true, "messages" => $chatArrays]);
+        exit;
     }
 }
