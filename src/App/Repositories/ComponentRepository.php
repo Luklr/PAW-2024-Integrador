@@ -54,6 +54,25 @@ class ComponentRepository extends Repository
         $c = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $id]);
     }
 
+    public function addStockById(int $id, int $quantity) {
+        $component = $this->getByIdAndType($id);
+        $filter = "id = :id";
+        $data = ["stock" => ($component->getStock() + $quantity)];
+        $c = self::$queryBuilder->table($this->table())->update($data, $filter, [':id' => $id]);
+    }
+
+    public function deleteById(int $id) {
+        $filter = "id = :id";
+        $component = self::$queryBuilder->table($this->table())->select($filter, [':id' => $id]);
+        $type = ($component[0])["type"];
+        
+        $type = "Paw\\App\\Models\\Components\\" . ucfirst($type);
+        $filter = "component_id = :component_id";
+        $sc = self::$queryBuilder->table("\"" . $type::$tableChild . "\"")->delete($filter, [':component_id' => $id]);
+        $filter = "id = :id";
+        $c = self::$queryBuilder->table($this->table())->delete($filter, [':id' => $id]);
+    }
+
     public function create(array $data, string $type = null)
     {
         if ($type !== null) {
@@ -71,7 +90,7 @@ class ComponentRepository extends Repository
                 $arraySpecificComponent = $specificComponent->toArray();
                 $arraySpecificComponent["component_id"] = $id;
 
-                $idSpecificComponent = self::$queryBuilder->table($type::$tableChild)->insert($arraySpecificComponent);
+                $idSpecificComponent = self::$queryBuilder->table("\"" . $type::$tableChild . "\"")->insert($arraySpecificComponent);
             }
             if ($idSpecificComponent && $id) {
                 $model = $this->getByIdAndType($id, $type);

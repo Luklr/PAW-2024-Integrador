@@ -23,6 +23,7 @@ use Paw\App\Repositories\GeminiChatRepository;
 use Paw\Core\LoggerFactory;
 
 require "routes.php";
+require "helpers.php";
 
 $dotenv = Dotenv::createUnsafeImmutable(__DIR__ . '/../');
 $dotenv->load();

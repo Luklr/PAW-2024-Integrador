@@ -75,13 +75,20 @@ $router->get("/get_orders_management", "IntranetController@getOrdersForManagemen
 $router->post("/set_order_status", "IntranetController@setOrderStatus");
 $router->post("/set_delivery_price", "IntranetController@setDeliveryPrice");
 
+$router->get("/products_ABM", "IntranetController@products");
+$router->get("/product_ABM", "IntranetController@product");
+$router->get("/products_ABM_page", "IntranetController@productsPage");
+$router->post("/add_component_stock", "IntranetController@addComponentStock");
+$router->post("/reduce_component_stock", "IntranetController@reduceComponentStock");
+$router->post("/delete_component_stock", "IntranetController@deleteComponent");
+
 $router->get("/login", "UserController@login");
 $router->post("/login", "UserController@loginPost");
 $router->get("/signin", "UserController@signin");
 $router->post("/signin", "UserController@signinPost");
 $router->get("/account", "UserController@account");
 $router->get("/account/logout", "UserController@logout");
-$router->get("/account/addresses", "UserController@addresses");
+$router->get("/addresses", "UserController@addresses");
 $router->get("/set_address", "UserController@setAddress");
 $router->post("/set_address", "UserController@setAddressForm");
 // $router->get("/get_notifications", "UserController@getNotifications");

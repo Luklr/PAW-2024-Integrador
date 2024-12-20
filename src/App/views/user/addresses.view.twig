@@ -1,14 +1,32 @@
 {% extends 'view.twig' %}
 
+{% block main_class %}payment{% endblock %}
+
 {% block content %}
-    {% for address in addresses %}
-        <article>
-            <h2>{{ address.name }}</h2>
-            <p><strong>Calle:</strong> {{ address.street }}</p>
-            <p><strong>Ciudad:</strong> {{ address.city }}</p>
-            <p><strong>País:</strong> {{ address.country }}</p>
-        </article>
+    <h2>
+        Direcciones
+    </h2>
+    {% if addresses is not empty %}
+        <ul>
+            {% for address in addresses %}
+            <li>
+                <article id="{{address.id}}" class="address-item"> <!--Si cliqueo en el articulo, un js envia el branch y luego me envia al confirm order-->
+                    <h3>{{address.street}} {{address.number}}, {{address.locality}}, {{address.province}}</h3>
+                    <ul>
+                        <li>Código postal {{address.postalcode}}</li>
+                        {% if address.floor %}
+                            <li>Piso {{address.floor}}</li>
+                        {% endif %}
+                        {% if address.apartment %}
+                            <li>Apartamento {{address.apartment}}</li>
+                        {% endif %}
+                    </ul>
+                </article>
+            </li>
+            {% endfor %}
+        </ul>
     {% else %}
-        <p>No hay direcciones disponibles.</p>
-    {% endfor %}
+        <h2>No tienes direcciones guardadas</h2>
+    {% endif %}
+    <a href="/set_address" class="boton-anchor address-add">Añade una nueva dirección aquí</a>
 {% endblock %}

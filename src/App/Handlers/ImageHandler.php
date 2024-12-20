@@ -17,25 +17,30 @@ class ImageHandler
     public function saveImage(array $img, string $subDir, array $sizes = ['S', 'M', 'L']): string
     {
         ImageValidator::validateImage($img);
-        $dir = $this->baseDir . '/' . $subDir;
+
+        // $subDir = "images/components 
+        // $this->baseDir = "/../../../public/images/";
+
+        $dir = $this->baseDir . "/../" . $subDir;
         $realDir = realpath($dir);
 
         if (!$realDir && !mkdir($dir, 0777, true) && !is_dir($dir)) {
             throw new InvalidImageException("Error al crear el directorio {$dir}");
         }
 
-        $filename = uniqid();
-        $absolutePath = $realDir . '/' . $filename;
+        $extension = pathinfo($img['name'], PATHINFO_EXTENSION);
+        $filename = uniqid() . '.' . $extension;
+        $absolutePath = $dir . '/' . $filename; // Usar $dir en lugar de $realDir
         $ok = move_uploaded_file($img['tmp_name'], $absolutePath);
 
         if ($ok) {
             $this->generateImageCopies($absolutePath, $img, $sizes);
-            return $filename;
+            return '/' . $subDir . '/' . $filename; // Devolver la ruta relativa con el prefijo '/'
         } else {
             throw new InvalidImageException("Error al subir la imagen");
         }
     }
-
+    
     private function generateImageCopies(string $absolutePath, array $img, array $sizes): void
     {
         $extension = pathinfo($img['name'], PATHINFO_EXTENSION);

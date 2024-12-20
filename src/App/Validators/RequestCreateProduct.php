@@ -10,7 +10,9 @@ class RequestCreateProduct
     public static function validate(Request $request, array $requiredParams)
     {
         $postParams = $request->post();
-
+        $requiredParams = array_filter($requiredParams, function($value) {  # Borro path_img de los requeridos
+            return $value !== "path_img";
+        });
         $missingParams = [];
         foreach ($requiredParams as $param) {
             if (!array_key_exists($param, $postParams)) {
@@ -18,9 +20,8 @@ class RequestCreateProduct
             }
         }
 
-
         if (!empty($missingParams)) {
-            throw new InvalidValueFormatException("Complete todos los campos");
+            throw new InvalidValueFormatException("Complete todos los campos. Parametros faltantes: " . implode(", ", $missingParams));
         }
 
         $img = $request->file("imagen");
